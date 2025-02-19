@@ -1,1 +1,45 @@
 @import 'tailwindcss';
+
+@font-face {
+  font-family: Oi;
+  src: url(./assets/fonts/Oi-Regular.ttf);
+}
+
+@font-face {
+  font-family: Lalezar;
+  src: url(./assets/fonts/Lalezar-Regular.ttf);
+}
+
+@font-face {
+  font-family: Inter;
+  src: url(./assets/fonts/Inter-VariableFont_opsz,wght.ttf);
+}
+
+@theme {
+  --color-background-light: #fff9e6;
+  --color-primary-light: #442727;
+  --color-secondary-light: #d0a473;
+  --color-accent-light: #efdb9c;
+  --color-neutral-light: #ffffff;
+  --font-big-header: Oi, 'sans-serif';
+  --font-sub-header: Lalezar, 'sans-serif';
+  --font-main: Inter, 'sans-serif';
+}
+
+@layer components {
+  * {
+    /* @apply outline-2 outline-red-500; */
+  }
+  li {
+    /* @apply hover:bg-secondary-light cursor-pointer rounded-full py-4 font-bold tracking-widest hover:text-white; */
+  }
+  input {
+    @apply focus:outline-none;
+  }
+}
+
+@layer base {
+  html {
+    @apply font-main;
+  }
+}
