@@ -1,3 +1,11 @@
+# JSHOP
+
+An online eCommerce shop markup in development.
+
+![JSHOP Screenshot](public/images/JSHOP.png)
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
