@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import { Outlet } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="">Hello World!</h1>
-    </>
-  );
+    <div className="wrapper bg-background-light flex min-h-screen flex-col">
+      <Outlet />
+    </div>
+  )
 }
 
-export default App;
+export default App
