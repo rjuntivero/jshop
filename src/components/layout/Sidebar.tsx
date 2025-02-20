@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 import Button from '../ui/Button'
 
 interface SidebarProps {
@@ -25,9 +25,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`${className} outline-primary-light text-primary-light relative max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
+      className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light relative max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
     >
-      <div className="sidebar-title font-big-header border-b-primary-light mb-4 border-b-4 text-3xl">
+      <div className="sidebar-title font-big-header border-b-primary-light dark:border-secondary-dark mb-4 border-b-4 text-3xl">
         <h1 className="">Products</h1>
       </div>
 
@@ -46,10 +46,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                 }`}
               />
               <span
-                className={`relative transition-colors duration-300 ${
+                className={`relative dark:text-secondary-dark${
                   activeCategory === item
-                    ? 'text-white'
-                    : 'text-primary-light delay-150 group-hover:text-white'
+                    ? 'dark:text-secondary-dark text-white'
+                    : 'dark:text-background-dark group-hover:text-white'
                 }`}
               >
                 {item}
@@ -59,9 +59,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         ))}
       </ul>
 
-      <div className="bg-primary-light absolute bottom-0 left-0 m-0 w-full rounded-br-xl py-5"></div>
+      <div className="bg-primary-light dark:bg-primary-dark absolute bottom-0 left-0 m-0 w-full rounded-br-xl py-5"></div>
     </div>
   )
 }
 
-export default Sidebar
+export default memo(Sidebar)

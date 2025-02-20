@@ -18,7 +18,7 @@ const ProductCard: React.FC<T> = ({ productName, productType, imageURL }) => {
         />
       </Button>
       <div className="product-details grid-cols-[1fr, auto] grid-rows-[auto, auto] grid p-3">
-        <h1 className="font-sub-header text-primary truncate text-xl">
+        <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate text-xl">
           {productName}
         </h1>
         <h2 className="text-1 text-secondary-light motion-scale-in-[0.1] motion-translate-x-in-[-84%] motion-translate-y-in-[-5%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur row-start-2 w-30">

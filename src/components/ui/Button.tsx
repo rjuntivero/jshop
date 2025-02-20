@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { memo, ReactNode } from 'react'
 
 interface ButtonProps {
   children?: ReactNode
@@ -16,4 +16,4 @@ const Button: React.FC<ButtonProps> = ({ children, className, onClick }) => {
   )
 }
 
-export default Button
+export default memo(Button)

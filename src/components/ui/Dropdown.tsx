@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import DropdownIcon from '../icons/DropdownIcon'
 
 const Dropdown = () => {
@@ -8,4 +9,4 @@ const Dropdown = () => {
   )
 }
 
-export default Dropdown
+export default memo(Dropdown)

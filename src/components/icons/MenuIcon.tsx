@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 interface IconProps {
   color?: string
 }
-const MenuIcon: React.FC<IconProps> = ({ color }) => {
+const MenuIcon: React.FC<IconProps> = () => {
   return (
     <svg
       className="hover:motion-preset-shake"

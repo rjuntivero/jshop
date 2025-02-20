@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 interface IconProps {
   color?: string
 }
-const SunIcon: React.FC<IconProps> = ({ color }) => {
+const SunIcon: React.FC<IconProps> = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

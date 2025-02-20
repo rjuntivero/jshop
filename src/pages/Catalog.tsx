@@ -1,7 +1,7 @@
 import { Product } from '../types/Product'
 import { useFetchProducts } from '../hooks/useFetchProducts'
 import { useWindowSize } from '../hooks/useWindowSize'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Navbar from '../components/layout/Navbar'
 import Searchbar from '../components/ui/Searchbar'
 import Sidebar from '../components/layout/Sidebar'
@@ -12,10 +12,9 @@ import ErrorMessage from '../components/ui/ErrorMessage'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
-  const [products, setProducts] = useState<Product[]>([])
   const [showSidebar, setShowSidebar] = useState(true)
   const [activeCategory, setActiveCategory] = useState<string>('All')
-  const { data, isLoading, error, refetch } = useFetchProducts()
+  const { data, isLoading, error } = useFetchProducts()
   const { screenWidth } = useWindowSize()
 
   const filteredProducts = data
@@ -29,13 +28,9 @@ const Catalog = () => {
       product.title.toLowerCase().includes(search.toLowerCase()),
     )
 
-  const handleItemClick = (item: string) => {
+  const handleItemClick = useCallback((item: string) => {
     setActiveCategory(item)
-  }
-
-  useEffect(() => {
-    if (data) setProducts(data)
-  }, [data])
+  }, [])
 
   useEffect(() => {
     setShowSidebar(screenWidth > 1024)
@@ -72,7 +67,7 @@ const Catalog = () => {
           />
         </div>
 
-        <div className="bg-background-light sticky top-0 z-2 col-span-1 col-start-2 row-start-1 py-5 pr-2 pl-12">
+        <div className="bg-background-light dark:bg-background-dark sticky top-0 z-2 col-span-1 col-start-2 row-start-1 py-5 pr-2 pl-12">
           <Searchbar
             input={search}
             onChange={handleSearch}
@@ -84,7 +79,7 @@ const Catalog = () => {
 
         <div className="catalog col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
           <div
-            className={`product-container flex min-h-[800px] flex-wrap gap-6 ${(filteredProducts && filteredProducts.length % 2 == 0) || isLoading ? 'justify-center' : 'justify-start'}`}
+            className={`product-container flex min-h-[800px] flex-wrap gap-6 ${(filteredProducts && filteredProducts.length % 2 == 0) || isLoading || !showSidebar ? 'justify-center' : 'justify-start'}`}
           >
             {isLoading && <LoadWheel />}
             {error && <ErrorMessage />}

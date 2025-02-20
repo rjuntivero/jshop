@@ -1,17 +1,16 @@
-import React, { ReactNode } from 'react'
+import React, { memo, ReactNode } from 'react'
 import GithubIcon from '../icons/GithubIcon'
 import InstagramIcon from '../icons/InstagramIcon'
 import LinkedInIcon from '../icons/LinkedInIcon'
-import Button from '../ui/Button'
 import ExternalLink from '../ui/ExternalLink'
 
 interface T {
   children?: ReactNode
 }
 
-const handleLinkClick = () => {}
+// const handleLinkClick = () => {}
 
-const Footer: React.FC<T> = ({ children }) => {
+const Footer: React.FC<T> = () => {
   return (
     <div className="wrapper mx-auto mt-30">
       {/* <div className="text-primary-light font-sub-header pb-8 text-center text-xl">
@@ -32,4 +31,4 @@ const Footer: React.FC<T> = ({ children }) => {
   )
 }
 
-export default Footer
+export default memo(Footer)

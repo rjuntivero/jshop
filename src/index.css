@@ -2,6 +2,8 @@
 @plugin 'tailwindcss-motion';
 @plugin 'tailwindcss-animate';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @font-face {
   font-family: Oi;
   src: url(./assets/fonts/Oi-Regular.ttf);
@@ -26,6 +28,10 @@
   --font-big-header: Oi, 'sans-serif';
   --font-sub-header: Lalezar, 'sans-serif';
   --font-main: Inter, 'sans-serif';
+  --color-background-dark: #2f2825;
+  --color-primary-dark: #b18e66;
+  --color-secondary-dark: #fff9e6;
+  --color-accent-dark: #b0a9a3;
 }
 
 @layer components {
@@ -33,7 +39,7 @@
     /* @apply outline-2 outline-red-500; */
   }
   li {
-    /* @apply hover:bg-secondary-light cursor-pointer rounded-full py-4 font-bold tracking-widest hover:text-white; */
+    @apply dark:text-primary-dark;
   }
   input {
     @apply focus:outline-none;
