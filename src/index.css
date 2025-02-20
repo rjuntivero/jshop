@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@plugin 'tailwindcss-motion';
+@plugin 'tailwindcss-animate';
 
 @font-face {
   font-family: Oi;
@@ -35,6 +37,16 @@
   }
   input {
     @apply focus:outline-none;
+  }
+}
+
+@layer utilities {
+  .navbar-btn {
+    @apply transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105;
+  }
+
+  .add-to-cart {
+    @apply transition duration-300 ease-in-out hover:bg-neutral-50;
   }
 }
 
