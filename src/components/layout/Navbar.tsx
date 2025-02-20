@@ -18,11 +18,10 @@ const Navbar: React.FC<NavbarProps> = ({ children }) => {
             <MenuIcon />
           </Link>
         </Button>
-        <h1 className="logo text-primary-light text-3xl font-bold tracking-widest">
-          {/* J S-H-O-P */}
-        </h1>
       </div>
-
+      <h1 className="logo text-primary-light text-center text-4xl font-bold tracking-widest">
+        J S-H-O-P
+      </h1>
       <div className="right flex items-center gap-6">
         {/* <Button className="bg-primary-light flex h-[78px] w-[78px] items-center justify-center rounded-full p-2">
           <SunIcon />
