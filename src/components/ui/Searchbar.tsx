@@ -19,9 +19,9 @@ const Searchbar: React.FC<T> = ({
   showSidebar,
 }) => {
   return (
-    <div className="text-primary-light dark:bg-background-dark flex items-center justify-between px-6 py-4">
+    <div className="text-primary-light dark:bg-background-dark flex items-center justify-between px-6 py-2">
       <div className="left flex gap-8">
-        <Button className="text-secondary-light dark:bg-background-dark dark:text-secondary-dark border-secondary-light dark:border-secondary-dark hidden items-center justify-center rounded-full border-2 px-4 py-2 md:flex">
+        <Button className="text-secondary-light dark:bg-background-dark dark:text-accent-dark border-secondary-light dark:border-accent-dark hidden items-center justify-center rounded-full border-2 px-4 py-2 md:flex">
           Sort By
           <Dropdown />
         </Button>

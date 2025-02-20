@@ -1,4 +1,3 @@
-import { Product } from '../types/Product'
 import { useFetchProducts } from '../hooks/useFetchProducts'
 import { useWindowSize } from '../hooks/useWindowSize'
 import { useState, useEffect, useCallback } from 'react'
@@ -9,6 +8,7 @@ import ProductCard from '../components/ProductCard'
 import Footer from '../components/layout/Footer'
 import LoadWheel from '../components/ui/LoadWheel'
 import ErrorMessage from '../components/ui/ErrorMessage'
+import React, { useMemo } from 'react'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
@@ -44,14 +44,19 @@ const Catalog = () => {
     setShowSidebar(!showSidebar)
   }
 
+  const gridStyles = useMemo(
+    () => ({
+      gridTemplateColumns: showSidebar ? '325px' : '0px',
+    }),
+    [showSidebar],
+  )
+
   return (
     <>
       <Navbar />
-      <div
-        className="wrapper grid h-full min-h-screen gap-x-9.5 pr-3 transition-all duration-500 md:pr-3"
-        style={{
-          gridTemplateColumns: showSidebar ? '325px' : '0px',
-        }}
+      <main
+        className="grid h-full min-h-screen gap-x-9.5 pr-3 transition-all duration-500 md:pr-3"
+        style={gridStyles}
       >
         <div
           className={`sticky top-12 row-start-2 self-start transition-transform duration-500 ${
@@ -77,11 +82,11 @@ const Catalog = () => {
           />
         </div>
 
-        <div className="catalog col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
-          <div
-            className={`product-container flex min-h-[800px] flex-wrap gap-6 ${(filteredProducts && filteredProducts.length % 2 == 0) || isLoading || !showSidebar ? 'justify-center' : 'justify-start'}`}
-          >
-            {isLoading && <LoadWheel />}
+        <div className="col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
+          <article className="relative flex min-h-[800px] flex-1 flex-wrap justify-start gap-6 px-3">
+            <div className="absolute inset-x-0 inset-y-[50%]">
+              {isLoading && <LoadWheel />}
+            </div>
             {error && <ErrorMessage />}
             {!isLoading &&
               !error &&
@@ -96,9 +101,9 @@ const Catalog = () => {
                   imageURL={product.image}
                 />
               ))}
-          </div>
+          </article>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

@@ -38,9 +38,7 @@
   * {
     /* @apply outline-2 outline-red-500; */
   }
-  li {
-    @apply dark:text-primary-dark;
-  }
+
   input {
     @apply focus:outline-none;
   }

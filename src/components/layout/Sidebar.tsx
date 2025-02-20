@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h1 className="">Products</h1>
       </div>
 
-      <ul className="mb-4 overflow-y-auto border-b-4">
+      <ul className="*:dark:text-secondary-dark mb-4 overflow-y-auto border-b-4">
         {categories.map((item) => (
           <li key={item}>
             <Button
@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <span
                 className={`relative dark:text-secondary-dark${
                   activeCategory === item
-                    ? 'dark:text-secondary-dark text-white'
+                    ? 'dark:text-background-dark text-white'
                     : 'dark:text-background-dark group-hover:text-white'
                 }`}
               >
