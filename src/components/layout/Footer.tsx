@@ -17,7 +17,7 @@ const Footer: React.FC<T> = ({ children }) => {
       {/* <div className="text-primary-light font-sub-header pb-8 text-center text-xl">
         Follow me on
       </div> */}
-      <div className="icons flex justify-around gap-56 pb-12">
+      <div className="icons flex justify-around gap-24 pb-12 md:gap-56">
         <ExternalLink link="https://github.com/rjuntivero">
           <GithubIcon />
         </ExternalLink>

@@ -4,7 +4,7 @@ import Footer from '../components/layout/Footer'
 const Homepage = () => {
   return (
     <>
-      <div className="hero text-primary-light mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center">
+      <div className="hero text-primary-light mx-auto flex min-h-screen flex-col items-center justify-center">
         <div className="hero-text">
           <h1 className="font-big-header text-6xl">JSHOP</h1>
         </div>

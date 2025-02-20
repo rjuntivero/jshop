@@ -6,7 +6,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
-  const [activeItem, setActiveItem] = useState<string>('')
+  const [activeItem, setActiveItem] = useState<string>('Men')
 
   const categories = [
     'Men',
@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
   return (
     <div
-      className={`${className} outline-primary-light text-primary-light relative rounded-r-3xl px-[18px] py-[42px] outline-5`}
+      className={`${className} outline-primary-light text-primary-light relative max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
     >
       <h1 className="sidebar-title font-big-header border-b-primary-light mb-4 border-b-4 text-3xl">
         Products
