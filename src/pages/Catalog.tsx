@@ -1,3 +1,6 @@
+import { Product } from '../types/Product'
+import { useFetchProducts } from '../hooks/useFetchProducts'
+import { useWindowSize } from '../hooks/useWindowSize'
 import { useState, useEffect } from 'react'
 import Navbar from '../components/layout/Navbar'
 import Searchbar from '../components/ui/Searchbar'
@@ -6,25 +9,18 @@ import ProductCard from '../components/ProductCard'
 import Footer from '../components/layout/Footer'
 import LoadWheel from '../components/ui/LoadWheel'
 import ErrorMessage from '../components/ui/ErrorMessage'
-import { Product } from '../types/Product'
-import { useFetchProducts } from '../hooks/useFetchProducts'
-import { useWindowSize } from '../hooks/useWindowSize'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
   const [products, setProducts] = useState<Product[]>([])
   const [showSidebar, setShowSidebar] = useState(true)
 
-  const fetchProducts = async (): Promise<Product[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    const response = await fetch('https://fakestoreapi.com/products')
-    return response.json()
-  }
-
   const { data, isLoading, error } = useFetchProducts()
-
   const { screenWidth } = useWindowSize()
 
+  const filteredProducts = data?.filter((products) =>
+    products.title.toLowerCase().includes(search.toLowerCase()),
+  )
   useEffect(() => {
     if (data) setProducts(data)
   }, [data])
@@ -77,7 +73,7 @@ const Catalog = () => {
             {error && <ErrorMessage />}
             {!isLoading &&
               !error &&
-              products.map((product) => (
+              filteredProducts?.map((product) => (
                 <ProductCard
                   key={String(product.id)}
                   productName={product.title}
