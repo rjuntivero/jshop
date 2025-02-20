@@ -6,6 +6,7 @@ interface IconProps {
 const MenuIcon: React.FC<IconProps> = ({ color }) => {
   return (
     <svg
+      className="hover:motion-preset-shake"
       xmlns="http://www.w3.org/2000/svg"
       width="48"
       height="49"

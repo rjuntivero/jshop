@@ -14,13 +14,25 @@ const Catalog = () => {
   const [search, setSearch] = useState('')
   const [products, setProducts] = useState<Product[]>([])
   const [showSidebar, setShowSidebar] = useState(true)
-
-  const { data, isLoading, error } = useFetchProducts()
+  const [activeCategory, setActiveCategory] = useState<string>('All')
+  const { data, isLoading, error, refetch } = useFetchProducts()
   const { screenWidth } = useWindowSize()
 
-  const filteredProducts = data?.filter((products) =>
-    products.title.toLowerCase().includes(search.toLowerCase()),
-  )
+  const filteredProducts = data
+    ?.filter((product) => {
+      if (activeCategory === 'All') return true
+      return product.category
+        .toLowerCase()
+        .includes(activeCategory.toLowerCase())
+    })
+    .filter((product) =>
+      product.title.toLowerCase().includes(search.toLowerCase()),
+    )
+
+  const handleItemClick = (item: string) => {
+    setActiveCategory(item)
+  }
+
   useEffect(() => {
     if (data) setProducts(data)
   }, [data])
@@ -54,21 +66,26 @@ const Catalog = () => {
             width: '325px',
           }}
         >
-          <Sidebar />
+          <Sidebar
+            activeCategory={activeCategory}
+            handleItemClick={handleItemClick}
+          />
         </div>
 
         <div className="bg-background-light sticky top-0 z-2 col-span-1 col-start-2 row-start-1 py-5 pr-2 pl-12">
           <Searchbar
             input={search}
             onChange={handleSearch}
-            results={products.length}
+            results={filteredProducts?.length || 0}
             sideBarVisible={showSidebar}
             showSidebar={handleShowSideBar}
           />
         </div>
 
         <div className="catalog col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
-          <div className="product-container flex min-h-[800px] flex-wrap justify-center gap-6">
+          <div
+            className={`product-container flex min-h-[800px] flex-wrap gap-6 ${(filteredProducts && filteredProducts.length % 2 == 0) || isLoading ? 'justify-center' : 'justify-start'}`}
+          >
             {isLoading && <LoadWheel />}
             {error && <ErrorMessage />}
             {!isLoading &&

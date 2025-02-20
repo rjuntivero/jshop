@@ -3,33 +3,33 @@ import Button from '../ui/Button'
 
 interface SidebarProps {
   className?: string
+  activeCategory: string
+  handleItemClick: (newValue: string) => void
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ className }) => {
-  const [activeItem, setActiveItem] = useState<string>('Men')
-
+const Sidebar: React.FC<SidebarProps> = ({
+  className,
+  activeCategory,
+  handleItemClick,
+}) => {
   const categories = [
+    'All',
     'Men',
     'Women',
-    'Kids',
-    'Dogs',
+    'Jewelery',
+    'Electronic',
     'Aliens',
     'Cows',
     'Sheep',
-    'Earthbenders',
   ]
-
-  const handleItemClick = (item: string) => {
-    setActiveItem(item)
-  }
 
   return (
     <div
       className={`${className} outline-primary-light text-primary-light relative max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
     >
-      <h1 className="sidebar-title font-big-header border-b-primary-light mb-4 border-b-4 text-3xl">
-        Products
-      </h1>
+      <div className="sidebar-title font-big-header border-b-primary-light mb-4 border-b-4 text-3xl">
+        <h1 className="">Products</h1>
+      </div>
 
       <ul className="mb-4 overflow-y-auto border-b-4">
         {categories.map((item) => (
@@ -40,14 +40,14 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             >
               <span
                 className={`bg-secondary-light absolute top-0 left-0 -z-10 h-full w-full origin-left rounded-r-full opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100 ${
-                  activeItem === item
+                  activeCategory === item
                     ? 'translate-x-0 opacity-100'
                     : 'translate-x-[-100%]'
                 }`}
               />
               <span
                 className={`relative transition-colors duration-300 ${
-                  activeItem === item
+                  activeCategory === item
                     ? 'text-white'
                     : 'text-primary-light delay-150 group-hover:text-white'
                 }`}
