@@ -36,7 +36,8 @@
 
 @layer components {
   * {
-    /* @apply outline-2 outline-red-500; */
+    box-sizing: border-box;
+    /* @apply box-border; */
   }
 
   input {

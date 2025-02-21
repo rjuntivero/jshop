@@ -36,7 +36,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           onClick={onClose}
           className="bg-secondary-light z-40 mt-4 flex items-center justify-center rounded-sm p-4 text-black"
         >
-          Close
+          Checkout
         </Button>
       </main>
     </>

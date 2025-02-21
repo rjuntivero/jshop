@@ -63,7 +63,7 @@ const Catalog = () => {
             showSidebar ? 'lg:translate-x-0' : '-translate-x-full'
           }`}
           style={{
-            width: '325px',
+            width: '305px',
           }}
         >
           <Sidebar
