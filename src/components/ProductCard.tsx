@@ -1,15 +1,15 @@
-import { memo } from 'react'
+import { memo, useContext } from 'react'
 import CartIcon from './icons/CartIcon'
 import Button from './ui/Button'
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
+import { useCart } from './contexts/CartContext'
 
 interface T {
   product?: Product
   productName?: string
   productType?: string
   imageURL?: string
-  addToCart: (product: Product) => void
 }
 
 const ProductCard: React.FC<T> = ({
@@ -17,10 +17,10 @@ const ProductCard: React.FC<T> = ({
   productName,
   productType,
   imageURL,
-  addToCart,
 }) => {
+  const { addToCart } = useCart()
   return (
-    <div className="motion-preset-blur-down bg-primary-light/20 z-1 h-auto w-[253px] rounded-sm duration-400">
+    <div className="motion-preset-blur-down bg-primary-light/20 z-1 h-auto w-[353px] rounded-sm duration-400">
       <div className="grid-rows-[auto, auto] mlg:grid-cols-[repeat(3,84px)] grid items-center p-3">
         <Link className="col-span-3 pb-3" to="product">
           <img

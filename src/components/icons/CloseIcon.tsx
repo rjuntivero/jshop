@@ -1,20 +1,19 @@
-import React from 'react'
-
 interface IconProps {
   color?: string
+  width?: number
+  height?: number
 }
-const MenuIcon: React.FC<IconProps> = ({ color }) => {
+const CloseIcon: React.FC<IconProps> = ({ color, width, height }) => {
   return (
     <svg
-      className="hover:motion-preset-shake"
       xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="49"
-      viewBox="0 0 48 49"
+      width={width}
+      height={height}
+      viewBox="0 0 43 43"
       fill="none"
     >
       <path
-        d="M6 24.5H42M6 12.5H42M6 36.5H42"
+        d="M32.25 10.75L10.75 32.25M10.75 10.75L32.25 32.25"
         stroke={color}
         stroke-width="4"
         stroke-linecap="round"
@@ -24,4 +23,4 @@ const MenuIcon: React.FC<IconProps> = ({ color }) => {
   )
 }
 
-export default MenuIcon
+export default CloseIcon

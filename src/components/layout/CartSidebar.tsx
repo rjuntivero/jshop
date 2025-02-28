@@ -1,23 +1,24 @@
 import { Product } from '../../types/Product'
-
 import Button from '../ui/Button'
 import CartItem from '../ui/CartItem'
+import CloseIcon from '../icons/CloseIcon'
+import { useCart } from '../contexts/CartContext'
 
 interface SidebarProps {
   onClose: () => void
+  product?: Product
   className?: string
-  cartItems?: Product[]
 }
 
-const CartSidebar: React.FC<SidebarProps> = ({
-  onClose,
-  className,
-  cartItems,
-}) => {
+const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
+  const { addToCart, cartItems } = useCart()
   return (
     <>
       <aside className={className + ' *:font-sub-header'}>
-        <div className="mb-4 w-full border-b-3 pb-2">
+        <div className="relative mb-4 w-full border-b-3 pb-2">
+          <Button onClick={onClose} className="absolute -top-4 z-40">
+            <CloseIcon width={43} height={43} color="#4D2C2C" />
+          </Button>
           <h1 className="font-big-header text-primary-light self-center justify-self-center text-3xl">
             My Cart
           </h1>
@@ -27,9 +28,11 @@ const CartSidebar: React.FC<SidebarProps> = ({
             cartItems?.map((item) => (
               <CartItem
                 key={item.id}
+                product={item}
                 productName={item.title}
                 productType={item.category}
                 imageURL={item.image}
+                count={item.count}
               />
             ))}
           {cartItems?.length === 0 && (
