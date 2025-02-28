@@ -31,8 +31,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   ]
 
   return (
-    <main
-      className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light relative max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
+    <aside
+      className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light bg-background-light relative z-100 max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
     >
       <div className="sidebar-title font-big-header border-b-primary-light dark:border-secondary-dark mb-4 border-b-4 text-3xl">
         <h1>Products</h1>
@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </ul>
 
       <div className="bg-primary-light dark:bg-primary-dark absolute bottom-0 left-0 m-0 w-full rounded-br-xl py-5"></div>
-    </main>
+    </aside>
   )
 }
 
