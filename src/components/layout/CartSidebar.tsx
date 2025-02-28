@@ -11,7 +11,10 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { addToCart, cartItems } = useCart()
+  const { cartItems } = useCart()
+  const cartTotal = cartItems.reduce((total: number, item: Product) => {
+    return (total += item.totalPrice)
+  }, 0)
   return (
     <>
       <aside className={className + ' *:font-sub-header'}>
@@ -33,13 +36,18 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
                 productType={item.category}
                 imageURL={item.image}
                 count={item.count}
+                productPrice={item.price}
+                totalPrice={item.totalPrice}
               />
             ))}
           {cartItems?.length === 0 && (
-            <h1 className="font-sub-header text-primary-light self-center text-3xl">
-              Cart is empty...
+            <h1 className="font-main text-primary-light my-auto self-center text-3xl">
+              cart is empty...
             </h1>
           )}
+        </div>
+        <div className="p-4 text-3xl">
+          <h1 className="">{'Total: $' + Math.round(cartTotal * 100) / 100}</h1>
         </div>
 
         <Button

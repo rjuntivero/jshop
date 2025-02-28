@@ -1,10 +1,20 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react'
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useRef,
+  useEffect,
+} from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 import { Product } from '../../types/Product'
+import { addPrices, subtractPrices } from '../../utils'
 
 interface CartContextType {
   cartItems: Product[]
   addToCart: (product: Product) => void
   removeFromCart: (productId: number) => void
+  cartTotal: number
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -15,6 +25,19 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([])
+  const toastRef = useRef<ReturnType<typeof toast.success> | null>(null)
+
+  useEffect(() => {
+    console.log(cartItems)
+  }, [cartItems])
+
+  const notify = (product: Product) => {
+    const toastId = `product-${product.id}`
+
+    toastRef.current = toast.success(`Added ${product.title} to cart`, {
+      toastId,
+    })
+  }
 
   const addToCart = (product: Product) => {
     setCartItems((prevItems) => {
@@ -24,11 +47,17 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         const updatedItems = [...prevItems]
         updatedItems[itemIndex] = {
           ...updatedItems[itemIndex],
+          totalPrice: addPrices(
+            updatedItems[itemIndex].totalPrice,
+            updatedItems[itemIndex].price,
+          ),
           count: updatedItems[itemIndex].count + 1,
         }
 
         return updatedItems
       }
+
+      notify(product)
       return [...prevItems, { ...product, count: 1 }]
     })
   }
@@ -40,6 +69,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         const updatedItems = [...prevItems]
         updatedItems[itemToRemove] = {
           ...updatedItems[itemToRemove],
+          totalPrice: subtractPrices(
+            updatedItems[itemToRemove].totalPrice,
+            updatedItems[itemToRemove].price,
+          ),
           count: updatedItems[itemToRemove].count - 1,
         }
         return updatedItems
@@ -51,6 +84,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
       {children}
+      <ToastContainer position="top-center" autoClose={2000} />
     </CartContext.Provider>
   )
 }

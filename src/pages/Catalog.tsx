@@ -101,11 +101,11 @@ const Catalog = () => {
             />
           </div>
 
-          <div className="col-span-1 col-start-2 row-start-2 h-full inset-shadow-sm transition-all duration-500">
+          <div className="col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
             <article
-              className={`relative flex grid-rows-[repeat(autofit,minmax(250px,1fr))] flex-wrap gap-4 px-3 ${!showSidebar ? 'justify-center' : 'justify-start'}`}
+              className={`relative flex flex-wrap gap-4 px-3 ${!showSidebar ? 'justify-center' : 'justify-start'}`}
             >
-              <div className="absolute inset-x-0 inset-y-[50%]">
+              <div className="absolute inset-x-0">
                 {isLoading && <LoadWheel />}
               </div>
               {error && <ErrorMessage />}
@@ -121,6 +121,7 @@ const Catalog = () => {
                       product.category.slice(1)
                     }
                     imageURL={product.image}
+                    productPrice={product.price}
                   />
                 ))}
             </article>

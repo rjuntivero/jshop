@@ -2,6 +2,10 @@
 @plugin 'tailwindcss-motion';
 @plugin 'tailwindcss-animate';
 
+:root {
+  --toastify-color-success: var(--color-primary-light);
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {

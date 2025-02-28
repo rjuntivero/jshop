@@ -8,7 +8,14 @@ const fetchProducts = async (category: string): Promise<Product[]> => {
       ? 'https://fakestoreapi.com/products'
       : `https://fakestoreapi.com/products/category/${category}`
   const response = await fetch(url)
-  return response.json()
+  const products: Product[] = await response.json()
+
+  const productsWithTotalPrice = products.map((product) => ({
+    ...product,
+    totalPrice: product.price,
+  }))
+
+  return productsWithTotalPrice
 }
 
 export const useFetchProducts = (category: string = 'All') => {

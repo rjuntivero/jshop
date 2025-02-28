@@ -8,6 +8,8 @@ interface T {
   product?: Product
   productName?: string
   productType?: string
+  productPrice?: number
+  totalPrice?: number
   imageURL?: string
   count?: number
 }
@@ -16,6 +18,8 @@ const CartItem: React.FC<T> = ({
   product,
   productName,
   productType,
+  productPrice,
+  totalPrice,
   imageURL,
   count,
 }) => {
@@ -33,8 +37,8 @@ const CartItem: React.FC<T> = ({
         <div>
           <h1 className="text-md font-main mb-2">{productName}</h1>
         </div>
-        <div className="text-secondary-light font-main pb-2">
-          {/* <h2>{productType}</h2> */}
+        <div className="font-main pb-2 text-[1.5rem] font-semibold">
+          <h2>{'$' + totalPrice}</h2>
         </div>
         <div className="flex items-center justify-between rounded-sm bg-white/30 text-xl">
           <Button

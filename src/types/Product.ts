@@ -4,4 +4,6 @@ export interface Product {
   category: string
   image: string
   count: number
+  price: number
+  totalPrice: number
 }
