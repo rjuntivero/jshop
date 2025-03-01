@@ -1,13 +1,11 @@
 import { memo } from 'react'
 import Button from './Button'
-import { isTemplateExpression } from 'typescript'
 import { Product } from '../../types/Product'
 import { useCart } from '../contexts/CartContext'
 
 interface T {
   product?: Product
   productName?: string
-  productType?: string
   productPrice?: number
   totalPrice?: number
   imageURL?: string
@@ -17,8 +15,6 @@ interface T {
 const CartItem: React.FC<T> = ({
   product,
   productName,
-  productType,
-  productPrice,
   totalPrice,
   imageURL,
   count,

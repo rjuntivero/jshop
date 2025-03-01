@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react'
+import { memo } from 'react'
 import CartIcon from './icons/CartIcon'
 import Button from './ui/Button'
 import { Link } from 'react-router-dom'
