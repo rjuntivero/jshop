@@ -1,12 +1,13 @@
 import { memo } from 'react'
 import Button from './Button'
 import { Product } from '../../types/Product'
-import { useCart } from '../contexts/CartContext'
+import { useCart } from '../../hooks/useCart'
 
 interface T {
   product?: Product
   productName?: string
   productPrice?: number
+  productType?: string
   totalPrice?: number
   imageURL?: string
   count?: number

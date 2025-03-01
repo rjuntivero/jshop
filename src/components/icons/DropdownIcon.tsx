@@ -1,5 +1,3 @@
-import Dropdown from '../ui/Dropdown'
-
 const DropdownIcon = () => {
   return (
     <svg

@@ -1,12 +1,10 @@
 import Button from '../ui/Button'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import MenuIcon from '../icons/MenuIcon'
 import CartIcon from '../icons/CartIcon'
 import { memo } from 'react'
 import DarkModeToggle from '../ui/DarkModeToggle'
-import CartSidebar from './CartSidebar'
-import Overlay from './Overlay'
 
 interface NavbarProps {
   children?: ReactNode

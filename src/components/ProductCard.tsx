@@ -3,7 +3,7 @@ import CartIcon from './icons/CartIcon'
 import Button from './ui/Button'
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
-import { useCart } from './contexts/CartContext'
+import { useCart } from '../hooks/useCart'
 
 interface T {
   product?: Product

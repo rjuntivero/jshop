@@ -1,5 +1,3 @@
-import React, { ReactNode } from 'react'
-
 interface IconProps {
   color?: string
   width?: number

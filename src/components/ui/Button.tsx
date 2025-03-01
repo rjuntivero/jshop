@@ -1,9 +1,10 @@
 import React, { memo, ReactNode } from 'react'
+import { MouseEventHandler } from 'react'
 
 interface ButtonProps {
   children?: ReactNode
   className?: string
-  onClick?: (e: any) => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 const Button: React.FC<ButtonProps> = ({ children, className, onClick }) => {

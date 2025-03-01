@@ -2,8 +2,7 @@ import { Product } from '../../types/Product'
 import Button from '../ui/Button'
 import CartItem from '../ui/CartItem'
 import CloseIcon from '../icons/CloseIcon'
-import { useCart } from '../contexts/CartContext'
-
+import { useCart } from '../../hooks/useCart'
 interface SidebarProps {
   onClose: () => void
   product?: Product
