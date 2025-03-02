@@ -11,6 +11,7 @@ import React, { useMemo } from 'react'
 import CartSidebar from '../components/layout/CartSidebar'
 import Overlay from '../components/layout/Overlay'
 import { useCart } from '../hooks/useCart'
+import { useFilteredProducts } from '../hooks/useFilteredProducts'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
@@ -20,16 +21,7 @@ const Catalog = () => {
   const { products, isLoading, error } = useCart()
   const { screenWidth } = useWindowSize()
 
-  const filteredProducts = products
-    ?.filter((product) => {
-      if (activeCategory === 'All') return true
-      return product.category
-        .toLowerCase()
-        .includes(activeCategory.toLowerCase())
-    })
-    .filter((product) =>
-      product.title.toLowerCase().includes(search.toLowerCase()),
-    )
+  const filteredProducts = useFilteredProducts(products, search, activeCategory)
 
   const handleItemClick = useCallback((item: string) => {
     setActiveCategory(item)
