@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import SearchIcon from '../icons/SearchIcon'
 import Button from './Button'
 import Dropdown from './Dropdown'
@@ -53,4 +53,4 @@ const Searchbar: React.FC<T> = ({
   )
 }
 
-export default Searchbar
+export default memo(Searchbar)

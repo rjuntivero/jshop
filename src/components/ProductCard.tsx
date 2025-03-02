@@ -22,11 +22,11 @@ const ProductCard: React.FC<T> = ({
 }) => {
   const { addToCart } = useCart()
   return (
-    <div className="motion-preset-blur-down z-1 h-auto w-[343px] rounded-sm bg-white/70 shadow-md duration-400">
+    <div className="motion-preset-blur-down z-1 h-auto w-[343px] rounded-sm bg-white shadow-md duration-400">
       <div className="grid-rows-[auto, auto] mlg:grid-cols-[repeat(3,84px)] grid items-center p-3">
         <Link className="col-span-3 pb-3" to="product">
           <img
-            className="col-start-1 row-start-1 w-full justify-self-center rounded-lg object-cover object-top transition-all duration-700 hover:-translate-y-1 hover:scale-102 hover:drop-shadow-lg md:h-[252px] lg:w-[252px]"
+            className="col-start-1 row-start-1 w-full justify-self-center rounded-lg object-cover object-top transition-all duration-700 hover:-translate-y-1 hover:scale-102 md:h-[252px] lg:w-[252px]"
             src={imageURL}
             alt="PRODUCT IMAGE"
           />

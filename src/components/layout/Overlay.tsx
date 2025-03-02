@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 interface OverlayProps {
   className?: string
@@ -7,4 +7,4 @@ const Overlay: React.FC<OverlayProps> = ({ className }) => {
   return <div className={className}></div>
 }
 
-export default Overlay
+export default memo(Overlay)

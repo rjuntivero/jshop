@@ -3,6 +3,8 @@ import Button from '../ui/Button'
 import CartItem from '../ui/CartItem'
 import CloseIcon from '../icons/CloseIcon'
 import { useCart } from '../../hooks/useCart'
+import { Link } from 'react-router-dom'
+import { memo } from 'react'
 interface SidebarProps {
   onClose: () => void
   product?: Product
@@ -10,10 +12,7 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { cartItems } = useCart()
-  const cartTotal = cartItems.reduce((total: number, item: Product) => {
-    return (total += item.totalPrice)
-  }, 0)
+  const { cartItems, cartTotal } = useCart()
   return (
     <>
       <aside className={className + ' *:font-sub-header'}>
@@ -49,15 +48,16 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           <h1 className="">{'Total: $' + Math.round(cartTotal * 100) / 100}</h1>
         </div>
 
-        <Button
+        <Link
           onClick={onClose}
+          to="/my-cart"
           className="bg-secondary-light z-40 mt-4 flex items-center justify-center rounded-sm p-4 text-black"
         >
           Checkout
-        </Button>
+        </Link>
       </aside>
     </>
   )
 }
 
-export default CartSidebar
+export default memo(CartSidebar)

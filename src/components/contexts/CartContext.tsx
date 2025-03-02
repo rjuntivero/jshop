@@ -4,13 +4,20 @@ import React, {
   ReactNode,
   useRef,
   useEffect,
+  useMemo,
+  useCallback,
 } from 'react'
+import { FetchError } from '../../types/FetchError'
 import { ToastContainer, toast } from 'react-toastify'
 import { Product } from '../../types/Product'
 import { addPrices, subtractPrices } from '../../utils'
+import { useFetchProducts } from '../../hooks/useFetchProducts'
 
 interface CartContextType {
   cartItems: Product[]
+  products: Product[] | undefined
+  isLoading: boolean
+  error: FetchError
   addToCart: (product: Product) => void
   removeFromCart: (productId: number) => void
   cartTotal: number
@@ -24,6 +31,7 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([])
+  const { data: products, isLoading, error } = useFetchProducts()
   const toastRef = useRef<ReturnType<typeof toast.success> | null>(null)
 
   useEffect(() => {
@@ -38,7 +46,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     })
   }
 
-  const addToCart = (product: Product) => {
+  const addToCart = useCallback((product: Product) => {
     setCartItems((prevItems) => {
       const itemIndex = prevItems.findIndex((item) => item.id === product.id)
 
@@ -59,9 +67,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       notify(product)
       return [...prevItems, { ...product, count: 1 }]
     })
-  }
+  }, [])
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = useCallback((productId: number) => {
     setCartItems((prevItems) => {
       const itemToRemove = prevItems.findIndex((item) => item.id === productId)
       if (prevItems[itemToRemove].count > 1) {
@@ -79,15 +87,23 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         return prevItems.filter((item) => item.id !== productId)
       }
     })
-  }
+  }, [])
 
-  const cartTotal = cartItems.reduce(
-    (total, item) => total + item.totalPrice,
-    0,
-  )
+  const cartTotal = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.totalPrice, 0)
+  }, [cartItems])
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, cartTotal }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        cartTotal,
+        products,
+        isLoading,
+        error,
+      }}
     >
       {children}
       <ToastContainer position="top-center" autoClose={2000} />

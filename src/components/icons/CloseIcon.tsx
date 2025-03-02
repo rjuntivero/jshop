@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 interface IconProps {
   color?: string
   width?: number
@@ -23,4 +25,4 @@ const CloseIcon: React.FC<IconProps> = ({ color, width, height }) => {
   )
 }
 
-export default CloseIcon
+export default memo(CloseIcon)
