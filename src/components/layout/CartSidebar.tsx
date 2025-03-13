@@ -5,6 +5,7 @@ import CloseIcon from '../icons/CloseIcon'
 import { useCart } from '../../hooks/useCart'
 import { Link } from 'react-router-dom'
 import { memo } from 'react'
+import Overlay from './Overlay'
 interface SidebarProps {
   onClose: () => void
   product?: Product
@@ -12,7 +13,7 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { cartItems, cartTotal } = useCart()
+  const { cartItems, cartTotal, isCartOpen } = useCart()
   return (
     <>
       <aside className={className + ' *:font-sub-header'}>
@@ -39,7 +40,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
               />
             ))}
           {cartItems?.length === 0 && (
-            <h1 className="font-main text-primary-light my-auto self-center text-3xl">
+            <h1 className="font-main text-primary-light my-auto self-center text-xl">
               cart is empty...
             </h1>
           )}
@@ -56,6 +57,9 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           Checkout
         </Link>
       </aside>
+      <Overlay
+        className={`bg-primary-light fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`}
+      />
     </>
   )
 }

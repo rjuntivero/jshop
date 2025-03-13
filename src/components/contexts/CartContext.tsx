@@ -21,6 +21,10 @@ interface CartContextType {
   addToCart: (product: Product) => void
   removeFromCart: (productId: number) => void
   cartTotal: number
+  toggleCart: () => void
+  isCartOpen: boolean
+  isDirectoryOpen: boolean
+  toggleDirectory: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -31,8 +35,19 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([])
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isDirectoryOpen, setIsDirectoryOpen] = useState(false)
+
   const { data: products, isLoading, error } = useFetchProducts()
   const toastRef = useRef<ReturnType<typeof toast.success> | null>(null)
+
+  const toggleCart = useCallback(() => {
+    setIsCartOpen((prev) => !prev)
+  }, [])
+
+  const toggleDirectory = useCallback(() => {
+    setIsDirectoryOpen((prev) => !prev)
+  }, [])
 
   useEffect(() => {
     console.log(cartItems)
@@ -103,6 +118,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         products,
         isLoading,
         error,
+        toggleCart,
+        isCartOpen,
+        isDirectoryOpen,
+        toggleDirectory,
       }}
     >
       {children}

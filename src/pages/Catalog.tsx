@@ -9,16 +9,14 @@ import LoadWheel from '../components/ui/LoadWheel'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import React, { useMemo } from 'react'
 import CartSidebar from '../components/layout/CartSidebar'
-import Overlay from '../components/layout/Overlay'
 import { useCart } from '../hooks/useCart'
 import { useFilteredProducts } from '../hooks/useFilteredProducts'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
   const [showSidebar, setShowSidebar] = useState(true)
-  const [isCartOpen, setIsCartOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string>('All')
-  const { products, isLoading, error } = useCart()
+  const { products, isLoading, error, isCartOpen, toggleCart } = useCart()
   const { screenWidth } = useWindowSize()
 
   const filteredProducts = useFilteredProducts(products, search, activeCategory)
@@ -39,10 +37,6 @@ const Catalog = () => {
     setShowSidebar(!showSidebar)
   }, [showSidebar])
 
-  const toggleCart = useCallback(() => {
-    setIsCartOpen((prev) => !prev)
-  }, [])
-
   const gridStyles = useMemo(
     () => ({
       gridTemplateColumns: showSidebar ? '325px' : '0px',
@@ -56,11 +50,9 @@ const Catalog = () => {
         toggleSidebar={toggleCart}
         className="border-b-bg-primary-light flex items-center justify-between border-b-3 transition-all"
       >
-        J-S-H-O-P
+        JSHOP
       </Navbar>
-      <Overlay
-        className={`bg-primary-light fixed inset-0 z-999 h-full w-full ease-in-out ${isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`}
-      />
+
       <CartSidebar
         onClose={toggleCart}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
