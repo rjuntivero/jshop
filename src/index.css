@@ -58,6 +58,14 @@
     @apply transition duration-300 ease-in-out hover:bg-neutral-50;
   }
 
+  .def-margin {
+    @apply mx-18 my-4;
+  }
+
+  .def-padding {
+    @apply px-18 py-4;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
   }

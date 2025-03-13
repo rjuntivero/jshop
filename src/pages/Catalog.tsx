@@ -54,8 +54,10 @@ const Catalog = () => {
     <>
       <Navbar
         toggleSidebar={toggleCart}
-        className="border-b-bg-primary-light flex items-center justify-between border-b-3 px-8 py-4 transition-all"
-      />
+        className="border-b-bg-primary-light flex items-center justify-between border-b-3 transition-all"
+      >
+        J-S-H-O-P
+      </Navbar>
       <Overlay
         className={`bg-primary-light fixed inset-0 z-999 h-full w-full ease-in-out ${isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`}
       />
