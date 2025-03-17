@@ -65,7 +65,7 @@ const Homepage = () => {
 
       <div className="def-margin">
         <h1 className="font-bold">New Arrivals</h1>
-        <div className="bg-secondary-light/50 outline-primary-light mt-3 flex gap-4 overflow-auto rounded-sm p-5 outline-2">
+        <div className="bg-secondary-light/50 outline-primary-light mt-3 flex gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">
           {error && <ErrorMessage />}
           {!isLoading &&
             !error &&

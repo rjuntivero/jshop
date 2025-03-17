@@ -22,7 +22,7 @@ const CheckoutItem: React.FC<T> = ({
   imageURL,
   count,
 }) => {
-  const { addToCart, removeFromCart } = useCart()
+  const { addToCart, removeFromCart, clearItem } = useCart()
   return (
     <section className="mb-8">
       <hr className="text-gray-300" />
@@ -59,7 +59,10 @@ const CheckoutItem: React.FC<T> = ({
               </Button>
             </div>
             <div className="text-secondary-light">
-              | <Button>Delete</Button>
+              |{' '}
+              <Button onClick={() => clearItem(product?.id as number)}>
+                Delete
+              </Button>
             </div>
           </div>
         </div>

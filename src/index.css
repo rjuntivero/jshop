@@ -78,6 +78,11 @@
     background-color: var(--color-primary-light);
     border-radius: 100vmax;
   }
+
+  ::-webkit-scrollbar-button {
+    background-color: var(--color-secondary-light);
+    cursor: pointer;
+  }
 }
 
 @layer base {

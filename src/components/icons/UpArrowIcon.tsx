@@ -5,7 +5,7 @@ interface IconProps {
   className?: string
 }
 
-const DropdownIcon: React.FC<IconProps> = ({ className }) => {
+const UpArrowIcon: React.FC<IconProps> = ({ className }) => {
   return (
     <svg
       className={className}
@@ -16,7 +16,7 @@ const DropdownIcon: React.FC<IconProps> = ({ className }) => {
       fill="none"
     >
       <path
-        d="M7.5 11.25L15 18.75L22.5 11.25"
+        d="M7.5 18.75L15 11.25L22.5 18.75"
         stroke="#D0A473"
         stroke-width="4"
         stroke-linecap="round"
@@ -26,4 +26,4 @@ const DropdownIcon: React.FC<IconProps> = ({ className }) => {
   )
 }
 
-export default DropdownIcon
+export default UpArrowIcon

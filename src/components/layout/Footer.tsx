@@ -13,7 +13,7 @@ interface T {
 const Footer: React.FC<T> = () => {
   return (
     <div className="mt-30">
-      <div className="bg-secondary-light/70 w-full pt-8 shadow-xl outline-3"></div>
+      <div className="bg-primary-light mb-1 w-full pt-1"></div>
 
       <div className="wrapper bg-primary-light flex flex-col items-center justify-center gap-8 p-12">
         {/* <div className="text-primary-light font-sub-header pb-8 text-center text-xl">
@@ -31,7 +31,7 @@ const Footer: React.FC<T> = () => {
             <LinkedInIcon />
           </ExternalLink>
         </div>
-        <h1 className="font-big-header text-secondary-light text-xl font-thin tracking-widest">
+        <h1 className="text-secondary-light text-xl font-bold tracking-widest">
           JSHOP
         </h1>
       </div>

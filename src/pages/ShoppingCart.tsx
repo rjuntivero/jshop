@@ -9,7 +9,10 @@ import CheckoutItem from '../components/ui/CheckoutItem'
 import CartIcon from '../components/icons/CartIcon'
 
 const ShoppingCart = () => {
-  const { cartItems, cartTotal, toggleDirectory, isDirectoryOpen } = useCart()
+  const { cartItems, cartTotal, toggleDirectory, isDirectoryOpen, clearCart } =
+    useCart()
+
+  const totalItems = cartItems.reduce((total, item) => total + item.count, 0)
 
   return (
     <>
@@ -37,9 +40,9 @@ const ShoppingCart = () => {
       <main className="text-primary-light grid min-h-screen grid-cols-3 p-8">
         <article className="col-span-2 m-8 overflow-y-auto rounded-sm bg-white p-15 shadow-md">
           <div className="">
-            <h1 className="font-big-header text-4xl">Shopping Cart</h1>
+            <h1 className="font-big-header text-3xl">Shopping Cart</h1>
           </div>
-          <Button>
+          <Button onClick={clearCart}>
             {cartItems.length > 0 && (
               <h2 className="text-secondary-light mb-4 text-xl">
                 Remove all items
@@ -50,6 +53,7 @@ const ShoppingCart = () => {
             {cartItems.length > 0 ? (
               cartItems?.map((item) => (
                 <CheckoutItem
+                  key={String(item.id)}
                   product={item}
                   productName={item.title}
                   productPrice={item.price}
@@ -72,8 +76,7 @@ const ShoppingCart = () => {
             )}
           </div>
           <h1 className="text-end text-xl">
-            Subtotal: {`(${cartItems.length} items)`}{' '}
-            <strong>${cartTotal}</strong>
+            Subtotal: {`(${totalItems} items)`} <strong>${cartTotal}</strong>
           </h1>
         </article>
         <div className="p-8">

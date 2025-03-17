@@ -25,6 +25,8 @@ interface CartContextType {
   isCartOpen: boolean
   isDirectoryOpen: boolean
   toggleDirectory: () => void
+  clearCart: () => void
+  clearItem: (itemId: number) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -48,6 +50,18 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const toggleDirectory = useCallback(() => {
     setIsDirectoryOpen((prev) => !prev)
   }, [])
+
+  const clearCart = useCallback(() => {
+    setCartItems([])
+  }, [])
+
+  const clearItem = useCallback(
+    (itemId: number) => {
+      const newItems = cartItems.filter((item) => item.id != itemId)
+      setCartItems(newItems)
+    },
+    [cartItems],
+  )
 
   useEffect(() => {
     console.log(cartItems)
@@ -122,6 +136,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         isCartOpen,
         isDirectoryOpen,
         toggleDirectory,
+        clearCart,
+        clearItem,
       }}
     >
       {children}
