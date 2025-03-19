@@ -24,7 +24,7 @@ const ProductPage = () => {
   } = useCart()
   return (
     <>
-      <Navbar className="mb-8 flex items-center justify-between border-b-3">
+      <Navbar className="bg-background-light z-10 mb-8 flex items-center justify-between border-b-3">
         <div className="left flex items-center gap-6">
           <Button
             onClick={toggleDirectory}
@@ -61,8 +61,15 @@ const ProductPage = () => {
       {error && <ErrorMessage />}
 
       {product && (
-        <main className="text-primary-light relative flex w-full flex-col justify-center px-48">
-          <div className="box-border flex w-full gap-3 rounded-t-md border-5 bg-white py-12">
+        <main className="text-primary-light relative z-5 my-10 flex w-full flex-col justify-center px-48 transition-all duration-400">
+          <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 h-[128px] w-[128px] rounded-full p-42"></div>
+          <div className="bg-secondary-light/70 absolute left-20 z-1 rounded-full p-8"></div>
+          <div className="bg-secondary-light/70 absolute bottom-68 left-38 z-1 rounded-full p-3"></div>
+          <div className="bg-secondary-light/70 absolute -top-12 right-30 z-1 h-[128px] w-[128px] rounded-full p-42"></div>
+          <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 rounded-full p-3"></div>
+          <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 rounded-full p-8"></div>
+
+          <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full gap-3 rounded-t-md border-5 bg-white py-12 duration-900">
             <img
               className="h-[352px] w-[352px] object-contain object-center p-8"
               src={product?.image}
@@ -97,7 +104,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="bg-primary-light def-padding mt-1 h-4 w-full rounded-b-md shadow-md"></div>
+          <div className="motion-translate-y-in-75 bg-primary-light def-padding motion-ease-bounce z-4 mt-1 h-4 w-full rounded-b-md shadow-md transition-all duration-1000"></div>
         </main>
       )}
 
