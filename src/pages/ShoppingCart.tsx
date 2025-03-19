@@ -37,14 +37,14 @@ const ShoppingCart = () => {
           </Link>
         </div>
       </Navbar>
-      <main className="text-primary-light grid min-h-screen grid-cols-3 p-8">
-        <article className="col-span-2 m-8 overflow-y-auto rounded-sm bg-white p-15 shadow-md">
-          <div className="">
-            <h1 className="font-big-header text-3xl">Shopping Cart</h1>
-          </div>
+      <main className="text-primary-light grid-rows-[1fr, auto] def-padding grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr]">
+        <article className="def-margin col-span-1 col-start-1 overflow-y-auto rounded-sm bg-white p-8 shadow-md">
+          <h1 className="font-big-header text-[clamp(1rem,2vw,1.875rem)]">
+            Shopping Cart
+          </h1>
           <Button onClick={clearCart}>
             {cartItems.length > 0 && (
-              <h2 className="text-secondary-light mb-4 text-xl">
+              <h2 className="text-secondary-light mb-4 text-sm md:text-xl">
                 Remove all items
               </h2>
             )}
@@ -64,22 +64,22 @@ const ShoppingCart = () => {
                 />
               ))
             ) : (
-              <>
-                <h1 className="text-2xl font-bold text-black">
+              <div className="text-[clamp(0.2rem, 1vw, 1.5rem)]">
+                <h1 className="font-bold text-black">
                   Your JSHOP cart is empty...
                 </h1>
                 <Link to="/products" className="text-black">
                   Your shopping cart lives to serve --- Go out there and fill it
                   with items!!
                 </Link>
-              </>
+              </div>
             )}
           </div>
-          <h1 className="text-end text-xl">
+          <h1 className="text-[clamp(0.2rem, 1vw, 1.25rem)] text-end">
             Subtotal: {`(${totalItems} items)`} <strong>${cartTotal}</strong>
           </h1>
         </article>
-        <div className="p-8">
+        <div className="col-start-1 row-start-2 p-8 md:col-start-2 md:row-start-1">
           <div className="text-secondary-light outline-secondary-light/50 rounded-sm bg-white p-8 font-bold outline-1">
             <h1 className="text-primary-light">Total:</h1>
             <hr className="w-full" />

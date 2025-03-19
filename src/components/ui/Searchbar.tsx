@@ -21,7 +21,7 @@ const Searchbar: React.FC<T> = ({
   return (
     <main className="text-primary-light dark:bg-background-dark flex items-center gap-12 px-6">
       <div className="hadow-md flex w-full items-center gap-8">
-        <Button className="hover:bg-secondary-light/40 text-secondary-light dark:bg-background-dark dark:text-accent-dark border-secondary-light dark:border-accent-dark hidden items-center justify-center rounded-full px-1 px-4 py-2 text-[0.75rem] transition-all md:flex">
+        <Button className="hover:bg-secondary-light/40 text-secondary-light dark:bg-background-dark dark:text-accent-dark border-secondary-light dark:border-accent-dark hidden items-center justify-center rounded-full px-4 py-2 text-[0.75rem] transition-all md:flex">
           Sort By
           <Dropdown />
         </Button>

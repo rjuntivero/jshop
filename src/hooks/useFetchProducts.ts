@@ -18,6 +18,13 @@ const fetchProducts = async (category: string): Promise<Product[]> => {
   return productsWithTotalPrice
 }
 
+export const fetchProduct = async (id: number): Promise<Product> => {
+  const url = `https:fakestoreapi.com/products/${id}`
+  const response = await fetch(url)
+  const product: Product = await response.json()
+  return product
+}
+
 export const useFetchProducts = (category: string = 'All') => {
   return useQuery<Product[], Error>({
     queryKey: ['products', category],

@@ -104,7 +104,6 @@ const Catalog = () => {
             handleItemClick={handleItemClick}
           />
         </div>
-
         <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 col-span-1 col-start-2 row-start-1 py-5 pr-2 pl-12">
           <Searchbar
             input={search}
@@ -114,14 +113,15 @@ const Catalog = () => {
             showSidebar={handleShowSideBar}
           />
         </div>
-
         <div className="col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
+          {isLoading && (
+            <div className="flex w-full items-center justify-center">
+              <LoadWheel />
+            </div>
+          )}
           <article
             className={`relative flex flex-wrap gap-4 px-3 ${!showSidebar ? 'justify-center' : 'justify-start'}`}
           >
-            <div className="absolute inset-x-0">
-              {isLoading && <LoadWheel />}
-            </div>
             {error && <ErrorMessage />}
             {!isLoading &&
               !error &&

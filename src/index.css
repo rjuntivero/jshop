@@ -38,17 +38,6 @@
   --color-accent-dark: #b0a9a3;
 }
 
-@layer components {
-  * {
-    box-sizing: border-box;
-    /* @apply box-border; */
-  }
-
-  input {
-    @apply focus:outline-none;
-  }
-}
-
 @layer utilities {
   .navbar-btn {
     @apply transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105;
@@ -59,29 +48,43 @@
   }
 
   .def-margin {
-    @apply mx-18 my-4;
+    @apply mx-[min(4.5rem,6%)] my-[min(1rem,6%)];
   }
 
   .def-padding {
-    @apply px-18 py-4;
+    @apply px-[min(4.5rem,6%)] py-[min(1rem,6%)];
+  }
+}
+
+@layer components {
+  * {
+    box-sizing: border-box;
+    /* @apply box-border; */
+
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--color-primary-light);
+      border-radius: 100vmax;
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: var(--color-background-light);
+    }
+
+    ::-webkit-scrollbar-button {
+      /* background-color: var(--color-secondary-light); */
+      cursor: pointer;
+    }
   }
 
-  ::-webkit-scrollbar {
-    width: 10px;
+  ul::-webkit-scrollbar {
+    width: 0px;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: var(--color-background-light);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--color-primary-light);
-    border-radius: 100vmax;
-  }
-
-  ::-webkit-scrollbar-button {
-    background-color: var(--color-secondary-light);
-    cursor: pointer;
+  input {
+    @apply focus:outline-none;
   }
 }
 

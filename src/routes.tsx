@@ -20,7 +20,7 @@ const routes = [
         element: <Catalog />,
       },
       {
-        path: 'product/:name',
+        path: 'product/:id',
         element: <ProductPage />,
       },
       {

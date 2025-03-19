@@ -1,6 +1,7 @@
 const InstagramIcon = () => {
   return (
     <svg
+      className="h-[clamp(35px,4vw,100px)] w-[clamp(35px,5vw,45px)]"
       xmlns="http://www.w3.org/2000/svg"
       width="44"
       height="44"

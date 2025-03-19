@@ -40,13 +40,13 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <aside
-        className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light bg-background-light relative z-100 mb-8 max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
+        className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light bg-background-light relative z-100 mb-8 h-[75vh] max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
       >
         <div className="font-sub-header sidebar-title border-b-primary-light dark:border-secondary-dark mb-4 border-b-4 text-4xl font-black tracking-widest">
           <h1>Products</h1>
         </div>
 
-        <ul className="*:dark:text-secondary-dark mb-4 overflow-y-auto border-b-4">
+        <ul className="*:dark:text-secondary-dark mb-4 h-[55vh] overflow-y-auto border-b-4">
           {categories.map((item) => (
             <SidebarItem
               key={item}

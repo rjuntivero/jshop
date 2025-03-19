@@ -9,6 +9,7 @@ import Button from '../components/ui/Button'
 import MenuIcon from '../components/icons/MenuIcon'
 import Directory from '../components/layout/Directory'
 import CartIcon from '../components/icons/CartIcon'
+import LoadWheel from '../components/ui/LoadWheel'
 
 const Homepage = () => {
   const { products, isLoading, error, isDirectoryOpen, toggleDirectory } =
@@ -39,7 +40,9 @@ const Homepage = () => {
       </Navbar>
       <div className="def-margin z-10 flex justify-around gap-5 p-5">
         <div className="text-primary-light relative z-2 flex h-80 flex-col items-center justify-center">
-          <h1 className="font-big-header relative z-10 text-7xl">JSHOP</h1>
+          <h1 className="font-big-header relative z-10 text-[clamp(2rem,15vw,4.5rem)]">
+            JSHOP
+          </h1>
           <div className="text-secondary-light relative flex flex-col items-center gap-4 font-bold">
             <h1 className="text-primary-light relative z-10">
               All the right styles for you
@@ -65,7 +68,13 @@ const Homepage = () => {
 
       <div className="def-margin">
         <h1 className="font-bold">New Arrivals</h1>
-        <div className="bg-secondary-light/50 outline-primary-light mt-3 flex gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">
+        <div className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-[430px] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">
+          {isLoading && (
+            <div className="flex w-full items-center justify-center">
+              {' '}
+              <LoadWheel />
+            </div>
+          )}
           {error && <ErrorMessage />}
           {!isLoading &&
             !error &&

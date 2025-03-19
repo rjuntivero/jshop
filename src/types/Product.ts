@@ -6,4 +6,5 @@ export interface Product {
   count: number
   price: number
   totalPrice: number
+  description: string
 }
