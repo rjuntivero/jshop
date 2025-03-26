@@ -16,8 +16,8 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
   const { cartItems, cartTotal, isCartOpen } = useCart()
   return (
     <>
-      <aside className={className + ' *:font-sub-header'}>
-        <div className="relative mb-4 w-full border-b-3 pb-2">
+      <aside className={className + ' font-sub-header'}>
+        <div className="relative mb-4 border-b-3 pb-2">
           <Button onClick={onClose} className="absolute -top-4 z-40">
             <CloseIcon width={43} height={43} color="#4D2C2C" />
           </Button>

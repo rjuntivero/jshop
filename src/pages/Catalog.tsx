@@ -88,7 +88,7 @@ const Catalog = () => {
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
       <main
-        className="relative grid h-full min-h-screen gap-x-9.5 pr-3 transition-all duration-500 md:pr-3"
+        className="relative grid h-full min-h-screen gap-x-2 pr-0 transition-all duration-500 md:gap-x-9.5 md:pr-3"
         style={gridStyles}
       >
         <div
@@ -102,9 +102,10 @@ const Catalog = () => {
           <Sidebar
             activeCategory={activeCategory}
             handleItemClick={handleItemClick}
+            className="hidden lg:block"
           />
         </div>
-        <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 col-span-1 col-start-2 row-start-1 py-5 pr-2 pl-12">
+        <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 col-span-1 col-start-2 row-start-1 p-3 md:py-5 md:pr-2 md:pl-12">
           <Searchbar
             input={search}
             onChange={handleSearch}
@@ -120,7 +121,7 @@ const Catalog = () => {
             </div>
           )}
           <article
-            className={`relative flex flex-wrap gap-4 px-3 ${!showSidebar ? 'justify-center' : 'justify-start'}`}
+            className={`relative grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] grid-rows-[repeat(autofit,400px)] justify-start gap-2 px-0 md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] md:gap-4 md:px-3 lg:grid-cols-[repeat(auto-fill,minmax(430px,1fr))] ${!showSidebar ? 'md:justify-center' : 'md:justify-start'}`}
           >
             {error && <ErrorMessage />}
             {!isLoading &&

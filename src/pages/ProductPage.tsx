@@ -51,7 +51,7 @@ const ProductPage = () => {
 
       <CartSidebar
         onClose={toggleCart}
-        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen flex-col p-8 transition-transform duration-300 ease-in-out md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
       {isLoading && (
         <div className="flex h-[600px] items-center justify-center">
@@ -61,30 +61,32 @@ const ProductPage = () => {
       {error && <ErrorMessage />}
 
       {product && (
-        <main className="text-primary-light relative z-5 my-10 flex w-full flex-col justify-center px-48 transition-all duration-400">
-          <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 h-[128px] w-[128px] rounded-full p-42"></div>
-          <div className="bg-secondary-light/70 absolute left-20 z-1 rounded-full p-8"></div>
-          <div className="bg-secondary-light/70 absolute bottom-68 left-38 z-1 rounded-full p-3"></div>
-          <div className="bg-secondary-light/70 absolute -top-12 right-30 z-1 h-[128px] w-[128px] rounded-full p-42"></div>
-          <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 rounded-full p-3"></div>
-          <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 rounded-full p-8"></div>
+        <main className="text-primary-light relative z-5 my-10 flex w-full flex-col justify-center px-[clamp(0.3rem,3%,48rem)] transition-all duration-400 md:px-[clamp(0.3rem,10%,48rem)]">
+          <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
+          <div className="bg-secondary-light/70 absolute left-20 z-1 hidden rounded-full p-8 md:block"></div>
+          <div className="bg-secondary-light/70 absolute bottom-68 left-38 z-1 hidden rounded-full p-3 md:block"></div>
+          <div className="bg-secondary-light/70 absolute -top-12 right-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
+          <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 hidden rounded-full p-3 md:block"></div>
+          <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div>
 
-          <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full gap-3 rounded-t-md border-5 bg-white py-12 duration-900">
+          <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full flex-col gap-5 rounded-t-md border-5 bg-white p-6 duration-900 md:flex-row md:py-12">
             <img
-              className="h-[352px] w-[352px] object-contain object-center p-8"
+              className="mx-auto h-[clamp(250px,50vh,352px)] w-[clamp(250px,50vw,452px)] object-contain object-center p-1"
               src={product?.image}
               alt={`image of ${product?.title}`}
             />
             <div className="def-padding pl-0!">
               <div className="text-3xl">
                 <h1 className="font-sub-header">{product?.title}</h1>
-                <h1 className="text-secondary-light text-lg">
+                <h1 className="text-secondary-light pb-6 text-xl">
                   {product?.category}
                 </h1>
               </div>
               <h1 className="font-sub-header !pb-0">About this item</h1>
-              <h1 className="pt-1!">{product?.description}</h1>
-              <div className="flex items-center justify-start">
+              <h1 className="pt-1! pb-10 text-[clamp(1em,1.2vw,4em)]">
+                {product?.description}
+              </h1>
+              <div className="flex flex-col items-start justify-start md:flex-row md:items-center">
                 <h1 className="def-padding pl-0! text-3xl font-bold">{`$${product?.price}`}</h1>
                 <Button
                   className="bg-secondary-light border-primary-light add-to-cart flex items-center justify-end gap-4 justify-self-start rounded-full border-2 p-2 md:col-start-3 md:justify-self-center"

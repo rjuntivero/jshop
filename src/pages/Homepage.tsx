@@ -68,7 +68,7 @@ const Homepage = () => {
 
       <div className="def-margin">
         <h1 className="font-bold">New Arrivals</h1>
-        <div className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-[430px] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">
+        <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto min-h-[250px] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5 lg:min-h-[530px]">
           {isLoading && (
             <div className="flex w-full items-center justify-center">
               {' '}
@@ -78,9 +78,11 @@ const Homepage = () => {
           {error && <ErrorMessage />}
           {!isLoading &&
             !error &&
-            filteredProducts
-              ?.slice(0, 4)
-              ?.map((product) => (
+            filteredProducts?.slice(0, 4)?.map((product) => (
+              <div
+                className="w-full flex-none sm:w-1/2 md:w-1/3 lg:w-1/4"
+                key={String(product.id)}
+              >
                 <ProductCard
                   key={String(product.id)}
                   product={product}
@@ -92,8 +94,9 @@ const Homepage = () => {
                   imageURL={product.image}
                   productPrice={product.price}
                 />
-              ))}
-        </div>
+              </div>
+            ))}
+        </article>
       </div>
       <Footer />
     </>

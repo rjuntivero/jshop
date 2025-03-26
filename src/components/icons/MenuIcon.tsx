@@ -2,14 +2,20 @@ import React from 'react'
 
 interface IconProps {
   color?: string
+  width?: string
+  height?: string
 }
-const MenuIcon: React.FC<IconProps> = ({ color }) => {
+const MenuIcon: React.FC<IconProps> = ({
+  color,
+  height = '49',
+  width = '48',
+}) => {
   return (
     <svg
       className="hover:motion-preset-shake"
       xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="49"
+      width={width}
+      height={height}
       viewBox="0 0 48 49"
       fill="none"
     >
