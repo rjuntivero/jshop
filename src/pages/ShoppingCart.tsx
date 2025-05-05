@@ -7,19 +7,29 @@ import Button from '../components/ui/Button'
 import { useCart } from '../hooks/useCart'
 import CheckoutItem from '../components/ui/CheckoutItem'
 import CartIcon from '../components/icons/CartIcon'
+import { useAppSelector } from '../app/hooks'
+import { useDispatch } from 'react-redux'
+import { toggleDirectory } from '../app/cartSlice'
 
 const ShoppingCart = () => {
-  const { cartItems, cartTotal, toggleDirectory, isDirectoryOpen, clearCart } =
-    useCart()
+  const { clearCart } = useCart()
+
+  const cartItems = useAppSelector((state) => state.cart.items)
+  const cartTotal = useAppSelector((state) => state.cart.totalPrice)
+  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
+  const dispatch = useDispatch()
 
   const totalItems = cartItems.reduce((total, item) => total + item.count, 0)
+  const handleDirectoryToggle = () => {
+    dispatch(toggleDirectory())
+  }
 
   return (
     <>
       <Navbar className="border-b-bg-primary-light flex items-center justify-between border-b-3 transition-all">
         <div className="left flex items-center gap-6">
           <Button
-            onClick={toggleDirectory}
+            onClick={handleDirectoryToggle}
             className="dark:bg-primary-dark motion-scale-in-[0.5] motion-translate-x-in-[-110%] motion-translate-y-in-[11%] motion-opacity-in-[33%] motion-rotate-in-[-480deg] motion-duration-[0.38s] motion-duration-[0.57s]/scale motion-delay-[0.23s]/scale motion-duration-[0.42s]/rotate motion-ease-spring-bouncier navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
           >
             <MenuIcon color="#442727" />
