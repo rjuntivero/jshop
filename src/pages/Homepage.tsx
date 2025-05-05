@@ -10,17 +10,25 @@ import MenuIcon from '../components/icons/MenuIcon'
 import Directory from '../components/layout/Directory'
 import CartIcon from '../components/icons/CartIcon'
 import LoadWheel from '../components/ui/LoadWheel'
+import { useAppSelector } from '../app/hooks'
+import { useDispatch } from 'react-redux'
+import { toggleDirectory } from '../app/cartSlice'
 
 const Homepage = () => {
-  const { products, isLoading, error, isDirectoryOpen, toggleDirectory } =
-    useCart()
+  const { products, isLoading, error } = useCart()
+  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
+  const dispatch = useDispatch()
+
+  const handleDirectoryToggle = () => {
+    dispatch(toggleDirectory())
+  }
   const filteredProducts = useFilteredProducts(products, '', 'All')
   return (
     <>
       <Navbar className="border-b-bg-primary-light flex items-center justify-between transition-all">
         <div className="left flex items-center gap-6">
           <Button
-            onClick={toggleDirectory}
+            onClick={handleDirectoryToggle}
             className="dark:bg-primary-dark motion-scale-in-[0.5] motion-translate-x-in-[-110%] motion-translate-y-in-[11%] motion-opacity-in-[33%] motion-rotate-in-[-480deg] motion-duration-[0.38s] motion-duration-[0.57s]/scale motion-delay-[0.23s]/scale motion-duration-[0.42s]/rotate motion-ease-spring-bouncier navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
           >
             <MenuIcon color="#442727" />

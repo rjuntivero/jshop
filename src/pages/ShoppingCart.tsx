@@ -4,24 +4,26 @@ import Directory from '../components/layout/Directory'
 import Footer from '../components/layout/Footer'
 import Navbar from '../components/layout/Navbar'
 import Button from '../components/ui/Button'
-import { useCart } from '../hooks/useCart'
 import CheckoutItem from '../components/ui/CheckoutItem'
 import CartIcon from '../components/icons/CartIcon'
 import { useAppSelector } from '../app/hooks'
 import { useDispatch } from 'react-redux'
-import { toggleDirectory } from '../app/cartSlice'
+import { toggleDirectory, clearCart } from '../app/cartSlice'
 
 const ShoppingCart = () => {
-  const { clearCart } = useCart()
-
   const cartItems = useAppSelector((state) => state.cart.items)
   const cartTotal = useAppSelector((state) => state.cart.totalPrice)
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
   const dispatch = useDispatch()
 
   const totalItems = cartItems.reduce((total, item) => total + item.count, 0)
+
   const handleDirectoryToggle = () => {
     dispatch(toggleDirectory())
+  }
+
+  const handleClearCart = () => {
+    dispatch(clearCart())
   }
 
   return (
@@ -52,7 +54,7 @@ const ShoppingCart = () => {
           <h1 className="font-big-header text-[clamp(1rem,2vw,1.875rem)]">
             Shopping Cart
           </h1>
-          <Button onClick={clearCart}>
+          <Button onClick={handleClearCart}>
             {cartItems.length > 0 && (
               <h2 className="text-secondary-light mb-4 text-sm md:text-xl">
                 Remove all items

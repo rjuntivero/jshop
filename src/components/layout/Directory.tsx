@@ -1,16 +1,23 @@
 import { Link, useLocation } from 'react-router-dom'
 import CloseIcon from '../icons/CloseIcon'
 import Button from '../ui/Button'
-import { useCart } from '../../hooks/useCart'
 import Overlay from './Overlay'
+import { useAppSelector } from '../../app/hooks'
+import { useDispatch } from 'react-redux'
+import { toggleDirectory } from '../../app/cartSlice'
 
 type DirectoryProps = {
   className: string
 }
 
 const Directory: React.FC<DirectoryProps> = ({ className }) => {
-  const { toggleDirectory, isDirectoryOpen } = useCart()
   const location = useLocation()
+  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
+  const dispatch = useDispatch()
+
+  const handleDirectoryToggle = () => {
+    dispatch(toggleDirectory())
+  }
 
   const getLinkClass = (path: string) => {
     return location.pathname === path
@@ -26,7 +33,10 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
           ' bg-background-light fixed top-0 z-1000 h-full w-[300px] p-8 transition-all duration-400'
         }
       >
-        <Button onClick={toggleDirectory} className="flex w-full justify-end">
+        <Button
+          onClick={handleDirectoryToggle}
+          className="flex w-full justify-end"
+        >
           <CloseIcon width={43} height={43} color="#4D2C2C" />
         </Button>
         <div className="font-big-header text-primary-light flex h-full items-center justify-center pt-6 text-2xl">
@@ -35,7 +45,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
               <Link
                 to="/"
                 className={getLinkClass('/')}
-                onClick={toggleDirectory}
+                onClick={handleDirectoryToggle}
               >
                 Home
               </Link>
@@ -44,7 +54,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
               <Link
                 to="/products"
                 className={getLinkClass('/products')}
-                onClick={toggleDirectory}
+                onClick={handleDirectoryToggle}
               >
                 Products
               </Link>
@@ -53,7 +63,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
               <Link
                 to="/my-cart"
                 className={getLinkClass('/my-cart')}
-                onClick={toggleDirectory}
+                onClick={handleDirectoryToggle}
               >
                 Cart
               </Link>

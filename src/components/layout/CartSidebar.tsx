@@ -2,7 +2,6 @@ import { Product } from '../../types/Product'
 import Button from '../ui/Button'
 import CartItem from '../ui/CartItem'
 import CloseIcon from '../icons/CloseIcon'
-import { useCart } from '../../hooks/useCart'
 import { Link } from 'react-router-dom'
 import { memo } from 'react'
 import Overlay from './Overlay'
@@ -14,9 +13,9 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { isCartOpen } = useCart()
   const cart = useAppSelector((state) => state.cart.items)
   const cartTotal = useAppSelector((state) => state.cart.totalPrice)
+  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
 
   return (
     <>

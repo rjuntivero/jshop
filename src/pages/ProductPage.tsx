@@ -6,28 +6,35 @@ import Button from '../components/ui/Button'
 import MenuIcon from '../components/icons/MenuIcon'
 import Directory from '../components/layout/Directory'
 import CartIcon from '../components/icons/CartIcon'
-import { useCart } from '../hooks/useCart'
 import CartSidebar from '../components/layout/CartSidebar'
 import Footer from '../components/layout/Footer'
 import { Product } from '../types/Product'
 import ErrorMessage from '../components/ui/ErrorMessage'
+import { useDispatch } from 'react-redux'
+import { addToCart, toggleCart, toggleDirectory } from '../app/cartSlice'
+import { useAppSelector } from '../app/hooks'
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>()
   const { data: product, isLoading, error } = useFetchProduct(Number(id))
-  const {
-    toggleDirectory,
-    isDirectoryOpen,
-    toggleCart,
-    isCartOpen,
-    addToCart,
-  } = useCart()
+  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
+  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
+  const dispatch = useDispatch()
+
+  const handleDirectoryToggle = () => {
+    dispatch(toggleDirectory())
+  }
+
+  const handleCartToggle = () => {
+    dispatch(toggleCart())
+  }
+
   return (
     <>
       <Navbar className="bg-background-light z-10 mb-8 flex items-center justify-between border-b-3">
         <div className="left flex items-center gap-6">
           <Button
-            onClick={toggleDirectory}
+            onClick={handleDirectoryToggle}
             className="dark:bg-primary-dark navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
           >
             <MenuIcon color="#442727" />
@@ -41,7 +48,7 @@ const ProductPage = () => {
         </h1>
         <div className="right flex items-center gap-6">
           <Button
-            onClick={toggleCart}
+            onClick={handleCartToggle}
             className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors"
           >
             <CartIcon width={44} height={40} color="#442727" />
@@ -50,7 +57,7 @@ const ProductPage = () => {
       </Navbar>
 
       <CartSidebar
-        onClose={toggleCart}
+        onClose={handleCartToggle}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen flex-col p-8 transition-transform duration-300 ease-in-out md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
       {isLoading && (
