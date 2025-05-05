@@ -1,7 +1,8 @@
 import { memo } from 'react'
 import Button from './Button'
 import { Product } from '../../types/Product'
-import { useCart } from '../../hooks/useCart'
+import { addToCart, removeFromCart } from '../../app/cartSlice'
+import { useDispatch } from 'react-redux'
 
 interface T {
   product?: Product
@@ -20,7 +21,7 @@ const CartItem: React.FC<T> = ({
   imageURL,
   count,
 }) => {
-  const { addToCart, removeFromCart } = useCart()
+  const dispatch = useDispatch()
   return (
     <div className="motion-preset-blur-down bg-primary-light/20 z-1 mb-3 flex h-auto w-full self-center rounded-sm duration-400">
       <div className="grow rounded-lg p-6">
@@ -39,7 +40,7 @@ const CartItem: React.FC<T> = ({
         </div>
         <div className="flex items-center justify-between rounded-sm bg-white/30 text-xl">
           <Button
-            onClick={() => removeFromCart(product?.id as number)}
+            onClick={() => dispatch(removeFromCart(product?.id as number))}
             className="hover:bg-primary-light/20 self-center px-4 py-2 transition duration-400"
           >
             -
@@ -47,7 +48,7 @@ const CartItem: React.FC<T> = ({
           <h1>{count}</h1>
 
           <Button
-            onClick={() => addToCart(product as Product)}
+            onClick={() => dispatch(addToCart(product as Product))}
             className="hover:bg-primary-light/20 self-center px-4 py-2 transition duration-400"
           >
             +
