@@ -25,8 +25,10 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.count += 1
         existingItem.totalPrice = existingItem.price * existingItem.count
+        state.totalPrice += product.price
       } else {
         state.items.push({ ...product, count: 1, totalPrice: product.price })
+        state.totalPrice += product.price
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
@@ -36,8 +38,10 @@ const cartSlice = createSlice({
       if (itemToRemove && itemToRemove.count > 1) {
         itemToRemove.count -= 1
         itemToRemove.totalPrice = itemToRemove.price * itemToRemove.count
+        state.totalPrice -= itemToRemove.price
       } else {
         state.items = state.items.filter((item) => item.id !== action.payload)
+        state.totalPrice -= itemToRemove?.price || 0
       }
     },
     clearCart(state) {

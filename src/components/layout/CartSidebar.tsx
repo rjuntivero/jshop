@@ -14,8 +14,9 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { cartTotal, isCartOpen } = useCart()
+  const { isCartOpen } = useCart()
   const cart = useAppSelector((state) => state.cart.items)
+  const cartTotal = useAppSelector((state) => state.cart.totalPrice)
 
   return (
     <>

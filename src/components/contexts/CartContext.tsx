@@ -10,7 +10,6 @@ import React, {
 import { FetchError } from '../../types/FetchError'
 import { ToastContainer, toast } from 'react-toastify'
 import { Product } from '../../types/Product'
-import { addPrices, subtractPrices } from '../../utils'
 import { useFetchProducts } from '../../hooks/useFetchProducts'
 
 interface CartContextType {
@@ -18,8 +17,6 @@ interface CartContextType {
   products: Product[] | undefined
   isLoading: boolean
   error: FetchError
-  addToCart: (product: Product) => void
-  removeFromCart: (productId: number) => void
   cartTotal: number
   toggleCart: () => void
   isCartOpen: boolean
@@ -75,48 +72,48 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     })
   }
 
-  const addToCart = useCallback((product: Product) => {
-    setCartItems((prevItems) => {
-      const itemIndex = prevItems.findIndex((item) => item.id === product.id)
+  // const addToCart = useCallback((product: Product) => {
+  //   setCartItems((prevItems) => {
+  //     const itemIndex = prevItems.findIndex((item) => item.id === product.id)
 
-      if (itemIndex !== -1) {
-        const updatedItems = [...prevItems]
-        updatedItems[itemIndex] = {
-          ...updatedItems[itemIndex],
-          totalPrice: addPrices(
-            updatedItems[itemIndex].totalPrice,
-            updatedItems[itemIndex].price,
-          ),
-          count: updatedItems[itemIndex].count + 1,
-        }
+  //     if (itemIndex !== -1) {
+  //       const updatedItems = [...prevItems]
+  //       updatedItems[itemIndex] = {
+  //         ...updatedItems[itemIndex],
+  //         totalPrice: addPrices(
+  //           updatedItems[itemIndex].totalPrice,
+  //           updatedItems[itemIndex].price,
+  //         ),
+  //         count: updatedItems[itemIndex].count + 1,
+  //       }
 
-        return updatedItems
-      }
+  //       return updatedItems
+  //     }
 
-      notify(product)
-      return [...prevItems, { ...product, count: 1 }]
-    })
-  }, [])
+  //     notify(product)
+  //     return [...prevItems, { ...product, count: 1 }]
+  //   })
+  // }, [])
 
-  const removeFromCart = useCallback((productId: number) => {
-    setCartItems((prevItems) => {
-      const itemToRemove = prevItems.findIndex((item) => item.id === productId)
-      if (prevItems[itemToRemove].count > 1) {
-        const updatedItems = [...prevItems]
-        updatedItems[itemToRemove] = {
-          ...updatedItems[itemToRemove],
-          totalPrice: subtractPrices(
-            updatedItems[itemToRemove].totalPrice,
-            updatedItems[itemToRemove].price,
-          ),
-          count: updatedItems[itemToRemove].count - 1,
-        }
-        return updatedItems
-      } else {
-        return prevItems.filter((item) => item.id !== productId)
-      }
-    })
-  }, [])
+  // const removeFromCart = useCallback((productId: number) => {
+  //   setCartItems((prevItems) => {
+  //     const itemToRemove = prevItems.findIndex((item) => item.id === productId)
+  //     if (prevItems[itemToRemove].count > 1) {
+  //       const updatedItems = [...prevItems]
+  //       updatedItems[itemToRemove] = {
+  //         ...updatedItems[itemToRemove],
+  //         totalPrice: subtractPrices(
+  //           updatedItems[itemToRemove].totalPrice,
+  //           updatedItems[itemToRemove].price,
+  //         ),
+  //         count: updatedItems[itemToRemove].count - 1,
+  //       }
+  //       return updatedItems
+  //     } else {
+  //       return prevItems.filter((item) => item.id !== productId)
+  //     }
+  //   })
+  // }, [])
 
   const cartTotal = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.totalPrice, 0)
@@ -126,8 +123,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
-        addToCart,
-        removeFromCart,
         cartTotal,
         products,
         isLoading,
