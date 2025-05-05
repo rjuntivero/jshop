@@ -3,8 +3,9 @@ import CartIcon from './icons/CartIcon'
 import Button from './ui/Button'
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
-import { useCart } from '../hooks/useCart'
+import { addToCart } from '../app/cartSlice'
 import MenuIcon from './icons/MenuIcon'
+import { useAppDispatch } from '../app/hooks'
 
 interface T {
   product?: Product
@@ -21,7 +22,7 @@ const ProductCard: React.FC<T> = ({
   productPrice,
   imageURL,
 }) => {
-  const { addToCart } = useCart()
+  const dispatch = useAppDispatch()
 
   return (
     <div className="motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-white shadow-md duration-400">
@@ -36,7 +37,7 @@ const ProductCard: React.FC<T> = ({
           <div className="font-sub-header absolute top-0 -right-5 flex w-[min-content] flex-col items-end justify-center gap-3 p-3">
             <Button
               className="group bg-primary-light/90 hover:bg-primary-light text-secondary-light flex w-[min-content] items-center justify-center rounded-l-full border-1 border-white p-2 px-2 antialiased shadow-lg transition-all duration-300 ease-in-out hover:w-[max-content] hover:px-4"
-              onClick={() => addToCart(product as Product)}
+              onClick={() => dispatch(addToCart(product as Product))}
             >
               <span className="mr-2 hidden items-center group-hover:inline-block">
                 Add to Cart

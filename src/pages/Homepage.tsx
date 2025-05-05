@@ -55,7 +55,7 @@ const Homepage = () => {
 
             <Link
               to="products"
-              className="motion-preset-expand bg-primary-light hover:bg-secondary-light hover:text-primary-light relative z-10 rounded-full px-4 py-2 transition-all delay-1500 duration-400 ease-out hover:delay-0"
+              className="motion-preset-expand bg-primary-light hover:bg-secondary-light hover:text-primary-light relative z-10 rounded-full px-4 py-2 transition-all duration-400 ease-out"
             >
               Shop Now
             </Link>

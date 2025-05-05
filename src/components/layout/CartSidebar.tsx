@@ -6,6 +6,7 @@ import { useCart } from '../../hooks/useCart'
 import { Link } from 'react-router-dom'
 import { memo } from 'react'
 import Overlay from './Overlay'
+import { useAppSelector } from '../../app/hooks'
 interface SidebarProps {
   onClose: () => void
   product?: Product
@@ -13,7 +14,9 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { cartItems, cartTotal, isCartOpen } = useCart()
+  const { cartTotal, isCartOpen } = useCart()
+  const cart = useAppSelector((state) => state.cart.items)
+
   return (
     <>
       <aside className={className + ' font-sub-header'}>
@@ -26,8 +29,8 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           </h1>
         </div>
         <div className="flex flex-1 flex-col overflow-y-auto">
-          {cartItems &&
-            cartItems?.map((item) => (
+          {cart &&
+            cart?.map((item) => (
               <CartItem
                 key={item.id}
                 product={item}
@@ -39,7 +42,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
                 totalPrice={item.totalPrice}
               />
             ))}
-          {cartItems?.length === 0 && (
+          {cart?.length === 0 && (
             <h1 className="font-main text-primary-light my-auto self-center text-xl">
               cart is empty...
             </h1>
