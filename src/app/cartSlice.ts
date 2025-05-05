@@ -30,7 +30,15 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
-      state.items = state.items.filter((item) => item.id !== action.payload)
+      const itemToRemove = state.items.find(
+        (item) => item.id === action.payload,
+      )
+      if (itemToRemove && itemToRemove.count > 1) {
+        itemToRemove.count -= 1
+        itemToRemove.totalPrice = itemToRemove.price * itemToRemove.count
+      } else {
+        state.items = state.items.filter((item) => item.id !== action.payload)
+      }
     },
     clearCart(state) {
       state.items = []
