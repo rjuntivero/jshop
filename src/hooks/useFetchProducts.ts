@@ -18,7 +18,6 @@ const fetchProducts = async (category: string): Promise<Product[]> => {
   return productsWithTotalPrice
 }
 
-
 export const useFetchProducts = (category: string = 'All') => {
   return useQuery<Product[], Error>({
     queryKey: ['products', category],

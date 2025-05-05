@@ -4,7 +4,7 @@ import Button from '../ui/Button'
 import Overlay from './Overlay'
 import { useAppSelector } from '../../app/hooks'
 import { useDispatch } from 'react-redux'
-import { toggleDirectory } from '../../app/cartSlice'
+import { toggleDirectory } from '../../features/cartSlice'
 
 type DirectoryProps = {
   className: string

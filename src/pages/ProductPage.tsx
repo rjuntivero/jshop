@@ -11,7 +11,7 @@ import Footer from '../components/layout/Footer'
 import { Product } from '../types/Product'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import { useDispatch } from 'react-redux'
-import { addToCart, toggleCart, toggleDirectory } from '../app/cartSlice'
+import { addToCart, toggleCart, toggleDirectory } from '../features/cartSlice'
 import { useAppSelector } from '../app/hooks'
 
 const ProductPage = () => {

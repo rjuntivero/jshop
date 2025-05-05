@@ -1,8 +1,9 @@
 import { memo } from 'react'
 import Button from './Button'
 import { Product } from '../../types/Product'
-import { useCart } from '../../hooks/useCart'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addToCart, clearItem, removeFromCart } from '../../features/cartSlice'
 
 interface T {
   product?: Product
@@ -22,7 +23,17 @@ const CheckoutItem: React.FC<T> = ({
   imageURL,
   count,
 }) => {
-  const { addToCart, removeFromCart, clearItem } = useCart()
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product))
+  }
+  const handleRemoveFromCart = (id: number) => {
+    dispatch(removeFromCart(id))
+  }
+  const handleClearItem = (id: number) => {
+    dispatch(clearItem(id))
+  }
   return (
     <section className="mb-8">
       <hr className="text-gray-300" />
@@ -49,21 +60,21 @@ const CheckoutItem: React.FC<T> = ({
           <div className="flex flex-col items-center md:flex-row">
             <div className="bg-secondary-light/15 m-3 flex max-w-50 items-center justify-between rounded-sm text-xl shadow-md">
               <Button
-                onClick={() => removeFromCart(product?.id as number)}
+                onClick={() => handleRemoveFromCart(product?.id as number)}
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400"
               >
                 -
               </Button>
               <h1>{count}</h1>
               <Button
-                onClick={() => addToCart(product as Product)}
+                onClick={() => handleAddToCart(product as Product)}
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400"
               >
                 +
               </Button>
             </div>
             <div className="text-secondary-light flex">
-              <Button onClick={() => clearItem(product?.id as number)}>
+              <Button onClick={() => handleClearItem(product?.id as number)}>
                 Delete
               </Button>
             </div>

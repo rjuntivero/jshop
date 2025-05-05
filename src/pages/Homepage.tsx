@@ -3,7 +3,6 @@ import Footer from '../components/layout/Footer'
 import Navbar from '../components/layout/Navbar'
 import ProductCard from '../components/ProductCard'
 import { useFilteredProducts } from '../hooks/useFilteredProducts'
-import { useCart } from '../hooks/useCart'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import Button from '../components/ui/Button'
 import MenuIcon from '../components/icons/MenuIcon'
@@ -12,10 +11,11 @@ import CartIcon from '../components/icons/CartIcon'
 import LoadWheel from '../components/ui/LoadWheel'
 import { useAppSelector } from '../app/hooks'
 import { useDispatch } from 'react-redux'
-import { toggleDirectory } from '../app/cartSlice'
+import { toggleDirectory } from '../features/cartSlice'
+import { useFetchProducts } from '../hooks/useFetchProducts'
 
 const Homepage = () => {
-  const { products, isLoading, error } = useCart()
+  const { data: products, isLoading, error } = useFetchProducts()
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
   const dispatch = useDispatch()
 

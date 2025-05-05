@@ -44,6 +44,14 @@ const cartSlice = createSlice({
         state.totalPrice -= itemToRemove?.price || 0
       }
     },
+    clearItem(state, action: PayloadAction<number>) {
+      const itemToClear = state.items.find((item) => item.id === action.payload)
+      if (itemToClear) {
+        state.totalPrice -= itemToClear.totalPrice
+        state.items = state.items.filter((item) => item.id !== action.payload)
+      }
+    },
+
     clearCart(state) {
       state.items = []
     },
@@ -68,6 +76,7 @@ export const {
   clearCart,
   toggleCart,
   toggleDirectory,
+  clearItem,
 } = cartSlice.actions
 
 export default cartSlice.reducer

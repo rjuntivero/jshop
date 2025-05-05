@@ -3,7 +3,7 @@ import CartIcon from './icons/CartIcon'
 import Button from './ui/Button'
 import { Link } from 'react-router-dom'
 import { Product } from '../types/Product'
-import { addToCart } from '../app/cartSlice'
+import { addToCart } from '../features/cartSlice'
 import MenuIcon from './icons/MenuIcon'
 import { useAppDispatch } from '../app/hooks'
 

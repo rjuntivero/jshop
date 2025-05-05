@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import Button from './Button'
 import { Product } from '../../types/Product'
-import { addToCart, removeFromCart } from '../../app/cartSlice'
+import { addToCart, removeFromCart } from '../../features/cartSlice'
 import { useDispatch } from 'react-redux'
 
 interface T {

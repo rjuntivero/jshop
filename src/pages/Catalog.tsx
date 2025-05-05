@@ -9,7 +9,6 @@ import LoadWheel from '../components/ui/LoadWheel'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import React, { useMemo } from 'react'
 import CartSidebar from '../components/layout/CartSidebar'
-import { useCart } from '../hooks/useCart'
 import { useFilteredProducts } from '../hooks/useFilteredProducts'
 import MenuIcon from '../components/icons/MenuIcon'
 import Button from '../components/ui/Button'
@@ -17,7 +16,8 @@ import Directory from '../components/layout/Directory'
 import CartIcon from '../components/icons/CartIcon'
 import { useAppSelector } from '../app/hooks'
 import { useDispatch } from 'react-redux'
-import { toggleCart, toggleDirectory } from '../app/cartSlice'
+import { toggleCart, toggleDirectory } from '../features/cartSlice'
+import { useFetchProducts } from '../hooks/useFetchProducts'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
@@ -26,7 +26,7 @@ const Catalog = () => {
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
   const dispatch = useDispatch()
-  const { products, isLoading, error } = useCart()
+  const { data: products, isLoading, error } = useFetchProducts()
   const { screenWidth } = useWindowSize()
 
   const filteredProducts = useFilteredProducts(products, search, activeCategory)

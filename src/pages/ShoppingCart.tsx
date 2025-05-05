@@ -8,7 +8,7 @@ import CheckoutItem from '../components/ui/CheckoutItem'
 import CartIcon from '../components/icons/CartIcon'
 import { useAppSelector } from '../app/hooks'
 import { useDispatch } from 'react-redux'
-import { toggleDirectory, clearCart } from '../app/cartSlice'
+import { toggleDirectory, clearCart } from '../features/cartSlice'
 
 const ShoppingCart = () => {
   const cartItems = useAppSelector((state) => state.cart.items)
