@@ -39,7 +39,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
                 imageURL={item.image}
                 count={item.count}
                 productPrice={item.price}
-                totalPrice={item.totalPrice}
+                totalPrice={parseFloat((item.price * item.count).toFixed(2))}
               />
             ))}
           {cart?.length === 0 && (
@@ -49,7 +49,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           )}
         </div>
         <div className="p-4 text-3xl">
-          <h1 className="">{'Total: $' + Math.round(cartTotal * 100) / 100}</h1>
+          <h1 className="">{'Total: $' + cartTotal.toFixed(2)}</h1>
         </div>
 
         <Link

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 interface IconProps {
   color?: string
@@ -30,4 +30,4 @@ const MenuIcon: React.FC<IconProps> = ({
   )
 }
 
-export default MenuIcon
+export default memo(MenuIcon)

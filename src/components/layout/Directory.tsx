@@ -5,6 +5,7 @@ import Overlay from './Overlay'
 import { useAppSelector } from '../../app/hooks'
 import { useDispatch } from 'react-redux'
 import { toggleDirectory } from '../../features/cartSlice'
+import { memo } from 'react'
 
 type DirectoryProps = {
   className: string
@@ -78,4 +79,4 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
   )
 }
 
-export default Directory
+export default memo(Directory)

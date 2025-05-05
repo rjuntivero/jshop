@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 interface IconProps {
   color?: string
   width?: number
@@ -36,4 +38,4 @@ const CartIcon: React.FC<IconProps> = ({ color, width, height }) => {
   )
 }
 
-export default CartIcon
+export default memo(CartIcon)

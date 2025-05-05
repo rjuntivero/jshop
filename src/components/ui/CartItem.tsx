@@ -36,7 +36,7 @@ const CartItem: React.FC<T> = ({
           <h1 className="text-md font-main mb-2">{productName}</h1>
         </div>
         <div className="font-main pb-2 text-[1.5rem] font-semibold">
-          <h2>{'$' + totalPrice}</h2>
+          <h2>{'$' + totalPrice?.toFixed(2)}</h2>
         </div>
         <div className="flex items-center justify-between rounded-sm bg-white/30 text-xl">
           <Button

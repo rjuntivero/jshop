@@ -54,7 +54,7 @@ const CheckoutItem: React.FC<T> = ({
               {productType}
             </h1>
             <h2 className="font-main pb-2 text-[clamp(1.5rem,2vw,2rem)] font-semibold">
-              {'$' + totalPrice}
+              {'$' + totalPrice?.toFixed(2)}
             </h2>
           </div>
           <div className="flex flex-col items-center md:flex-row">

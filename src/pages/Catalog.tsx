@@ -31,13 +31,13 @@ const Catalog = () => {
 
   const filteredProducts = useFilteredProducts(products, search, activeCategory)
 
-  const handleDirectoryToggle = () => {
+  const handleDirectoryToggle = useCallback(() => {
     dispatch(toggleDirectory())
-  }
+  }, [dispatch])
 
-  const handleCartToggle = () => {
+  const handleCartToggle = useCallback(() => {
     dispatch(toggleCart())
-  }
+  }, [dispatch])
 
   const handleItemClick = useCallback((item: string) => {
     setActiveCategory(item)

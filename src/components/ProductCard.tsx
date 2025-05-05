@@ -66,7 +66,7 @@ const ProductCard: React.FC<T> = ({
         </div>
 
         <h2 className="font-main antialised motion-scale-in-[0.1] motion-translate-x-in-[-84%] motion-translate-y-in-[-5%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur col-span-3 col-start-1 row-start-4 ml-3 w-30 pt-1 text-[0.60rem] font-semibold text-black md:col-span-1 md:text-[1.8rem]">
-          {'$' + productPrice}
+          {'$' + productPrice?.toFixed(2)}
         </h2>
       </div>
     </div>

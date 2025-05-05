@@ -88,7 +88,8 @@ const ShoppingCart = () => {
             )}
           </div>
           <h1 className="text-[clamp(0.2rem, 1vw, 1.25rem)] text-end">
-            Subtotal: {`(${totalItems} items)`} <strong>${cartTotal}</strong>
+            Subtotal: {`(${totalItems} items)`}{' '}
+            <strong>${cartTotal.toFixed(2)}</strong>
           </h1>
         </article>
         <div className="col-start-1 row-start-2 p-8 md:col-start-2 md:row-start-1">
@@ -96,7 +97,7 @@ const ShoppingCart = () => {
             <h1 className="text-primary-light">Total:</h1>
             <hr className="w-full" />
             <h1 className="text-primary-light justify-self-end">
-              {'$' + Math.round(cartTotal * 100) / 100}
+              {'$' + cartTotal.toFixed(2)}
             </h1>
           </div>
         </div>
