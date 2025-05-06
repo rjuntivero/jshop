@@ -1,50 +1,19 @@
-'use client';
-
 import Link from 'next/link';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
-import { useFilteredProducts } from '../hooks/useFilteredProducts';
-import ErrorMessage from '../components/ui/ErrorMessage';
-import Button from '@/components/ui/Button';
-import MenuIcon from '../components/icons/MenuIcon';
-import Directory from '@/components/layouts/Directory';
-import CartIcon from '@/components/icons/CartIcon';
-import LoadWheel from '@/components/ui/LoadWheel';
-import { useAppSelector } from '@/state/hooks';
-import { useDispatch } from 'react-redux';
-import { toggleDirectory } from '../features/cartSlice';
-import { useFetchProducts } from '../hooks/useFetchProducts';
+import DirectoryToggle from '@/components/client/DirectoryToggle';
 import ProductPreview from '@/components/ui/ProductPreview';
+import { Product } from '@/types/Product';
 
-export default function Homepage() {
-  const { data: products, isLoading, error } = useFetchProducts();
-  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
-  const dispatch = useDispatch();
-
-  const handleDirectoryToggle = () => {
-    dispatch(toggleDirectory());
-  };
-  const filteredProducts = useFilteredProducts(products, '', 'All');
+export default async function Homepage() {
+  const res = await fetch('https://fakestoreapi.com/products', {
+    cache: 'no-store',
+  });
+  const products: Product[] = await res.json();
   return (
     <>
       <Navbar className="border-b-bg-primary-light flex items-center justify-between transition-all">
-        <div className="left flex items-center gap-6">
-          <Button
-            onClick={handleDirectoryToggle}
-            className="dark:bg-primary-dark motion-scale-in-[0.5] motion-translate-x-in-[-110%] motion-translate-y-in-[11%] motion-opacity-in-[33%] motion-rotate-in-[-480deg] motion-duration-[0.38s] motion-duration-[0.57s]/scale motion-delay-[0.23s]/scale motion-duration-[0.42s]/rotate motion-ease-spring-bouncier navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
-          >
-            <MenuIcon color="#442727" />
-          </Button>
-          <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
-        </div>
-        <div className="right flex items-center gap-6">
-          <Link
-            href="/my-cart"
-            className="dark:bg-secondary-light motion-translate-x-in-[-110%] motion-translate-y-in-[11%] motion-opacity-in-[33%] motion-rotate-in-[-480deg] motion-duration-[0.38s] motion-duration-[0.57s]/scale motion-delay-[0.23s]/scale motion-duration-[0.42s]/rotate motion-ease-spring-bouncier flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors"
-          >
-            <CartIcon width={44} height={40} color="#442727" />
-          </Link>
-        </div>
+        <DirectoryToggle />
       </Navbar>
       <main>
         <section className="def-margin z-10 flex justify-around gap-5 p-5">
@@ -65,20 +34,12 @@ export default function Homepage() {
         </section>
         <section className="def-margin">
           <h2 className="font-bold">New Arrivals</h2>
-          <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto min-h-[250px] md:min-h-[clamp(360px,5vw,520px)] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5 lg:min-h-[clamp(360px,5vw,520px)]">
-            {isLoading && (
-              <div className="flex w-full items-center justify-center">
-                <LoadWheel />
-              </div>
-            )}
-            {error && <ErrorMessage />}
-            {!isLoading &&
-              !error &&
-              filteredProducts?.slice(0, 8)?.map((product) => (
-                <article className="w-full flex-none sm:w-1/2 md:w-1/3 lg:w-1/4" key={String(product.id)}>
-                  <ProductPreview key={String(product.id)} product={product} productName={product.title} imageURL={product.image} productPrice={product.price} />
-                </article>
-              ))}
+          <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">
+            {products?.slice(0, 8)?.map((product) => (
+              <article className="w-full flex-none sm:w-1/2 md:w-1/3 lg:w-1/4" key={String(product.id)}>
+                <ProductPreview key={String(product.id)} product={product} productName={product.title} imageURL={product.image} productPrice={product.price} />
+              </article>
+            ))}
           </article>
         </section>
       </main>

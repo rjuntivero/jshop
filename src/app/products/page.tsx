@@ -77,17 +77,10 @@ const Catalog = () => {
       </header>
 
       <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
-      <main className="relative flex h-full gap-6 transition-all duration-500 ">
+      <main className="relative flex h-screen gap-6 transition-all duration-500 ">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
-            <motion.aside
-              className="sticky top-0 self-start flex flex-col min-w-[300px] pt-15 hidden lg:block"
-              initial={{ x: -300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              key="sidebar"
-            >
+            <motion.aside className="sticky top-0 self-start lg:flex flex-col min-w-[300px] pt-15 hidden " initial={{ x: -300, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -300, opacity: 0 }} transition={{ duration: 0.3 }} key="sidebar">
               <Sidebar activeCategory={activeCategory} handleItemClick={handleItemClick} className="hidden lg:block " />
             </motion.aside>
           )}
