@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import CloseIcon from '../icons/CloseIcon';
 import Button from '../ui/Button';
 import Overlay from './Overlay';
+import { usePathname } from 'next/navigation';
 import { useAppSelector } from '@/state/hooks';
 import { useDispatch } from 'react-redux';
 import { toggleDirectory } from '../../features/cartSlice';
@@ -32,7 +32,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
           <CloseIcon width={43} height={43} color="#4D2C2C" />
         </Button>
         <div className="font-big-header text-primary-light flex h-full items-center justify-center pt-6 text-2xl">
-          <div className="flex flex-col gap-20">
+          <nav className="flex flex-col gap-20">
             <h1>
               <Link href="/" className={getLinkClass('/')} onClick={handleDirectoryToggle}>
                 Home
@@ -48,7 +48,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
                 Cart
               </Link>
             </h1>
-          </div>
+          </nav>
         </div>
       </aside>
       <Overlay className={`bg-primary-light fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isDirectoryOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`} />

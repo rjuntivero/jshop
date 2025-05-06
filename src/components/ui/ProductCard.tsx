@@ -20,18 +20,10 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
   const dispatch = useAppDispatch();
 
   return (
-    <div className="motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-white shadow-md duration-400">
+    <article className="aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-white shadow-md duration-400">
       <div className="p-1 md:p-3">
-        <div className="relative col-span-3 h-[clamp(50px,20vh,252px)] w-full pb-1 sm:h-[clamp(50px,15vh,252px)] md:h-[clamp(50px,25vh,252px)] lg:h-[clamp(50px,40vh,352px)]">
-          <Image
-            className="rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102 sm:h-[clamp(50px,15vh,252px)] md:h-[clamp(50px,25vh,252px)] lg:h-[clamp(50px,40vh,352px)]"
-            src={imageURL!}
-            alt="PRODUCT IMAGE"
-            placeholder="empty"
-            width={500}
-            height={500}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
+        <div className="relative w-full max-w-[400px] aspect-square mx-auto ">
+          <Image src={imageURL!} alt="PRODUCT IMAGE" fill className="rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102" />
         </div>
 
         <div className="col-span-3 col-start-1 row-start-2 flex flex-col">
@@ -58,7 +50,7 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
