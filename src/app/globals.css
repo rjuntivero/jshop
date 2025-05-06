@@ -10,17 +10,17 @@
 
 @font-face {
   font-family: Oi;
-  src: url(./assets/fonts/Oi-Regular.ttf);
+  src: url(/fonts/Oi-Regular.ttf);
 }
 
 @font-face {
   font-family: Lalezar;
-  src: url(./assets/fonts/Lalezar-Regular.ttf);
+  src: url(/fonts/Lalezar-Regular.ttf);
 }
 
 @font-face {
   font-family: Inter;
-  src: url(./assets/fonts/Inter-VariableFont_opsz,wght.ttf);
+  src: url(/fonts/Inter-VariableFont_opszwght.ttf);
 }
 
 @theme {
@@ -70,12 +70,10 @@
     }
 
     ::-webkit-scrollbar-track {
-      background-color: var(--color-background-light);
     }
 
     ::-webkit-scrollbar-button {
-      /* background-color: var(--color-secondary-light); */
-      cursor: pointer;
+      width: 0px;
     }
   }
 

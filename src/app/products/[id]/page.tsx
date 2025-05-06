@@ -1,65 +1,55 @@
-import { Link, useParams } from 'react-router-dom'
-import { useFetchProduct } from '../hooks/useFetchProduct'
-import Navbar from '../components/layout/Navbar'
-import LoadWheel from '../components/ui/LoadWheel'
-import Button from '../components/ui/Button'
-import MenuIcon from '../components/icons/MenuIcon'
-import Directory from '../components/layout/Directory'
-import CartIcon from '../components/icons/CartIcon'
-import CartSidebar from '../components/layout/CartSidebar'
-import Footer from '../components/layout/Footer'
-import { Product } from '../types/Product'
-import ErrorMessage from '../components/ui/ErrorMessage'
-import { useDispatch } from 'react-redux'
-import { addToCart, toggleCart, toggleDirectory } from '../features/cartSlice'
-import { useAppSelector } from '../app/hooks'
+'use client';
+
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useFetchProduct } from '@/hooks/useFetchProduct';
+import Navbar from '@/components/layouts/Navbar';
+import LoadWheel from '@/components/ui/LoadWheel';
+import Button from '@/components/ui/Button';
+import MenuIcon from '@/components/icons/MenuIcon';
+import Directory from '@/components/layouts/Directory';
+import CartIcon from '@/components/icons/CartIcon';
+import CartSidebar from '@/components/layouts/CartSidebar';
+import Footer from '@/components/layouts/Footer';
+import { Product } from '@/types/Product';
+import ErrorMessage from '@/components/ui/ErrorMessage';
+import { useDispatch } from 'react-redux';
+import { addToCart, toggleCart, toggleDirectory } from '@/features/cartSlice';
+import { useAppSelector } from '@/state/hooks';
 
 const ProductPage = () => {
-  const { id } = useParams<{ id: string }>()
-  const { data: product, isLoading, error } = useFetchProduct(Number(id))
-  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
-  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
-  const dispatch = useDispatch()
+  const { id } = useParams<{ id: string }>();
+  const { data: product, isLoading, error } = useFetchProduct(Number(id));
+  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
+  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+  const dispatch = useDispatch();
 
   const handleDirectoryToggle = () => {
-    dispatch(toggleDirectory())
-  }
+    dispatch(toggleDirectory());
+  };
 
   const handleCartToggle = () => {
-    dispatch(toggleCart())
-  }
+    dispatch(toggleCart());
+  };
 
   return (
     <>
       <Navbar className="bg-background-light z-10 mb-8 flex items-center justify-between border-b-3">
         <div className="left flex items-center gap-6">
-          <Button
-            onClick={handleDirectoryToggle}
-            className="dark:bg-primary-dark navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
-          >
+          <Button onClick={handleDirectoryToggle} className="dark:bg-primary-dark navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2">
             <MenuIcon color="#442727" />
           </Button>
-          <Directory
-            className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`}
-          />
+          <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
         </div>
-        <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">
-          JSHOP
-        </h1>
+        <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">JSHOP</h1>
         <div className="right flex items-center gap-6">
-          <Button
-            onClick={handleCartToggle}
-            className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors"
-          >
+          <Button onClick={handleCartToggle} className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
             <CartIcon width={44} height={40} color="#442727" />
           </Button>
         </div>
       </Navbar>
 
-      <CartSidebar
-        onClose={handleCartToggle}
-        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen flex-col p-8 transition-transform duration-300 ease-in-out md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
-      />
+      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen flex-col p-8 transition-transform duration-300 ease-in-out md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
       {isLoading && (
         <div className="flex h-[600px] items-center justify-center">
           <LoadWheel />
@@ -77,22 +67,14 @@ const ProductPage = () => {
           <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div>
 
           <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full flex-col gap-5 rounded-t-md border-5 bg-white p-6 duration-900 md:flex-row md:py-12">
-            <img
-              className="mx-auto h-[clamp(250px,50vh,352px)] w-[clamp(250px,50vw,452px)] object-contain object-center p-1"
-              src={product?.image}
-              alt={`image of ${product?.title}`}
-            />
+            <img className="mx-auto h-[clamp(250px,50vh,352px)] w-[clamp(250px,50vw,452px)] object-contain object-center p-1" src={product?.image} alt={`image of ${product?.title}`} />
             <div className="def-padding pl-0!">
               <div className="text-3xl">
                 <h1 className="font-sub-header">{product?.title}</h1>
-                <h1 className="text-secondary-light pb-6 text-xl">
-                  {product?.category}
-                </h1>
+                <h1 className="text-secondary-light pb-6 text-xl">{product?.category}</h1>
               </div>
               <h1 className="font-sub-header !pb-0">About this item</h1>
-              <h1 className="pt-1! pb-10 text-[clamp(1em,1.2vw,4em)]">
-                {product?.description}
-              </h1>
+              <h1 className="pt-1! pb-10 text-[clamp(1em,1.2vw,4em)]">{product?.description}</h1>
               <div className="flex flex-col items-start justify-start md:flex-row md:items-center">
                 <h1 className="def-padding pl-0! text-3xl font-bold">{`$${product?.price}`}</h1>
                 <Button
@@ -104,10 +86,8 @@ const ProductPage = () => {
                 </Button>
               </div>
               <div>
-                <Link className="" to="/products">
-                  <h1 className="font-sub-header hover:text-secondary-light cursor-pointer pt-12 text-end text-sm">
-                    Back to Products...
-                  </h1>
+                <Link className="" href="/products">
+                  <h1 className="font-sub-header hover:text-secondary-light cursor-pointer pt-12 text-end text-sm">Back to Products...</h1>
                 </Link>
               </div>
             </div>
@@ -119,7 +99,7 @@ const ProductPage = () => {
 
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;
