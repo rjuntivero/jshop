@@ -52,6 +52,7 @@ const cartSlice = createSlice({
 
     clearCart(state) {
       state.items = [];
+      state.totalPrice = 0;
     },
     toggleCart(state) {
       state.isCartOpen = !state.isCartOpen;

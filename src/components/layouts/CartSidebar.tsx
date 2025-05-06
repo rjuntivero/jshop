@@ -25,7 +25,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           <Button onClick={onClose} className="absolute -top-4 z-40">
             <CloseIcon width={43} height={43} color="#4D2C2C" />
           </Button>
-          <h1 className="font-big-header text-primary-light self-center justify-self-center text-3xl">My Cart</h1>
+          <h1 className="font-big-header text-primary-light self-center justify-self-center text-center text-3xl">My Cart</h1>
         </div>
         <div className="flex flex-1 flex-col overflow-y-auto">
           {cart &&

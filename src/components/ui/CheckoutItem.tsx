@@ -2,6 +2,7 @@ import { memo } from 'react';
 import Button from './Button';
 import { Product } from '../../types/Product';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { addToCart, clearItem, removeFromCart } from '../../features/cartSlice';
 
@@ -30,9 +31,9 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
   return (
     <section className="mb-8">
       <hr className="text-gray-300" />
-      <article className="motion-preset-blur-down def-padding flex flex-col gap-8 duration-400 sm:flex-row md:flex-row">
-        <Link href="/" className="h-auto max-w-[150px]">
-          <img className="h-full w-full rounded-sm object-contain transition-all duration-400 hover:-translate-y-3 hover:scale-102" src={imageURL} alt="Product Image" />
+      <article className="motion-preset-blur-down def-padding flex flex-col gap-8 duration-400 sm:flex-row">
+        <Link href="/" className="aspect-square w-full md:w-[clamp(100px,20vw,400px)] h-[clamp(150px,20vw,400px)] relative">
+          <Image className="rounded-sm object-contain transition-all duration-400 hover:-translate-y-3 hover:scale-102  " src={imageURL!} alt="Product Image" fill />
         </Link>
         <div>
           <div className="md:p-4">
@@ -40,7 +41,7 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
             <h1 className="font-main mb-2 text-[clamp(0.8rem,1.5vw,1.5rem)]">{productType}</h1>
             <h2 className="font-main pb-2 text-[clamp(1.5rem,2vw,2rem)] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
           </div>
-          <div className="flex flex-col items-center md:flex-row">
+          <div className="flex flex-col md:items-center md:flex-row">
             <div className="bg-secondary-light/15 m-3 flex max-w-50 items-center justify-between rounded-sm text-xl shadow-md">
               <Button onClick={() => handleRemoveFromCart(product?.id as number)} className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 -
@@ -50,7 +51,7 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
                 +
               </Button>
             </div>
-            <div className="text-secondary-light flex">
+            <div className="text-secondary-light flex self-center">
               <Button onClick={() => handleClearItem(product?.id as number)}>Delete</Button>
             </div>
           </div>

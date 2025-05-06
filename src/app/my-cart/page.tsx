@@ -49,7 +49,7 @@ const ShoppingCart = () => {
           </Link>
         </div>
       </Navbar>
-      <main className="text-primary-light grid-rows-[1fr, auto] def-padding grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr]">
+      <main className="text-primary-light grid-rows-[1fr, auto] md:p-6 grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr]">
         <article className="def-margin col-span-1 col-start-1 overflow-y-auto rounded-sm bg-white p-8 shadow-md">
           <h1 className="font-big-header text-[clamp(1rem,2vw,1.875rem)]">Shopping Cart</h1>
           <Button onClick={handleClearCart}>{cartItems.length > 0 && <h2 className="text-secondary-light mb-4 text-sm md:text-xl">Remove all items</h2>}</Button>

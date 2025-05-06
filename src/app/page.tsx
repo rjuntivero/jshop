@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
-import ProductCard from '@/components/ui/ProductCard';
 import { useFilteredProducts } from '../hooks/useFilteredProducts';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import Button from '@/components/ui/Button';
@@ -15,6 +14,7 @@ import { useAppSelector } from '@/state/hooks';
 import { useDispatch } from 'react-redux';
 import { toggleDirectory } from '../features/cartSlice';
 import { useFetchProducts } from '../hooks/useFetchProducts';
+import ProductPreview from '@/components/ui/ProductPreview';
 
 export default function Homepage() {
   const { data: products, isLoading, error } = useFetchProducts();
@@ -65,7 +65,7 @@ export default function Homepage() {
         </section>
         <section className="def-margin">
           <h2 className="font-bold">New Arrivals</h2>
-          <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto min-h-[250px] md:min-h-[400px] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5 lg:min-h-[620px]">
+          <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto min-h-[250px] md:min-h-[clamp(360px,5vw,520px)] gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5 lg:min-h-[clamp(360px,5vw,520px)]">
             {isLoading && (
               <div className="flex w-full items-center justify-center">
                 <LoadWheel />
@@ -74,9 +74,9 @@ export default function Homepage() {
             {error && <ErrorMessage />}
             {!isLoading &&
               !error &&
-              filteredProducts?.slice(0, 4)?.map((product) => (
+              filteredProducts?.slice(0, 8)?.map((product) => (
                 <article className="w-full flex-none sm:w-1/2 md:w-1/3 lg:w-1/4" key={String(product.id)}>
-                  <ProductCard key={String(product.id)} product={product} productName={product.title} productType={product.category.charAt(0).toUpperCase() + product.category.slice(1)} imageURL={product.image} productPrice={product.price} />
+                  <ProductPreview key={String(product.id)} product={product} productName={product.title} imageURL={product.image} productPrice={product.price} />
                 </article>
               ))}
           </article>

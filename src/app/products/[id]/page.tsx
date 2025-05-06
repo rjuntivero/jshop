@@ -16,6 +16,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import { useDispatch } from 'react-redux';
 import { addToCart, toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { useAppSelector } from '@/state/hooks';
+import Image from 'next/image';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,7 +50,7 @@ const ProductPage = () => {
         </div>
       </Navbar>
 
-      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen flex-col p-8 transition-transform duration-300 ease-in-out md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
+      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh flex-col p-8 transition-transform duration-300 ease-in-out w- 93 md:w-106 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
       {isLoading && (
         <div className="flex h-[600px] items-center justify-center">
           <LoadWheel />
@@ -66,8 +67,11 @@ const ProductPage = () => {
           <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 hidden rounded-full p-3 md:block"></div>
           <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div>
 
-          <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full flex-col gap-5 rounded-t-md border-5 bg-white p-6 duration-900 md:flex-row md:py-12">
-            <img className="mx-auto h-[clamp(250px,50vh,352px)] w-[clamp(250px,50vw,452px)] object-contain object-center p-1" src={product?.image} alt={`image of ${product?.title}`} />
+          <div className="motion-ease-bounce motion-preset-blur-down-md -motion-translate-y-in-25 z-3 box-border flex w-full flex-col gap-5 md:gap-25 rounded-t-md border-5 bg-white p-6 duration-900 md:flex-row md:py-12">
+            <div className="relative w-full max-w-[400px] aspect-square mx-auto ">
+              <Image src={product.image!} alt="PRODUCT IMAGE" fill className=" mx-auto rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102" />
+            </div>
+            {/* <Image src={imageURL!} alt="PRODUCT IMAGE" fill className="rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102" /> */}
             <div className="def-padding pl-0!">
               <div className="text-3xl">
                 <h1 className="font-sub-header">{product?.title}</h1>

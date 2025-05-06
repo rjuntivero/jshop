@@ -76,19 +76,19 @@ const Catalog = () => {
         </Navbar>
       </header>
 
-      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
-      <main className="relative flex h-full gap-4 transition-all duration-500">
+      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
+      <main className="relative flex h-full gap-6 transition-all duration-500 ">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
             <motion.aside
-              className={`sticky top-5 self-start flex flex-col gap-2 transition-transform duration-500 min-w-[max-content] mt-25`}
-              initial={{ x: -300 }}
-              animate={{ x: 0 }}
-              exit={{ x: -300 }}
-              transition={{ duration: 0.1, ease: 'backInOut' }}
-              key={'sidebar'}
+              className="sticky top-0 self-start flex flex-col min-w-[300px] pt-15 hidden lg:block"
+              initial={{ x: -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              key="sidebar"
             >
-              <Sidebar activeCategory={activeCategory} handleItemClick={handleItemClick} className="hidden lg:block" />
+              <Sidebar activeCategory={activeCategory} handleItemClick={handleItemClick} className="hidden lg:block " />
             </motion.aside>
           )}
         </AnimatePresence>
@@ -97,6 +97,7 @@ const Catalog = () => {
           <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 px-3 py-3 md:px-12 md:py-5">
             <Searchbar input={search} onChange={handleSearch} results={filteredProducts?.length || 0} showSidebar={handleSidebarToggle} sideBarVisible={showSidebar} />
           </div>
+
           <div className="h-full transition-all duration-500">
             {isLoading && (
               <div className="flex w-full items-center justify-center">
