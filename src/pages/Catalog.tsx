@@ -1,5 +1,5 @@
-import { useWindowSize } from '../hooks/useWindowSize'
-import { useState, useEffect, useCallback } from 'react'
+// import { useWindowSize } from '../hooks/useWindowSize'
+import { useState, useCallback } from 'react'
 import Navbar from '../components/layout/Navbar'
 import Searchbar from '../components/ui/Searchbar'
 import Sidebar from '../components/layout/Sidebar'
@@ -7,7 +7,7 @@ import ProductCard from '../components/ProductCard'
 import Footer from '../components/layout/Footer'
 import LoadWheel from '../components/ui/LoadWheel'
 import ErrorMessage from '../components/ui/ErrorMessage'
-import React, { useMemo } from 'react'
+import React from 'react'
 import CartSidebar from '../components/layout/CartSidebar'
 import { useFilteredProducts } from '../hooks/useFilteredProducts'
 import MenuIcon from '../components/icons/MenuIcon'
@@ -21,13 +21,13 @@ import { useFetchProducts } from '../hooks/useFetchProducts'
 
 const Catalog = () => {
   const [search, setSearch] = useState('')
-  const [showSidebar, setShowSidebar] = useState(true)
+  // const { screenWidth } = useWindowSize()
+  // const [showSidebar, setShowSidebar] = useState(true)
   const [activeCategory, setActiveCategory] = useState<string>('All')
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen)
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
   const dispatch = useDispatch()
   const { data: products, isLoading, error } = useFetchProducts()
-  const { screenWidth } = useWindowSize()
 
   const filteredProducts = useFilteredProducts(products, search, activeCategory)
 
@@ -43,24 +43,9 @@ const Catalog = () => {
     setActiveCategory(item)
   }, [])
 
-  useEffect(() => {
-    setShowSidebar(screenWidth > 1024)
-  }, [screenWidth])
-
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }, [])
-
-  const handleShowSideBar = useCallback(() => {
-    setShowSidebar(!showSidebar)
-  }, [showSidebar])
-
-  const gridStyles = useMemo(
-    () => ({
-      gridTemplateColumns: showSidebar ? '325px' : '0px',
-    }),
-    [showSidebar],
-  )
 
   return (
     <>
@@ -93,14 +78,9 @@ const Catalog = () => {
         onClose={handleCartToggle}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-screen w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
-      <main
-        className="relative grid h-full min-h-screen gap-x-2 pr-0 transition-all duration-500 md:gap-x-9.5 md:pr-3"
-        style={gridStyles}
-      >
-        <div
-          className={`sticky top-12 row-start-2 self-start transition-transform duration-500 ${
-            showSidebar ? 'lg:translate-x-0' : '-translate-x-full'
-          }`}
+      <main className="relative grid h-full min-h-screen grid-cols-1 gap-x-2 transition-all duration-500 md:grid-cols-1 lg:grid-cols-[325px_1fr]">
+        <aside
+          className={`sticky top-12 row-start-2 self-start transition-transform duration-500`}
           style={{
             width: '305px',
           }}
@@ -110,14 +90,12 @@ const Catalog = () => {
             handleItemClick={handleItemClick}
             className="hidden lg:block"
           />
-        </div>
-        <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 col-span-1 col-start-2 row-start-1 p-3 md:py-5 md:pr-2 md:pl-12">
+        </aside>
+        <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 col-span-1 col-start-2 row-start-1 px-3 py-3 md:px-12 md:py-5">
           <Searchbar
             input={search}
             onChange={handleSearch}
             results={filteredProducts?.length || 0}
-            sideBarVisible={showSidebar}
-            showSidebar={handleShowSideBar}
           />
         </div>
         <div className="col-span-1 col-start-2 row-start-2 h-full transition-all duration-500">
@@ -126,9 +104,7 @@ const Catalog = () => {
               <LoadWheel />
             </div>
           )}
-          <article
-            className={`relative grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] grid-rows-[repeat(autofit,400px)] justify-start gap-2 px-0 md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] md:gap-4 md:px-3 lg:grid-cols-[repeat(auto-fill,minmax(430px,1fr))] ${!showSidebar ? 'md:justify-center' : 'md:justify-start'}`}
-          >
+          <article className="relative grid grid-cols-2 gap-2 px-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-3">
             {error && <ErrorMessage />}
             {!isLoading &&
               !error &&
