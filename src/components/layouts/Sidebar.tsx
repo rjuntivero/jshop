@@ -1,59 +1,40 @@
-import React, { memo, useCallback } from 'react'
-import SidebarItem from '../ui/SidebarItem'
-import Button from '../ui/Button'
-import UpArrowIcon from '../icons/UpArrowIcon'
+'use client';
+
+import React, { memo, useCallback } from 'react';
+import SidebarItem from '../ui/SidebarItem';
+import Button from '../ui/Button';
+import UpArrowIcon from '../icons/UpArrowIcon';
 
 interface SidebarProps {
-  className?: string
-  activeCategory: string
-  handleItemClick: (newValue: string) => void
+  className?: string;
+  activeCategory: string;
+  handleItemClick: (newValue: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
-  className,
-  activeCategory,
-  handleItemClick,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ className, activeCategory, handleItemClick }) => {
   const handleClick = useCallback(
     (newValue: string) => {
-      handleItemClick(newValue)
+      handleItemClick(newValue);
     },
-    [handleItemClick], // Prevent re-creating the function unless handleItemClick changes
-  )
+    [handleItemClick]
+  );
 
   const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
-  // Prevent re-creating the function unless handleItemClick changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
-  const categories = [
-    'All',
-    'Men',
-    'Women',
-    'Jewelery',
-    'Electronic',
-    'Aliens',
-    'Cows',
-    'Sheep',
-  ]
+  const categories = ['All', 'Men', 'Women', 'Jewelery', 'Electronic', 'Aliens', 'Cows', 'Sheep'];
 
   return (
     <>
-      <div
-        className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light bg-background-light relative z-100 mb-8 h-[75vh] max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}
-      >
+      <div className={`${className} outline-primary-light dark:outline-primary-dark dark:text-secondary-dark text-primary-light bg-background-light relative z-100 mb-8 h-[75vh] max-w-[310px] rounded-r-3xl px-[18px] py-[42px] outline-5`}>
         <div className="font-sub-header sidebar-title border-b-primary-light dark:border-secondary-dark mb-4 border-b-4 text-4xl font-black tracking-widest">
           <h1>Products</h1>
         </div>
 
         <ul className="*:dark:text-secondary-dark mb-4 h-[55vh] overflow-y-auto border-b-4">
           {categories.map((item) => (
-            <SidebarItem
-              key={item}
-              item={item}
-              isActive={activeCategory === item}
-              handleItemClick={handleClick}
-            />
+            <SidebarItem key={item} item={item} isActive={activeCategory === item} handleItemClick={handleClick} />
           ))}
         </ul>
 
@@ -66,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Button>
       </aside>
     </>
-  )
-}
+  );
+};
 
-export default memo(Sidebar)
+export default memo(Sidebar);
