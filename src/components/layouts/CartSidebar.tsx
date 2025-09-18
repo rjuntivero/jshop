@@ -39,7 +39,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           <p>${cartTotal.toFixed(2)}</p>
         </div>
         <div className="p-4">
-          <Link onClick={onClose} href="/my-cart" className="bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-black">
+          <Link onClick={onClose} href="/my-cart" className="bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-primary-light font-semibold">
             Checkout
           </Link>
         </div>

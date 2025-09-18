@@ -49,6 +49,8 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
     setSearch(e.target.value);
   }, []);
 
+  const isSmallScreen = window.innerWidth <= 768;
+
   return (
     <>
       <header>
@@ -79,11 +81,18 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
         onClose={handleCartToggle}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
-      <main className=" bg-background-light relative flex  gap-6 transition-all duration-500">
+      <main className="min-h-screen bg-background-light relative flex  gap-6 transition-all duration-500">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
-            <motion.aside className="sticky top-0 self-start lg:flex flex-col h-full hidden grow min-h-screen" initial={{ x: 0, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -300, opacity: 0 }} transition={{ duration: 0.2 }} key="sidebar">
-              <Sidebar activeCategory={activeCategory} handleItemClick={handleItemClick} className="hidden lg:block " />
+            <motion.aside
+              className="bottom-0 fixed lg:w-[fit-content] w-full bg-background-light z-9 lg:sticky lg:top-0 self-start lg:flex flex-col lg:h-full grow lg:min-h-screen"
+              initial={isSmallScreen ? { y: '100%' } : { x: 0 }}
+              animate={isSmallScreen ? { y: 0 } : { x: 0 }}
+              exit={isSmallScreen ? { y: '100%' } : { x: -300 }}
+              transition={{ duration: 0.3 }}
+              key="sidebar"
+            >
+              <Sidebar toggleSidebar={handleSidebarToggle} activeCategory={activeCategory} handleItemClick={handleItemClick} className=" lg:block " />
             </motion.aside>
           )}
         </AnimatePresence>

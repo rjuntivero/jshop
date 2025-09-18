@@ -131,9 +131,10 @@ const ProductPage = () => {
           ))}
         </div>
       </section>
-      <div className="bg-primary-light mb-1 w-full pt-1"></div>
-
-      <Footer />
+      <section>
+        <div className="bg-primary-light mb-1 w-full pt-1"></div>
+        <Footer />
+      </section>
     </div>
   );
 };

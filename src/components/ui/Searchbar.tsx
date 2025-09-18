@@ -19,7 +19,7 @@ const Searchbar: React.FC<T> = ({ input, onChange, results, sideBarVisible, show
   };
   return (
     <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 ">
-      <div className="flex w-full items-center ">
+      <div className="flex w-full items-center">
         <div className="dark:bg-background-dark outline-primary-light dark:outline-secondary-dark flex basis-[400px] items-center  px-1 py-1 text-sm outline-1 ">
           <input type="text" placeholder="Search..." value={input} onChange={onChange} className="dark:text-secondary-dark text-primary-light w-full min-w-0 border-red-50 bg-transparent px-4 focus:outline-none" />
           <Button className="dark:bg-background-dark ml-auto">
@@ -28,7 +28,7 @@ const Searchbar: React.FC<T> = ({ input, onChange, results, sideBarVisible, show
         </div>
       </div>
       <div className="dark:bg-background-dark grid grid-cols-[max-content] grid-rows-[repeat(2,auto)] items-center justify-end pr-8 text-right">
-        <Button className="bg-primary text-secondary-light dark:text-secondary-dark z-50 row-start-1 hidden justify-self-end rounded-lg lg:block" onClick={showSidebar}>
+        <Button className="bg-primary text-secondary-light dark:text-secondary-dark z-50 row-start-1  justify-self-end rounded-lg lg:block" onClick={showSidebar}>
           {sideBarVisible ? 'Hide' : 'Show'}
         </Button>
         <h1 className="text-primary-light dark:text-accent-dark row-start-2 hidden text-lg md:block">{results} Results</h1>

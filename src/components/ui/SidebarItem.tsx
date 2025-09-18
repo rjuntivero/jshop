@@ -10,7 +10,7 @@ interface ItemProps {
 const SidebarItem: React.FC<ItemProps> = ({ item, isActive, handleItemClick }) => {
   return (
     <li key={item}>
-      <Button onClick={() => handleItemClick(item)} className="group relative mb-4 w-full rounded-full px-4 py-2 text-left  tracking-widest transition-colors duration-300 ease-in-out">
+      <Button onClick={() => handleItemClick(item)} className="group relative mb-4 w-full rounded-full px-4 py-2 text-left  transition-colors duration-300 ease-in-out">
         <span
           className={`bg-secondary-light absolute top-0 left-0 -z-10 h-full w-full origin-left  opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100 ${
             isActive ? 'translate-x-0 opacity-100' : 'translate-x-[-100%]'
