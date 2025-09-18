@@ -1,11 +1,10 @@
 'use client';
-import { useState, useCallback, lazy, Suspense } from 'react';
+import { useState, useCallback, lazy } from 'react';
 import Navbar from '@/components/layouts/Navbar';
 import Searchbar from '@/components/ui/Searchbar';
 import Sidebar from '@/components/layouts/Sidebar';
 import Footer from '@/components/layouts/Footer';
 import React from 'react';
-import CartSidebar from '@/components/layouts/CartSidebar';
 import { useFilteredProducts } from '@/hooks/useFilteredProducts';
 import MenuIcon from '@/components/icons/MenuIcon';
 import Button from '@/components/ui/Button';
@@ -16,8 +15,9 @@ import { useDispatch } from 'react-redux';
 import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { AnimatePresence, motion } from 'motion/react';
 import { Product } from '@/types/Product';
-import ProductCard from '../ui/ProductCard';
 import LazyProductCard from '../ui/LazyProductCard';
+import dynamic from 'next/dynamic';
+import CartSidebar from '@/components/layouts/CartSidebar';
 
 const ProductGrid = ({ products }: { products: Product[] }) => {
   const [search, setSearch] = useState('');
@@ -48,8 +48,6 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
-
-  const ProductCard = lazy(() => import('../ui/ProductCard'));
 
   return (
     <>

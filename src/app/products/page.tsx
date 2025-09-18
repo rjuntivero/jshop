@@ -9,7 +9,9 @@ export async function fetchProducts() {
     throw new Error('Failed to fetch products');
   }
 
-  return res.json();
+  const products = await res.json();
+
+  return products;
 }
 export default async function Page() {
   const products = await fetchProducts();
