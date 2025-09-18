@@ -31,7 +31,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
         <Button onClick={handleDirectoryToggle} className="flex w-full justify-end">
           <CloseIcon width={43} height={43} color="#4D2C2C" />
         </Button>
-        <div className="font-big-header text-primary-light flex h-full items-center justify-center pt-6 text-2xl">
+        <div className="font-semibold text-primary-light flex h-full items-center justify-center pt-6 text-2xl">
           <nav className="flex flex-col gap-20">
             <h1>
               <Link href="/" className={getLinkClass('/')} onClick={handleDirectoryToggle}>

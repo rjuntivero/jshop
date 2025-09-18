@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Providers } from './providers';
 import './globals.css';
-import { Inter } from 'next/font/google';
 import { Reddit_Sans } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-main' });
+const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-main' });
 const reddit_sans = Reddit_Sans({ subsets: ['latin'], variable: '--font-sub-header' });
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${reddit_sans.variable}  min-h-screen`}>
+    <html lang="en" className={` ${reddit_sans.variable} ${montserrat.variable}  min-h-screen`}>
       <body className={`antialiased bg-background-light`}>
         <Providers>{children}</Providers>
       </body>

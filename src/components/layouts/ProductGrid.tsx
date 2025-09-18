@@ -1,9 +1,8 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, lazy, Suspense } from 'react';
 import Navbar from '@/components/layouts/Navbar';
 import Searchbar from '@/components/ui/Searchbar';
 import Sidebar from '@/components/layouts/Sidebar';
-import ProductCard from '@/components/ui/ProductCard';
 import Footer from '@/components/layouts/Footer';
 import React from 'react';
 import CartSidebar from '@/components/layouts/CartSidebar';
@@ -17,6 +16,8 @@ import { useDispatch } from 'react-redux';
 import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { AnimatePresence, motion } from 'motion/react';
 import { Product } from '@/types/Product';
+import ProductCard from '../ui/ProductCard';
+import LazyProductCard from '../ui/LazyProductCard';
 
 const ProductGrid = ({ products }: { products: Product[] }) => {
   const [search, setSearch] = useState('');
@@ -48,10 +49,12 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
     setSearch(e.target.value);
   }, []);
 
+  const ProductCard = lazy(() => import('../ui/ProductCard'));
+
   return (
     <>
       <header>
-        <Navbar className="border-b-bg-primary-light flex items-center justify-between border-b-3 transition-all">
+        <Navbar className="flex items-center justify-between  transition-all">
           <div className="left flex items-center gap-6">
             <Button
               onClick={handleDirectoryToggle}
@@ -72,29 +75,30 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
           </div>
         </Navbar>
       </header>
+      <hr className=" bg-bg-primary-light " />
 
       <CartSidebar
         onClose={handleCartToggle}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
-      <main className="relative flex min-h-screen gap-6 transition-all duration-500 ">
+      <main className=" bg-background-light relative flex  gap-6 transition-all duration-500">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
-            <motion.aside className="sticky top-0 self-start lg:flex flex-col min-w-[300px] pt-15 hidden " initial={{ x: 0, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -300, opacity: 0 }} transition={{ duration: 0.2 }} key="sidebar">
+            <motion.aside className="sticky top-0 self-start lg:flex flex-col h-full hidden grow min-h-screen" initial={{ x: 0, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -300, opacity: 0 }} transition={{ duration: 0.2 }} key="sidebar">
               <Sidebar activeCategory={activeCategory} handleItemClick={handleItemClick} className="hidden lg:block " />
             </motion.aside>
           )}
         </AnimatePresence>
 
-        <motion.section layout="position" className="flex flex-col gap-2 w-full">
-          <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 px-3 py-3 md:px-12 md:py-5">
+        <motion.section layout="position" className=" flex flex-col gap-2 w-full ">
+          <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 px-3 py-3  md:py-5">
             <Searchbar input={search} onChange={handleSearch} results={filteredProducts?.length || 0} showSidebar={handleSidebarToggle} sideBarVisible={showSidebar} />
           </div>
 
-          <div className="h-full transition-all duration-500">
+          <div className="h-full transition-all duration-500 mb-6">
             <article className="relative grid grid-cols-2 gap-2 px-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-3">
               {filteredProducts?.map((product) => (
-                <ProductCard key={String(product.id)} product={product} productName={product.title} productType={product.category.charAt(0).toUpperCase() + product.category.slice(1)} imageURL={product.image} productPrice={product.price} />
+                <LazyProductCard key={String(product.id)} product={product} />
               ))}
             </article>
           </div>

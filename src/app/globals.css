@@ -10,18 +10,22 @@
 
 @font-face {
   font-family: Oi;
+  font-display: swap;
   src: url(/fonts/Oi-Regular.ttf);
 }
 
 @font-face {
   font-family: 'RedditSans';
+  font-display: swap;
   src: url(/fonts/RedditSans-VariableFont_opszwght.ttf);
 }
 
 @font-face {
   font-family: Inter;
+  font-display: auto;
   src: url(/fonts/Inter-VariableFont_opszwght.ttf);
 }
+
 
 @theme {
   --color-background-light: #f3eed9;
@@ -30,7 +34,8 @@
   --color-accent-light: #efdb9c;
   --color-neutral-light: #ffffff;
   --font-big-header: Oi, 'sans-serif';
-  --font-main: Inter, 'sans-serif';
+  --font-main: Montserrat, 'sans-serif';
+  --font-sans: Inter, 'sans-serif'
   --color-background-dark: #2f2825;
   --color-primary-dark: #b18e66;
   --color-secondary-dark: #fff9e6;

@@ -1,20 +1,18 @@
-import React, { memo, ReactNode } from 'react'
-import GithubIcon from '../icons/GithubIcon'
-import InstagramIcon from '../icons/InstagramIcon'
-import LinkedInIcon from '../icons/LinkedInIcon'
-import ExternalLink from '../ui/ExternalLink'
+import React, { memo, ReactNode } from 'react';
+import GithubIcon from '../icons/GithubIcon';
+import InstagramIcon from '../icons/InstagramIcon';
+import LinkedInIcon from '../icons/LinkedInIcon';
+import ExternalLink from '../ui/ExternalLink';
 
 interface T {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 // const handleLinkClick = () => {}
 
 const Footer: React.FC<T> = () => {
   return (
-    <div className="mt-30">
-      <div className="bg-primary-light mb-1 w-full pt-1"></div>
-
+    <div className="">
       <div className="wrapper bg-primary-light flex flex-col items-center justify-center gap-8 p-12">
         {/* <div className="text-primary-light font-sub-header pb-8 text-center text-xl">
           Follow me on
@@ -31,12 +29,10 @@ const Footer: React.FC<T> = () => {
             <LinkedInIcon />
           </ExternalLink>
         </div>
-        <h1 className="text-secondary-light text-xl font-bold tracking-widest">
-          JSHOP
-        </h1>
+        <h1 className="text-secondary-light text-xl font-bold tracking-widest">JSHOP</h1>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default memo(Footer)
+export default memo(Footer);

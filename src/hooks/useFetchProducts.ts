@@ -12,8 +12,6 @@ const fetchProducts = async (category: string): Promise<Product[]> => {
     totalPrice: product.price,
   }));
 
-  console.log('fetched products: ', productsWithTotalPrice);
-
   return productsWithTotalPrice;
 };
 

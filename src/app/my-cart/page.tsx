@@ -30,7 +30,7 @@ const ShoppingCart = () => {
 
   return (
     <>
-      <Navbar className="border-b-bg-primary-light flex items-center justify-between border-b-3 transition-all">
+      <Navbar className="flex items-center justify-between transition-all">
         <div className="left flex items-center gap-6">
           <Button
             onClick={handleDirectoryToggle}
@@ -40,6 +40,8 @@ const ShoppingCart = () => {
           </Button>
           <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
         </div>
+        <h1 className="motion-preset-blur-down logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest delay-700 duration-500 ease-in">JSHOP</h1>
+
         <div className="right flex items-center gap-6">
           <Link
             href="/my-cart"
@@ -49,9 +51,11 @@ const ShoppingCart = () => {
           </Link>
         </div>
       </Navbar>
-      <main className="text-primary-light grid-rows-[1fr, auto] md:p-6 grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr]">
+      <hr className="bg-primary-light " />
+
+      <main className=" text-primary-light grid-rows-[1fr, auto] md:p-6 grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr] ">
         <article className="def-margin col-span-1 col-start-1 overflow-y-auto rounded-sm bg-white p-8 shadow-md">
-          <h1 className="font-big-header text-[clamp(1rem,2vw,1.875rem)]">Shopping Cart</h1>
+          <h1 className="font-sub-header font-bold text-[clamp(1rem,2vw,1.875rem)]">My Cart</h1>
           <Button onClick={handleClearCart}>{cartItems.length > 0 && <h2 className="text-secondary-light mb-4 text-sm md:text-xl">Remove all items</h2>}</Button>
           <div className="relative rounded-md">
             {cartItems.length > 0 ? (
@@ -77,6 +81,8 @@ const ShoppingCart = () => {
           </div>
         </div>
       </main>
+      <div className="bg-primary-light mb-1 w-full pt-1"></div>
+
       <Footer />
     </>
   );

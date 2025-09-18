@@ -27,7 +27,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
             <CloseIcon width={40} height={40} color="#4D2C2C" />
           </Button>
         </header>
-        <section className="flex flex-1 flex-col overflow-y-auto bg-secondary-light/30">
+        <section className="flex flex-1 flex-col overflow-y-auto bg-white/50">
           {cart &&
             cart?.map((item) => (
               <CartItem key={item.id} product={item} productName={item.title} productType={item.category} imageURL={item.image} count={item.count} productPrice={item.price} totalPrice={parseFloat((item.price * item.count).toFixed(2))} />

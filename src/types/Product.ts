@@ -9,6 +9,10 @@ export interface Product {
   image: string;
   count: number;
   price: number;
+  rating: {
+    rate: number;
+    count: number;
+  };
   totalPrice: number;
   description: string;
 }

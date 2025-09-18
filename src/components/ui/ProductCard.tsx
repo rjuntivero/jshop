@@ -21,8 +21,8 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <article className="aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-white shadow-md duration-400">
-      <div className="p-1 md:p-3">
+    <article className="outline-1 outline-primary-dark/20 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-secondary-dark shadow-md duration-400">
+      <div className="p-1 md:p-3 ">
         <div className="relative w-full max-w-[400px] aspect-square mx-auto ">
           <Image
             sizes="(max-width: 768px) 100vw, 400px"
@@ -36,13 +36,13 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
 
         <div className="col-span-3 col-start-1 row-start-2 flex flex-col">
           <h1 className="font-sub-header text-primary-light dark:text-secondary-dark ml-3 truncate pt-3 text-xl md:col-span-3 md:text-xl">{productName}</h1>
-          <h2 className="motion-scale-in-[0.1] motion-translate-x-in-[-84%] motion-translate-y-in-[-5%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur text-primary-light/50 col-span-3 col-start-1 row-start-3 ml-3 w-30 text-[0.90rem] md:col-span-1 md:text-sm">
+          <h2 className="motion-scale-in-[0.1] motion-translate-x-in-[-14%] motion-translate-y-in-[-5%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur text-primary-light/50 col-span-3 col-start-1 row-start-3 ml-3 w-full text-[0.90rem] md:col-span-1 md:text-sm">
             {productType}
           </h2>
         </div>
 
-        <h2 className="motion-scale-in-[0.1] motion-translate-x-in-[-84%] motion-translate-y-in-[-5%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur col-span-3 col-start-1 row-start-4 ml-3 w-30 pt-1 text-[1.2rem] font-medium text-black antialiased md:col-span-1 md:text-[1.8rem]">
-          {'$' + productPrice?.toFixed(2)}
+        <h2 className="motion-scale-in-[0.1] motion-translate-x-in-[-14%] motion-translate-y-in-[-6%] motion-blur-in-[1px] motion-duration-[0.48s]/scale motion-duration-[0.62s]/translate motion-duration-[0.37s]/blur col-span-3 col-start-1 row-start-4 ml-3 w-full pt-1 text-[1.2rem] font-bold text-primary-light antialiased md:col-span-1 md:text-[2rem]">
+          {'$ ' + productPrice?.toFixed(2)}
         </h2>
 
         {/* ACTION BUTTONS */}

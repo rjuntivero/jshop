@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 import { Product } from '../types/Product';
 
 export const useFilteredProducts = (products: Product[] | undefined, search: string, activeCategory: string) => {
-  console.log('fetched products: ', products);
-
   return useMemo(() => {
     return products
       ?.filter((product) => {
