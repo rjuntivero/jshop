@@ -1,62 +1,44 @@
-import { memo } from 'react'
-import Button from './Button'
-import { Product } from '../../types/Product'
-import { addToCart, removeFromCart } from '../../features/cartSlice'
-import { useDispatch } from 'react-redux'
+import { memo } from 'react';
+import Button from './Button';
+import { Product } from '../../types/Product';
+import { addToCart, removeFromCart } from '../../features/cartSlice';
+import { useDispatch } from 'react-redux';
+import Image from 'next/image';
 
 interface T {
-  product?: Product
-  productName?: string
-  productPrice?: number
-  productType?: string
-  totalPrice?: number
-  imageURL?: string
-  count?: number
+  product?: Product;
+  productName?: string;
+  productPrice?: number;
+  productType?: string;
+  totalPrice?: number;
+  imageURL?: string;
+  count?: number;
 }
 
-const CartItem: React.FC<T> = ({
-  product,
-  productName,
-  totalPrice,
-  imageURL,
-  count,
-}) => {
-  const dispatch = useDispatch()
+const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
+  const dispatch = useDispatch();
   return (
-    <div className="motion-preset-blur-down bg-primary-light/20 z-1 mb-3 flex h-auto w-full self-center rounded-sm duration-400">
-      <div className="grow rounded-lg p-6">
-        <div className="pb-2">
-          <img
-            className="outline-primary-light h-[100px] w-full rounded-sm object-cover object-top outline-2"
-            src={imageURL}
-            alt="Product Image"
-          />
+    <div className=" motion-preset-blur-down border-b-1 border-primary-light flex h-auto w-full self-center duration-400 p-8">
+      <article className="grow flex gap-6">
+        <div className="p-4 bg-white/75 flex items-center">
+          <Image className=" max-h-[150px] aspect-square max-w-[100px] rounded-sm object-contain object-top " src={imageURL ?? ''} alt="Product Image" width={300} height={300} />
         </div>
-        <div>
-          <h1 className="text-md font-main mb-2">{productName}</h1>
+        <div className="flex flex-col grow">
+          <h1 className="text-lg font-main mb-2 w-full text-ellipsis line-clamp-1">{productName}</h1>
+          <h2 className="font-main pb-2 text-[1.5rem] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
+          <div className="flex items-center justify-between rounded-sm bg-white/30 text-sm grow">
+            <Button onClick={() => dispatch(removeFromCart(product?.id as number))} className="hover:bg-primary-light/20 self-center p-4 h-full transition duration-400">
+              -
+            </Button>
+            <h1>{count}</h1>
+            <Button onClick={() => dispatch(addToCart(product as Product))} className="hover:bg-primary-light/20 self-center h-full p-4 transition duration-400">
+              +
+            </Button>
+          </div>
         </div>
-        <div className="font-main pb-2 text-[1.5rem] font-semibold">
-          <h2>{'$' + totalPrice?.toFixed(2)}</h2>
-        </div>
-        <div className="flex items-center justify-between rounded-sm bg-white/30 text-xl">
-          <Button
-            onClick={() => dispatch(removeFromCart(product?.id as number))}
-            className="hover:bg-primary-light/20 self-center px-4 py-2 transition duration-400"
-          >
-            -
-          </Button>
-          <h1>{count}</h1>
-
-          <Button
-            onClick={() => dispatch(addToCart(product as Product))}
-            className="hover:bg-primary-light/20 self-center px-4 py-2 transition duration-400"
-          >
-            +
-          </Button>
-        </div>
-      </div>
+      </article>
     </div>
-  )
-}
+  );
+};
 
-export default memo(CartItem)
+export default memo(CartItem);

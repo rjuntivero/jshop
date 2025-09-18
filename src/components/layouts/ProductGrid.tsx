@@ -73,7 +73,10 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
         </Navbar>
       </header>
 
-      <CartSidebar onClose={handleCartToggle} className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col p-8 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`} />
+      <CartSidebar
+        onClose={handleCartToggle}
+        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      />
       <main className="relative flex min-h-screen gap-6 transition-all duration-500 ">
         <AnimatePresence mode="popLayout">
           {showSidebar && (

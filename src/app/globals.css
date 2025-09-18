@@ -14,8 +14,8 @@
 }
 
 @font-face {
-  font-family: Lalezar;
-  src: url(/fonts/Lalezar-Regular.ttf);
+  font-family: 'RedditSans';
+  src: url(/fonts/RedditSans-VariableFont_opszwght.ttf);
 }
 
 @font-face {
@@ -30,7 +30,6 @@
   --color-accent-light: #efdb9c;
   --color-neutral-light: #ffffff;
   --font-big-header: Oi, 'sans-serif';
-  --font-sub-header: Lalezar, 'sans-serif';
   --font-main: Inter, 'sans-serif';
   --color-background-dark: #2f2825;
   --color-primary-dark: #b18e66;
@@ -54,6 +53,10 @@
   .def-padding {
     @apply px-[min(4.5rem,6%)] py-[min(1rem,6%)];
   }
+
+  .debug {
+    @apply outline-2 outline-red-600;
+  }
 }
 
 @layer components {
@@ -63,22 +66,15 @@
 
     ::-webkit-scrollbar-thumb {
       background-color: var(--color-primary-light);
-      border-radius: 100vmax;
     }
     ::-webkit-scrollbar {
       width: 10px;
     }
 
     ::-webkit-scrollbar-track {
+      width: 10px;
+      background-color: var(--color-secondary-light);
     }
-
-    ::-webkit-scrollbar-button {
-      width: 0px;
-    }
-  }
-
-  ul::-webkit-scrollbar {
-    width: 0px;
   }
 
   input {

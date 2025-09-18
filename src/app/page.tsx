@@ -4,11 +4,13 @@ import Navbar from '@/components/layouts/Navbar';
 import DirectoryToggle from '@/components/client/DirectoryToggle';
 import ProductPreview from '@/components/ui/ProductPreview';
 import { Product } from '@/types/Product';
+import Image from 'next/image';
 
 export default async function Homepage() {
   const res = await fetch('https://fakestoreapi.com/products', {
     cache: 'no-store',
   });
+
   const products: Product[] = await res.json();
   return (
     <>
@@ -16,8 +18,8 @@ export default async function Homepage() {
         <DirectoryToggle />
       </Navbar>
       <main>
-        <section className="def-margin z-10 flex justify-around gap-5 p-5">
-          <div className="text-primary-light relative z-2 flex h-80 flex-col items-center justify-center">
+        <section className="def-margin z-10 flex justify-around gap-5 p-5 ">
+          <div className="w-full  text-primary-light relative z-2 flex h-80 flex-col items-center justify-center">
             <h1 className="font-big-header -motion-translate-y-in-25 motion-preset-focus-md relative z-10 text-[clamp(2rem,15vw,4.5rem)] transition-all delay-300 duration-1200 ease-in-out">JSHOP</h1>
             <div className="text-secondary-light relative flex flex-col items-center gap-4 font-bold transition-all duration-800">
               <p className="text-primary-light motion-preset-slide-left relative z-10 transition-all delay-1200 duration-1000">All the right styles for you</p>
@@ -30,8 +32,15 @@ export default async function Homepage() {
                 Shop Now
               </Link>
             </div>
+            <div className="absolute inset-0 -translate-x-90  w-full lg:flex hidden">
+              <Image src="./favoriteitem.svg" fill alt="shopping_icon" />
+            </div>
+            <div className="absolute inset-0 translate-x-75  w-full lg:flex hidden">
+              <Image src="./shoppingspree.svg" fill alt="shopping_icon" />
+            </div>
           </div>
         </section>
+
         <section className="def-margin">
           <h2 className="font-bold">New Arrivals</h2>
           <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto gap-4 overflow-auto rounded-sm p-2 outline-2 md:p-5">

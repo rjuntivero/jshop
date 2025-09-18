@@ -24,7 +24,14 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
     <article className="aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-white shadow-md duration-400">
       <div className="p-1 md:p-3">
         <div className="relative w-full max-w-[400px] aspect-square mx-auto ">
-          <Image src={imageURL!} alt="PRODUCT IMAGE" fill className={`rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102 ${loaded ? 'opacity-100' : 'opacity-0'}`} onLoadingComplete={() => setLoaded(true)} />
+          <Image
+            sizes="(max-width: 768px) 100vw, 400px"
+            src={imageURL!}
+            alt="PRODUCT IMAGE"
+            fill
+            className={`rounded-lg object-contain object-center transition-all duration-700 group-hover:scale-102 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setLoaded(true)}
+          />
         </div>
 
         <div className="col-span-3 col-start-1 row-start-2 flex flex-col">

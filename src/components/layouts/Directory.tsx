@@ -51,7 +51,7 @@ const Directory: React.FC<DirectoryProps> = ({ className }) => {
           </nav>
         </div>
       </aside>
-      <Overlay className={`bg-primary-light fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isDirectoryOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`} />
+      <Overlay className={`bg-black fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isDirectoryOpen ? 'opacity-45' : 'pointer-events-none opacity-0'}`} />
     </>
   );
 };

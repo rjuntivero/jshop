@@ -19,7 +19,7 @@ const ProductPreview: React.FC<T> = ({ product, productName, productPrice, image
       <div className="p-1 md:p-3">
         <Link href={`/products/${product?.id}`}>
           <div className={`relative w-full aspect-square mx-auto overflow-hidden rounded-lg transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
-            <Image src={imageURL!} alt={productName ?? 'Product Image'} fill className="object-contain object-center" onLoadingComplete={() => setLoaded(true)} />
+            <Image sizes="(max-width: 768px) 100vw, 400px" src={imageURL!} alt={productName ?? 'Product Image'} fill className="object-contain object-center" onLoad={() => setLoaded(true)} />
           </div>
         </Link>
 

@@ -21,28 +21,30 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
   return (
     <>
       <aside className={className + ' font-sub-header'}>
-        <div className="relative mb-4 border-b-3 pb-2">
-          <Button onClick={onClose} className="absolute -top-4 z-40">
-            <CloseIcon width={43} height={43} color="#4D2C2C" />
+        <header className="relative  outline-1 p-3 pb-2 flex justify-between items-end">
+          <h1 className="font-extrabold text-primary-light text-2xl">Cart</h1>
+          <Button onClick={onClose} className="">
+            <CloseIcon width={40} height={40} color="#4D2C2C" />
           </Button>
-          <h1 className="font-big-header text-primary-light self-center justify-self-center text-center text-3xl">My Cart</h1>
-        </div>
-        <div className="flex flex-1 flex-col overflow-y-auto">
+        </header>
+        <section className="flex flex-1 flex-col overflow-y-auto bg-secondary-light/30">
           {cart &&
             cart?.map((item) => (
               <CartItem key={item.id} product={item} productName={item.title} productType={item.category} imageURL={item.image} count={item.count} productPrice={item.price} totalPrice={parseFloat((item.price * item.count).toFixed(2))} />
             ))}
           {cart?.length === 0 && <h1 className="font-main text-primary-light my-auto self-center text-xl">cart is empty...</h1>}
+        </section>
+        <div className="p-4 text-2xl flex justify-between border-t-1 border-b-1">
+          <p>Total: </p>
+          <p>${cartTotal.toFixed(2)}</p>
         </div>
-        <div className="p-4 text-3xl">
-          <h1 className="">{'Total: $' + cartTotal.toFixed(2)}</h1>
+        <div className="p-4">
+          <Link onClick={onClose} href="/my-cart" className="bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-black">
+            Checkout
+          </Link>
         </div>
-
-        <Link onClick={onClose} href="/my-cart" className="bg-secondary-light z-40 mt-4 flex items-center justify-center rounded-sm p-4 text-black">
-          Checkout
-        </Link>
       </aside>
-      <Overlay className={`bg-primary-light fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'}`} />
+      <Overlay className={`bg-black fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isCartOpen ? 'opacity-45' : 'pointer-events-none opacity-0'}`} />
     </>
   );
 };
