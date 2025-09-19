@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @plugin 'tailwindcss-motion';
 @plugin 'tailwindcss-animate';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 :root {
   --toastify-color-success: var(--color-primary-light);
@@ -38,7 +40,7 @@
   --font-sans: Inter, 'sans-serif'
   --color-background-dark: #2f2825;
   --color-primary-dark: #b18e66;
-  --color-secondary-dark: #fff9e6;
+  --color-secondary-dark: #faf7ed;
   --color-accent-dark: #b0a9a3;
 }
 

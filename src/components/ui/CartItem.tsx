@@ -17,6 +17,16 @@ interface T {
 
 const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
   const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        ...(product as Product),
+        count: 1,
+      })
+    );
+  };
+
   return (
     <div className=" motion-preset-blur-down border-b-1 border-primary-light flex h-auto w-full self-center duration-400 p-8">
       <article className="grow flex gap-6">
@@ -27,22 +37,12 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
           <h1 className="text-lg font-main mb-2 w-full text-ellipsis line-clamp-1">{productName}</h1>
           <h2 className="font-main pb-2 text-[1.5rem] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
           <div className="flex gap-4 items-center justify-between">
-            <div className="outline-1 outline-secondary-light/60 shadow-sm flex items-center justify-between rounded-sm bg-secondary-light/20 text-sm grow">
+            <div className="outline-1 outline-secondary-light/60 flex items-center justify-between bg-secondary-light/20 text-sm grow">
               <Button onClick={() => dispatch(removeFromCart(product!.id as number))} className="hover:bg-secondary-light/30 self-center p-4 h-full transition duration-400">
                 -
               </Button>
               <h1>{count}</h1>
-              <Button
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      ...(product as Product),
-                      count: 1,
-                    })
-                  )
-                }
-                className="hover:bg-secondary-light/30 self-center h-full p-4 transition duration-400"
-              >
+              <Button onClick={handleAddToCart} className="hover:bg-secondary-light/30 self-center h-full p-4 transition duration-400">
                 +
               </Button>
             </div>

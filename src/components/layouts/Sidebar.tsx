@@ -4,6 +4,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import SidebarItem from '../ui/SidebarItem';
 import Button from '../ui/Button';
 import UpArrowIcon from '../icons/UpArrowIcon';
+import { useFetchProducts } from '@/hooks/useFetchProducts';
 
 interface SidebarProps {
   className?: string;
@@ -40,7 +41,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className, activeCategory, handleItem
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const categories = ['All', 'Men', 'Women', 'Jewelery', 'Electronic'];
+  const { data: products } = useFetchProducts();
+
+  const categories = ['All', ...Array.from(new Set(products?.map((item) => item.category)))];
 
   return (
     <>

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { memo } from 'react';
 import Overlay from './Overlay';
 import { useAppSelector } from '@/state/hooks';
-import Image from 'next/image';
 import CartIcon from '../icons/CartIcon';
 
 interface SidebarProps {

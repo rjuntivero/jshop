@@ -19,9 +19,15 @@ interface T {
 const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPrice, imageURL, count }) => {
   const dispatch = useDispatch();
 
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        ...(product as Product),
+        count: 1,
+      })
+    );
   };
+
   const handleRemoveFromCart = (id: number) => {
     dispatch(removeFromCart(id));
   };
@@ -30,24 +36,24 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
   };
   return (
     <section className="mb-8">
-      <hr className="text-gray-300" />
-      <article className="motion-preset-blur-down def-padding flex flex-col gap-8 duration-400 sm:flex-row">
-        <Link href="/" className="aspect-square w-full md:w-[clamp(100px,20vw,400px)] h-[clamp(150px,20vw,400px)] relative">
-          <Image className="rounded-sm object-contain transition-all duration-400 hover:-translate-y-3 hover:scale-102  " src={imageURL!} alt="Product Image" fill />
+      <hr className="text-gray-400" />
+      <article className="motion-preset-blur-down flex flex-col gap-8 duration-400 sm:flex-row  py-2 md:py-6">
+        <Link href="/" className="aspect-square w-full md:w-[clamp(100px,20vw,400px)] h-[clamp(150px,20vw,400px)] relative bg-white outline-1 outline-primary-light/10 shadow-sm">
+          <Image className="rounded-sm object-contain transition-all duration-400 hover:-translate-y-1 hover:scale-102 p-4" src={imageURL!} alt="Product Image" fill />
         </Link>
         <div>
           <div className="md:p-4">
             <h1 className="font-main mb-2 text-[clamp(1rem,2vw,2rem)]">{productName}</h1>
-            <h1 className="font-main text-secondary-light mb-2 text-[clamp(0.8rem,1.5vw,1rem)]">{productType}</h1>
-            <h2 className="font-main pb-2 text-[clamp(1.5rem,2vw,2rem)] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
+            <h1 className="font-main text-secondary-light mb-2 text-[clamp(0.8rem,1.5vw,1.4rem)]">{productType}</h1>
+            <h2 className="font-main pb-2 text-[clamp(1.5rem,3vw,2.4rem)] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
           </div>
           <div className="flex flex-col md:items-center md:flex-row">
-            <div className="bg-secondary-light/15 m-3 flex max-w-50 items-center justify-between rounded-sm text-xl shadow-md">
+            <div className="bg-white m-3 flex max-w-50 items-center justify-between rounded-sm text-xl shadow-md outline-secondary-light/60 outline-1">
               <Button onClick={() => handleRemoveFromCart(product?.id as number)} className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 -
               </Button>
-              <h1>{count}</h1>
-              <Button onClick={() => handleAddToCart(product as Product)} className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
+              <p className="px-1 w-[2ch] text-center">{count}</p>
+              <Button onClick={handleAddToCart} className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 +
               </Button>
             </div>
@@ -57,7 +63,7 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
           </div>
         </div>
       </article>
-      <hr className="text-gray-300" />
+      <hr className="text-gray-400" />
     </section>
   );
 };

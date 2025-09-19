@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback, lazy } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Navbar from '@/components/layouts/Navbar';
 import Searchbar from '@/components/ui/Searchbar';
 import Sidebar from '@/components/layouts/Sidebar';
@@ -16,7 +16,6 @@ import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { AnimatePresence, motion } from 'motion/react';
 import { Product } from '@/types/Product';
 import LazyProductCard from '../ui/LazyProductCard';
-import dynamic from 'next/dynamic';
 import CartSidebar from '@/components/layouts/CartSidebar';
 
 const ProductGrid = ({ products }: { products: Product[] }) => {
@@ -49,7 +48,15 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
     setSearch(e.target.value);
   }, []);
 
-  const isSmallScreen = window.innerWidth <= 768;
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => setIsSmallScreen(window.innerWidth <= 768);
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
 
   return (
     <>

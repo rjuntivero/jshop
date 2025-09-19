@@ -21,6 +21,8 @@ import ProductPreview from '@/components/ui/ProductPreview';
 import ItemCounter from '@/components/ui/ItemCounter';
 import { useItemCount } from '@/hooks/useItemCount';
 import toast from 'react-hot-toast';
+import { useFetchProducts } from '@/hooks/useFetchProducts';
+import StarRating from '@/components/ui/StarRating';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,19 +31,9 @@ const ProductPage = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const dispatch = useDispatch();
   const { itemCount, updateItemCount } = useItemCount();
-  const similarProducts: Product[] = [
-    {
-      id: 20,
-      title: 'DANVOUY Womens T Shirt Casual Cotton Short',
-      price: 12.99,
-      description: '95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.',
-      category: "women's clothing",
-      image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png',
-      rating: { rate: 3.6, count: 145 },
-      count: 0,
-      totalPrice: 0,
-    },
-  ];
+  const { data: products } = useFetchProducts();
+  console.log('FETCHED PRODUCTS', products);
+  const similarProducts: Product[] | undefined = products?.filter((item) => item.category === product?.category && item.id != product.id);
 
   const handleDirectoryToggle = () => {
     dispatch(toggleDirectory());
@@ -101,15 +93,18 @@ const ProductPage = () => {
           <article className="justify-center z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-6 p-0 md:flex-row ">
             <div className="md:px-6">
               {/* image container */}
-              <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-secondary-dark flex rounded-xl shadow-md outline-1 outline-primary-dark">
+              <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-white flex rounded-sm shadow-md outline-1 outline-primary-dark">
                 <Image src={product.image!} alt="PRODUCT IMAGE" width={500} height={500} className="max-w-[500px] mx-auto  object-contain object-center transition-all duration-700 group-hover:scale-102" priority />
               </div>
             </div>
             <section className="flex flex-col gap-3 max-w-[500px] motion-preset-blur-down-md">
-              <header className="w-full ">
+              <header className="w-full flex flex-col gap-3">
                 <h1 className="font-sub-header font-bold text-5xl">{product?.title}</h1>
                 <h2 className="text-secondary-light text-2xl">{product?.category}</h2>
-                <p>{product?.rating.rate} stars</p>
+                <div className="flex items-center gap-2">
+                  <p>{product?.rating.rate || 0}</p>
+                  <StarRating rating={product?.rating.rate || 0} />
+                </div>
               </header>
               <hr />
               <p className="py-4 text-[clamp(0.9em,1vw,2em)]">{product?.description}</p>
@@ -132,8 +127,8 @@ const ProductPage = () => {
       )}
 
       <section className="p-20 border-t-1 border-b-1 flex flex-col gap-4">
-        <h1 className="font-semibold text-2xl text-primary-light ">Similar Products</h1>
-        <div className="grid grid-rows-[repeat(auto-fill,minmax(200px,1fr))] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+        <h1 className="font-semibold text-2xl text-primary-light ">Products related to this item:</h1>
+        <div className="gap-4 grid grid-rows-[repeat(auto-fill,minmax(200px,1fr))] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
           {similarProducts?.map((product) => (
             <ProductPreview key={product.id} product={product} />
           ))}
