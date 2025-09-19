@@ -7,7 +7,7 @@ interface Props {
 
 export default function ItemCounter({ itemCount, updateItemCount }: Props) {
   return (
-    <div className=" font-semibold text-primary-light outline-1 outline-primary-dark shadow-sm w-[fit-content] flex gap-3 bg-white justify-around items-center">
+    <div className="md:text[0.5rem] text-[0.8rem] font-semibold text-primary-light outline-1 outline-primary-dark shadow-sm w-[fit-content] flex gap-3 bg-white justify-around items-center">
       <Button onClick={() => updateItemCount(-1)} className="p-3 grow h-full hover:bg-gray-200 transition-all duration-300">
         -
       </Button>

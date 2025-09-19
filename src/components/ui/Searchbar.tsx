@@ -12,21 +12,25 @@ interface T {
 }
 
 const Searchbar: React.FC<T> = ({ input, onChange, results, sideBarVisible, showSidebar }) => {
-  const filters = ['Newest', 'Oldest', 'Popularity', 'Rating'];
-  const [dropdown, setDropdown] = useState(false);
-  const handleDropdown = () => {
-    setDropdown((prev) => !prev);
-  };
+  // const filters = ['Newest', 'Oldest', 'Popularity', 'Rating'];
+  // const [dropdown, setDropdown] = useState(false);
+
+  // const handleDropdown = () => {
+  //   setDropdown((prev) => !prev);
+  // };
+
   return (
     <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 ">
+      {/* searchbar */}
       <div className="flex w-full items-center">
-        <div className="dark:bg-background-dark outline-primary-light dark:outline-secondary-dark flex basis-[400px] items-center  px-1 py-1 text-sm outline-1 ">
-          <input type="text" placeholder="Search..." value={input} onChange={onChange} className="dark:text-secondary-dark text-primary-light w-full min-w-0 border-red-50 bg-transparent px-4 focus:outline-none" />
+        <div className="dark:bg-background-dark outline-primary-light dark:outline-secondary-dark flex w-[45%] items-center  px-1 py-1 text-sm outline-1 ">
+          <input type="text" placeholder="Search..." value={input} onChange={onChange} className=" dark:text-secondary-dark text-primary-light w-full min-w-0 border-red-50 bg-transparent px-4 focus:outline-none" />
           <Button className="dark:bg-background-dark ml-auto">
             <SearchIcon />
           </Button>
         </div>
       </div>
+      {/* show/hide sidebar and results */}
       <div className="dark:bg-background-dark grid grid-cols-[max-content] grid-rows-[repeat(2,auto)] items-center justify-end pr-8 text-right">
         <Button className="bg-primary text-secondary-light dark:text-secondary-dark z-50 row-start-1  justify-self-end rounded-lg lg:block" onClick={showSidebar}>
           {sideBarVisible ? 'Hide' : 'Show'}
