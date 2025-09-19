@@ -16,10 +16,10 @@ export default async function Homepage() {
   console.log('fetched products', products);
   return (
     <>
-      <Navbar className="border-b-bg-primary-light flex items-center justify-between transition-all">
+      <Navbar className="border-b-bg-primary-light flex items-center justify-between transition-all ">
         <DirectoryToggle />
       </Navbar>
-      <main className="mb-12">
+      <main className="mb-12 bg-background-light relative">
         <section className=" def-margin z-10 flex justify-around gap-5 p-5 ">
           <div className="w-full text-primary-light relative z-2 flex h-80 flex-col items-center justify-center">
             <h1 className="font-bold font-sans -motion-translate-y-in-25 motion-preset-focus-md relative z-10 text-[clamp(2rem,15vw,5.5rem)] transition-all delay-300 duration-1200 ease-in-out leading-25">JSHOP</h1>

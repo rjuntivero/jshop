@@ -21,7 +21,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
   return (
     <>
       <aside className={className + ' font-sub-header'}>
-        <header className="relative  outline-1 p-3 pb-2 flex justify-between items-end">
+        <header className="relative  outline-1 p-3 pb-2 flex justify-between items-center">
           <h1 className="font-extrabold text-primary-light text-2xl">Cart</h1>
           <Button onClick={onClose} className="">
             <CloseIcon width={40} height={40} color="#4D2C2C" />

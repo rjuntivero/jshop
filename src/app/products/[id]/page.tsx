@@ -17,8 +17,10 @@ import { useDispatch } from 'react-redux';
 import { addToCart, toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { useAppSelector } from '@/state/hooks';
 import Image from 'next/image';
-import { useState } from 'react';
 import ProductPreview from '@/components/ui/ProductPreview';
+import ItemCounter from '@/components/ui/ItemCounter';
+import { useItemCount } from '@/hooks/useItemCount';
+import toast from 'react-hot-toast';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,7 +28,7 @@ const ProductPage = () => {
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const dispatch = useDispatch();
-  const [itemCount, setItemCount] = useState(1);
+  const { itemCount, updateItemCount } = useItemCount();
   const similarProducts: Product[] = [
     {
       id: 20,
@@ -47,6 +49,15 @@ const ProductPage = () => {
 
   const handleCartToggle = () => {
     dispatch(toggleCart());
+  };
+
+  const handleAddToCart = (product: Product) => {
+    const payload: Product = {
+      ...product,
+      count: itemCount,
+    };
+    dispatch(addToCart(payload));
+    toast.success(`${product.title} added to cart!`);
   };
 
   return (
@@ -87,7 +98,7 @@ const ProductPage = () => {
           <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 hidden rounded-full p-3 md:block"></div>
           <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div> */}
 
-          <article className="z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-6 p-0 md:flex-row ">
+          <article className="justify-center z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-6 p-0 md:flex-row ">
             <div className="md:px-6">
               {/* image container */}
               <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-secondary-dark flex rounded-xl shadow-md outline-1 outline-primary-dark">
@@ -100,16 +111,13 @@ const ProductPage = () => {
                 <h2 className="text-secondary-light text-2xl">{product?.category}</h2>
                 <p>{product?.rating.rate} stars</p>
               </header>
+              <hr />
               <p className="py-4 text-[clamp(0.9em,1vw,2em)]">{product?.description}</p>
               <div className="flex flex-col items-start justify-start gap-3">
                 <h1 className="text-3xl font-bold">{`$${product?.price}`}</h1>
                 <div className="flex gap-3 md:flex-row flex-col w-full">
-                  <div className=" w-[200px] flex gap-3 bg-white justify-around items-center">
-                    <Button className="p-3 grow h-full hover:bg-gray-200 transition-all duration-300">-</Button>
-                    <span className="px-10">1</span>
-                    <Button className="p-3 grow h-full hover:bg-gray-200 transition-all duration-300">+</Button>
-                  </div>
-                  <Button className="w-full bg-secondary-light border-primary-light flex items-center justify-center p-3 gap-3" onClick={() => addToCart(product as Product)}>
+                  <ItemCounter updateItemCount={updateItemCount} itemCount={itemCount} />
+                  <Button className="w-full bg-secondary-light border-primary-light flex items-center justify-center p-3 gap-3" onClick={() => handleAddToCart(product as Product)}>
                     <h1 className="font-sub-header">Add To Cart</h1>
                     <CartIcon width={28} height={28} color="#442727" />
                   </Button>

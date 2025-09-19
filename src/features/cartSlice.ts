@@ -21,14 +21,20 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<Product>) {
       const product = action.payload;
+      const quantityToAdd = product.count && product.count > 0 ? product.count : 1;
       const existingItem = state.items.find((item) => item.id === product.id);
       if (existingItem) {
-        existingItem.count += 1;
-        existingItem.totalPrice = existingItem.price * existingItem.count;
-        state.totalPrice = Math.round((state.totalPrice + product.price) * 100) / 100;
+        existingItem.count += quantityToAdd;
+        existingItem.totalPrice = Math.round(existingItem.price * existingItem.count * 100) / 100;
+        state.totalPrice = Math.round((state.totalPrice + existingItem.price * quantityToAdd) * 100) / 100;
       } else {
-        state.items.push({ ...product, count: 1, totalPrice: product.price });
-        state.totalPrice = Math.round((state.totalPrice + product.price) * 100) / 100;
+        const itemToPush: Product = {
+          ...product,
+          count: quantityToAdd,
+          totalPrice: Math.round(product.price * quantityToAdd * 100) / 100,
+        };
+        state.items.push(itemToPush);
+        state.totalPrice = Math.round((state.totalPrice + product.price * quantityToAdd) * 100) / 100;
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
@@ -38,8 +44,7 @@ const cartSlice = createSlice({
         itemToRemove.totalPrice = itemToRemove.price * itemToRemove.count;
         state.totalPrice = Math.round((state.totalPrice - itemToRemove.price) * 100) / 100;
       } else {
-        state.items = state.items.filter((item) => item.id !== action.payload);
-        state.totalPrice = Math.round((state.totalPrice - (itemToRemove?.price || 0)) * 100) / 100;
+        return;
       }
     },
     clearItem(state, action: PayloadAction<number>) {

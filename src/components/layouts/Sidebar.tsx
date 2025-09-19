@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className, activeCategory, handleItem
 
   return (
     <>
-      <aside className={`${className} outline-primary-light  text-primary-light relative z-100 py-[42px] border-t-2 lg:border-r-1 grow `}>
+      <aside className={`${className} outline-primary-light text-primary-light relative z-100 py-[42px] border-t-2 lg:border-t-0 lg:border-r-1 grow `}>
         <div className="items-center flex justify-between font-sub-header pr-8 border-b-primary-light dark:border-secondary-dark border-b-4 text-[2.7rem] font-bold  px-2">
           <h1 className="">Categories</h1>
           <button onClick={toggleSidebar} className="lg:hidden block font-light cursor-pointer">

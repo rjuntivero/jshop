@@ -53,9 +53,9 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
 
   return (
     <>
-      <header>
-        <Navbar className="flex items-center justify-between  transition-all">
-          <div className="left flex items-center gap-6">
+      <header className="sticky top-0 z-50 bg-background-light">
+        <Navbar className="flex items-center justify-between transition-all border-b-1">
+          <div className="flex items-center gap-6">
             <Button
               onClick={handleDirectoryToggle}
               className="dark:bg-primary-dark motion-scale-in-[0.5] motion-translate-x-in-[-110%] motion-translate-y-in-[11%] motion-opacity-in-[33%] motion-rotate-in-[-480deg] motion-duration-[0.38s] motion-duration-[0.57s]/scale motion-delay-[0.23s]/scale motion-duration-[0.42s]/rotate motion-ease-spring-bouncier navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2"
@@ -75,17 +75,16 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
           </div>
         </Navbar>
       </header>
-      <hr className=" bg-bg-primary-light " />
 
       <CartSidebar
         onClose={handleCartToggle}
         className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       />
-      <main className="min-h-screen bg-background-light relative flex  gap-6 transition-all duration-500">
+      <main className=" min-h-screen bg-background-light relative flex   transition-all duration-500">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
             <motion.aside
-              className="bottom-0 fixed lg:w-[fit-content] w-full bg-background-light z-9 lg:sticky lg:top-0 self-start lg:flex flex-col lg:h-full grow lg:min-h-screen"
+              className="bottom-0 fixed lg:w-[fit-content] w-full bg-background-light z-9 lg:sticky lg:top-28 self-start lg:flex flex-col lg:h-full grow lg:min-h-screen"
               initial={isSmallScreen ? { y: '100%' } : { x: 0 }}
               animate={isSmallScreen ? { y: 0 } : { x: 0 }}
               exit={isSmallScreen ? { y: '100%' } : { x: -300 }}
@@ -98,11 +97,11 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
         </AnimatePresence>
 
         <motion.section layout="position" className=" flex flex-col gap-2 w-full ">
-          <div className="bg-background-light dark:bg-background-dark shadow-b sticky top-0 z-2 px-3 py-3  md:py-5">
+          <div className="shadow-md bg-background-light dark:bg-background-dark shadow-b sticky top-27 z-2 px-5 md:px-8 py-3  md:py-6">
             <Searchbar input={search} onChange={handleSearch} results={filteredProducts?.length || 0} showSidebar={handleSidebarToggle} sideBarVisible={showSidebar} />
           </div>
 
-          <div className="h-full transition-all duration-500 mb-6">
+          <div className="h-full transition-all duration-500 mb-6 md:p-3 lg:p-5">
             <article className="relative grid grid-cols-2 gap-2 px-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-3">
               {filteredProducts?.map((product) => (
                 <LazyProductCard key={String(product.id)} product={product} />
