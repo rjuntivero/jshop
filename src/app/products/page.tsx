@@ -1,6 +1,6 @@
 import ProductGrid from '@/components/layouts/ProductGrid';
 
-export async function fetchProducts() {
+const fetchProducts = async () => {
   const res = await fetch('https://fakestoreapi.com/products', {
     cache: 'no-store',
   });
@@ -12,7 +12,8 @@ export async function fetchProducts() {
   const products = await res.json();
 
   return products;
-}
+};
+
 export default async function Page() {
   const products = await fetchProducts();
 

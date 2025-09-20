@@ -40,10 +40,14 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
         </section>
         <div className="p-4 text-2xl flex justify-between border-t-1 border-b-1">
           <p>Total: </p>
-          <p>${cartTotal.toFixed(2)}</p>
+          <p>$ {cartTotal.toFixed(2)}</p>
         </div>
         <div className="p-4">
-          <Link onClick={onClose} href="/my-cart" className="bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-primary-light font-semibold">
+          <Link
+            onClick={onClose}
+            href="/my-cart"
+            className=" ease-in outline-1 outline-secondary-light hover:bg-white hover:text-secondary-light transition-all duration-150 bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-primary-light font-semibold"
+          >
             Checkout
           </Link>
         </div>

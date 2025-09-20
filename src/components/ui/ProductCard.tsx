@@ -75,9 +75,12 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
           </h2>
           {/* Action Buttons */}
           <div className="mt-3 flex justify-between gap-3 border-t pt-2  transition-opacity duration-300 md:flex-row flex-col items-center">
-            <ItemCounter itemCount={itemCount} updateItemCount={updateItemCount} />
+            <div className="flex items-center gap-2">
+              <p className="font-semibold">Qt.</p>
+              <ItemCounter itemCount={itemCount} updateItemCount={updateItemCount} />
+            </div>
             <div className="flex gap-3 items-center ">
-              <Button className="hover:bg-primary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85" onClick={() => handleAddToCart(product as Product)}>
+              <Button className="hover:bg-secondary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85" onClick={() => handleAddToCart(product as Product)}>
                 <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" />
               </Button>
             </div>

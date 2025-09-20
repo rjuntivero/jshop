@@ -35,7 +35,7 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
         </div>
         <div className="flex flex-col grow">
           <h1 className="text-lg font-main mb-2 w-full text-ellipsis line-clamp-1">{productName}</h1>
-          <h2 className="font-main pb-2 text-[1.5rem] font-semibold">{'$' + totalPrice?.toFixed(2)}</h2>
+          <h2 className="font-main pb-2 text-[1.5rem] font-medium">{'$ ' + totalPrice?.toFixed(2)}</h2>
           <div className="flex gap-4 items-center justify-between">
             <div className="outline-1 outline-secondary-light/60 flex items-center justify-between bg-secondary-light/20 text-sm grow">
               <Button onClick={() => dispatch(removeFromCart(product!.id as number))} className="hover:bg-secondary-light/30 self-center p-4 h-full transition duration-400">
@@ -46,7 +46,9 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
                 +
               </Button>
             </div>
-            <Button onClick={() => dispatch(clearItem(product!.id as number))}>H</Button>
+            <Button onClick={() => dispatch(clearItem(product!.id as number))}>
+              <Image src="/trash.svg" alt="trash icon" width={25} height={25} />
+            </Button>
           </div>
         </div>
       </article>

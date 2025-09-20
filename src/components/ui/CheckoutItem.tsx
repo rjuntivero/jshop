@@ -38,7 +38,7 @@ const CheckoutItem: React.FC<T> = ({ product, productName, productType, totalPri
     <section className="mb-8">
       <hr className="text-gray-400" />
       <article className="motion-preset-blur-down flex flex-col gap-8 duration-400 sm:flex-row  py-2 md:py-6">
-        <Link href="/" className="aspect-square w-full md:w-[clamp(100px,20vw,400px)] h-[clamp(150px,20vw,400px)] relative bg-white outline-1 outline-primary-light/10 shadow-sm">
+        <Link href={`/products/${product!.id}`} className="aspect-square w-full md:w-[clamp(100px,20vw,400px)] h-[clamp(150px,20vw,400px)] relative bg-white outline-1 outline-primary-light/10 shadow-sm">
           <Image className="rounded-sm object-contain transition-all duration-400 hover:-translate-y-1 hover:scale-102 p-4" src={imageURL!} alt="Product Image" fill />
         </Link>
         <div>

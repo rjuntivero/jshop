@@ -142,7 +142,9 @@ export default function CheckoutPage() {
             )} */}
             <form onSubmit={handleCheckout} className="flex flex-col gap-6">
               {clientSecret && <PaymentElement />} {errorMessage && <div>{errorMessage}</div>}
-              <Button className="text-secondary-dark p-4 w-full flex justify-center items-center bg-secondary-light rounded-md">{!loading ? `Pay $${cartTotal}` : 'Processing...'}</Button>
+              <Button className="hover:scale-102 transition-all duration-150 outline-1 outline-secondary-light hover:bg-white hover:text-secondary-light text-secondary-dark p-4 w-full flex justify-center items-center bg-secondary-light rounded-md">
+                {!loading ? `Pay $${cartTotal}` : 'Processing...'}
+              </Button>
             </form>
           </div>
         </div>
