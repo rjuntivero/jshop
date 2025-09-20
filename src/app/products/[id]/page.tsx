@@ -104,6 +104,7 @@ const ProductPage = () => {
                 <div className="flex items-center gap-2">
                   <p>{product?.rating.rate || 0}</p>
                   <StarRating rating={product?.rating.rate || 0} />
+                  <p className="text-gray-400">{product?.rating.count} reviews</p>
                 </div>
               </header>
               <hr />
