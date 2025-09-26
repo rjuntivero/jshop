@@ -33,11 +33,9 @@ const ProductPage = () => {
   const { itemCount, updateItemCount } = useItemCount();
   const { data: products } = useFetchProducts();
   console.log('FETCHED PRODUCTS', products);
-  const similarProducts: Product[] | undefined = products?.filter((item) => item.category === product?.category && item.id != product.id);
-
-  const handleDirectoryToggle = () => {
-    dispatch(toggleDirectory());
-  };
+  const similarProducts: Product[] | undefined = products?.filter(
+    (item) => item.category === product?.category && item.id != product.id
+  );
 
   const handleCartToggle = () => {
     dispatch(toggleCart());
@@ -54,24 +52,13 @@ const ProductPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col gap-12">
-      <Navbar className="bg-background-light z-10 mb-8 flex items-center justify-between border-b-3">
-        <div className="left flex items-center gap-6">
-          <Button onClick={handleDirectoryToggle} className="dark:bg-primary-dark navbar-btn flex h-[78px] w-[78px] items-center justify-center rounded-full p-2">
-            <MenuIcon color="#442727" />
-          </Button>
-          <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
-        </div>
-        <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">JSHOP</h1>
-        <div className="right flex items-center gap-6">
-          <Button onClick={handleCartToggle} className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
-            <CartIcon width={44} height={40} color="#442727" />
-          </Button>
-        </div>
-      </Navbar>
+      <Navbar productsPage={true} />
 
       <CartSidebar
         onClose={handleCartToggle}
-        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${
+          isCartOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       />
       {isLoading && (
         <div className="flex h-[600px] items-center justify-center">
@@ -94,7 +81,14 @@ const ProductPage = () => {
             <div className="md:px-6">
               {/* image container */}
               <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-white flex rounded-sm shadow-md outline-1 outline-primary-dark">
-                <Image src={product.image!} alt="PRODUCT IMAGE" width={500} height={500} className="max-w-[500px] mx-auto  object-contain object-center transition-all duration-700 group-hover:scale-102" priority />
+                <Image
+                  src={product.image!}
+                  alt="PRODUCT IMAGE"
+                  width={500}
+                  height={500}
+                  className="max-w-[500px] mx-auto  object-contain object-center transition-all duration-700 group-hover:scale-102"
+                  priority
+                />
               </div>
             </div>
             <section className="flex flex-col gap-3 max-w-[500px] motion-preset-blur-down-md">
@@ -113,14 +107,18 @@ const ProductPage = () => {
                 <h1 className="text-3xl font-bold">{`$${product?.price}`}</h1>
                 <div className="flex gap-3 md:flex-row flex-col w-full">
                   <ItemCounter updateItemCount={updateItemCount} itemCount={itemCount} />
-                  <Button className="w-full bg-secondary-light border-primary-light flex items-center justify-center p-3 gap-3" onClick={() => handleAddToCart(product as Product)}>
+                  <Button
+                    className="w-full bg-secondary-light border-primary-light flex items-center justify-center p-3 gap-3"
+                    onClick={() => handleAddToCart(product as Product)}>
                     <h1 className="font-sub-header">Add To Cart</h1>
                     <CartIcon width={28} height={28} color="#442727" />
                   </Button>
                 </div>
               </div>
               <Link className="" href="/products">
-                <h1 className="font-sub-header hover:text-secondary-light cursor-pointer text-end text-sm">Back to Products...</h1>
+                <h1 className="font-sub-header hover:text-secondary-light cursor-pointer text-end text-sm">
+                  Back to Products...
+                </h1>
               </Link>
             </section>
           </article>
@@ -128,7 +126,9 @@ const ProductPage = () => {
       )}
 
       <section className="p-20 border-t-1 border-b-1 flex flex-col gap-4">
-        <h1 className="font-semibold text-2xl text-primary-light ">Products related to this item:</h1>
+        <h1 className="font-semibold text-2xl text-primary-light ">
+          Products related to this item:
+        </h1>
         <div className="gap-4 grid grid-rows-[repeat(auto-fill,minmax(200px,1fr))] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
           {similarProducts?.map((product) => (
             <ProductPreview key={product.id} product={product} />

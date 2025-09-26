@@ -18,7 +18,13 @@ interface T {
   imageURL?: string;
 }
 
-const ProductCard: React.FC<T> = ({ product, productName, productType, productPrice, imageURL }) => {
+const ProductCard: React.FC<T> = ({
+  product,
+  productName,
+  productType,
+  productPrice,
+  imageURL,
+}) => {
   const dispatch = useAppDispatch();
   const [loaded, setLoaded] = useState(false);
   const { itemCount, updateItemCount } = useItemCount();
@@ -44,7 +50,9 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
                 src={imageURL!}
                 alt="PRODUCT IMAGE"
                 fill
-                className={`z-1 p-2 md:p-4 lg:p-6 cursor-pointer object-contain object-center transition-all duration-500 group-hover:scale-103 group-hover:-translate-y-1 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+                className={`z-1 p-2 md:p-4 lg:p-6 cursor-pointer object-contain object-center transition-all duration-500 group-hover:scale-103 group-hover:-translate-y-1 ${
+                  loaded ? 'opacity-100' : 'opacity-0'
+                }`}
                 onLoad={() => setLoaded(true)}
               />
             </Link>
@@ -60,8 +68,12 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
         </div>
 
         <div className=" md:p-3 p-2 bg-white border-t-1 border-t-primary-light/20">
-          <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate text-xl md:text-xl">{productName}</h1>
-          <h2 className="text-secondary-light text-[0.90rem] md:text-lg font-medium">{productType}</h2>
+          <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate text-xl md:text-xl">
+            {productName}
+          </h1>
+          <h2 className="  text-secondary-light text-[0.90rem] md:text-lg font-medium">
+            {productType}
+          </h2>
           <div className="lg:flex-row flex-col flex items-start lg:items-center justify-start lg:gap-1">
             <div className="flex gap-2 items-center justify-start md:text-lg text-xs">
               <p>{product?.rating.rate || 0}</p>
@@ -80,7 +92,9 @@ const ProductCard: React.FC<T> = ({ product, productName, productType, productPr
               <ItemCounter itemCount={itemCount} updateItemCount={updateItemCount} />
             </div>
             <div className="flex gap-3 items-center ">
-              <Button className="hover:bg-secondary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85" onClick={() => handleAddToCart(product as Product)}>
+              <Button
+                className="hover:bg-secondary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85"
+                onClick={() => handleAddToCart(product as Product)}>
                 <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" />
               </Button>
             </div>
