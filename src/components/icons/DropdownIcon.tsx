@@ -7,8 +7,20 @@ interface IconProps {
 
 const DropdownIcon: React.FC<IconProps> = ({ className }) => {
   return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-      <path d="M7.5 11.25L15 18.75L22.5 11.25" stroke="#D0A473" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 30 30"
+      fill="none">
+      <path
+        d="M7.5 11.25L15 18.75L22.5 11.25"
+        stroke="#442727"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

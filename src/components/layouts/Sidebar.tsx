@@ -14,12 +14,7 @@ interface SidebarProps {
   toggleSidebar: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
-  className,
-  activeCategory,
-  handleItemClick,
-  toggleSidebar,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeCategory, handleItemClick, toggleSidebar }) => {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
 
   const scrollToTop = useCallback(() => {
@@ -49,10 +44,32 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const { data: products } = useFetchProducts();
 
-  const categories = [
-    'All',
-    ...Array.from(new Set(products?.map((item) => capitalizeFirst(item.category.toString())))),
-  ];
+  // Sub Categories
+  const subCategories = React.useMemo(() => {
+    const map: Record<string, { label: string; value: string }[]> = {};
+
+    products?.forEach((item) => {
+      const cat = item.category.toString();
+      const parts = cat.split('-');
+      const parentLabel = capitalizeFirst(parts[0]);
+      const childLabel = parts.length > 1 ? capitalizeFirst(parts[1]) : null;
+
+      if (!map[parentLabel]) map[parentLabel] = [];
+
+      if (childLabel) {
+        const childObj = { label: childLabel, value: cat };
+        // only add if value doesn't exist already
+        if (!map[parentLabel].some((c) => c.value === childObj.value)) {
+          map[parentLabel].push(childObj);
+        }
+      }
+    });
+
+    return [
+      { parent: 'All', children: [] },
+      ...Object.entries(map).map(([parent, children]) => ({ parent, children })),
+    ];
+  }, [products]);
 
   return (
     <>
@@ -66,14 +83,17 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Scrollable middle */}
-        <div className="flex-1 min-h-0 overflow-y-auto">
-          <ul className="flex flex-col *:dark:text-secondary-dark">
-            {categories.map((item) => (
+        <div className="flex-1 min-h-0 overflow-y-auto max-h-[70vh]">
+          <ul className="flex flex-col gap-1 ">
+            {subCategories.map(({ parent, children }) => (
               <SidebarItem
-                key={item}
-                item={item}
-                isActive={activeCategory === item}
+                key={parent}
+                item={parent}
+                isActive={activeCategory === parent}
+                activeValue={activeCategory}
                 handleItemClick={handleClick}
+                childrenItems={children}
+                hasDropdown={children.length > 0}
               />
             ))}
           </ul>

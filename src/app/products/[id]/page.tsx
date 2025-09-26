@@ -52,7 +52,7 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col gap-6">
+    <div className="min-h-screen flex flex-col ">
       <Navbar productsPage={true} />
 
       <CartSidebar
@@ -69,7 +69,7 @@ const ProductPage = () => {
       {error && <ErrorMessage />}
 
       {product && (
-        <main className=" grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
+        <main className=" py-12 bg-white grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
           {/* background design */}
           {/* <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
           <div className="bg-secondary-light/70 absolute left-20 z-1 hidden rounded-full p-8 md:block"></div>
@@ -105,6 +105,9 @@ const ProductPage = () => {
               </header>
               <hr />
               <p className="py-4 text-[clamp(0.9em,1vw,2em)]">{product?.description}</p>
+              <p>
+                tags: <span className="text-secondary-light">{product?.tags?.join(', ')}</span>
+              </p>
               <div className="flex flex-col items-start justify-start gap-3">
                 <h1 className="text-3xl font-bold">{`$${product?.price}`}</h1>
                 <div className="flex gap-3 md:flex-row flex-col w-full">
@@ -128,10 +131,12 @@ const ProductPage = () => {
       )}
       {/* related products */}
       <section className="p-8 border-t-1   flex flex-col gap-4">
-        <h1 className="font-semibold text-2xl text-primary-light ">Related Products:</h1>
+        <h1 className="font-semibold text-2xl text-primary-light ">
+          Related Products: {`"${product?.category}"`}
+        </h1>
         <div className="gap-4 flex  overflow-x-auto pb-2">
           {relatedProducts?.map((product) => (
-            <div key={product.id} className="shrink-0 w-64">
+            <div key={`${product.id}-related`} className="shrink-0 w-64">
               <ProductPreview product={product} />
             </div>
           ))}
@@ -140,10 +145,10 @@ const ProductPage = () => {
 
       {similarProducts && similarProducts?.length > 0 && (
         <section className="p-8 border-t-1 border-b-1   flex flex-col gap-4">
-          <h1 className="font-semibold text-2xl text-primary-light ">Products like this item:</h1>
+          <h1 className="font-semibold text-2xl text-primary-light ">Similar Items:</h1>
           <div className="gap-4 flex  overflow-x-auto pb-2">
             {similarProducts?.map((product) => (
-              <div key={product.id} className="shrink-0 w-64">
+              <div key={`${product.id}-similar`} className="shrink-0 w-64">
                 <ProductPreview product={product} />
               </div>
             ))}
@@ -154,8 +159,8 @@ const ProductPage = () => {
       <section className="p-8 flex flex-col gap-4">
         <h1 className="font-semibold text-2xl text-primary-light ">Reviews:</h1>
         <div className="gap-4 flex flex-col grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
-          {product?.reviews?.map((review) => (
-            <Review key={review.reviewerEmail} review={review} />
+          {product?.reviews?.map((review, i) => (
+            <Review key={`${review.reviewerEmail}-${i}`} review={review} />
           ))}
         </div>
       </section>

@@ -4,7 +4,7 @@ interface IconProps {
   height?: number;
 }
 
-export default function UserIcon({ color, width, height }: IconProps) {
+export default function UserIcon({ color = '#442727', width = 25, height = 25 }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

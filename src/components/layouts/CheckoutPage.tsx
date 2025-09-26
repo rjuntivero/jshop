@@ -88,7 +88,7 @@ export default function CheckoutPage() {
               </h2>
             )}
           </Button>
-          <div className="relative rounded-md">
+          <div className="relative rounded-md bg-white">
             {cartItems.length > 0 ? (
               cartItems?.map((item) => (
                 <CheckoutItem
