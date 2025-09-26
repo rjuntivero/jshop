@@ -34,9 +34,22 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
         <section className="flex flex-1 flex-col overflow-y-auto bg-white/50">
           {cart &&
             cart?.map((item) => (
-              <CartItem key={item.id} product={item} productName={item.title} productType={item.category} imageURL={item.image} count={item.count} productPrice={item.price} totalPrice={parseFloat((item.price * item.count).toFixed(2))} />
+              <CartItem
+                key={item.id}
+                product={item}
+                productName={item.title}
+                productType={item.category}
+                imageURL={item.thumbnail}
+                count={item.count}
+                productPrice={item.price}
+                totalPrice={parseFloat((item.price * item.count).toFixed(2))}
+              />
             ))}
-          {cart?.length === 0 && <h1 className="font-main text-primary-light my-auto self-center text-xl">cart is empty...</h1>}
+          {cart?.length === 0 && (
+            <h1 className="font-main text-primary-light my-auto self-center text-xl">
+              cart is empty...
+            </h1>
+          )}
         </section>
         <div className="p-4 text-2xl flex justify-between border-t-1 border-b-1">
           <p>Total: </p>
@@ -46,13 +59,16 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
           <Link
             onClick={onClose}
             href="/my-cart"
-            className=" ease-in outline-1 outline-secondary-light hover:bg-white hover:text-secondary-light transition-all duration-150 bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-primary-light font-semibold"
-          >
+            className=" ease-in outline-1 outline-secondary-light hover:bg-white hover:text-secondary-light transition-all duration-150 bg-secondary-light z-40 flex items-center justify-center rounded-sm p-4 text-primary-light font-semibold">
             Checkout
           </Link>
         </div>
       </aside>
-      <Overlay className={`bg-black fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${isCartOpen ? 'opacity-45' : 'pointer-events-none opacity-0'}`} />
+      <Overlay
+        className={`bg-black fixed inset-0 z-999 h-full w-full transition-all duration-400 ease-in-out ${
+          isCartOpen ? 'opacity-45' : 'pointer-events-none opacity-0'
+        }`}
+      />
     </>
   );
 };

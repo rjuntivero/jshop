@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
+import UserIcon from '../icons/UserIcon';
 interface NavbarProps {
   homePage?: boolean;
   productsPage?: boolean;
@@ -62,6 +63,11 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
             </Button>
           </Link>
         )}
+        <Link href="/login">
+          <Button className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
+            <UserIcon width={44} height={40} color="#442727" />
+          </Button>
+        </Link>
       </div>
     </nav>
   );

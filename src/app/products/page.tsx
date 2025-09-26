@@ -1,7 +1,8 @@
 import ProductGrid from '@/components/layouts/ProductGrid';
+import { Product } from '@/types/Product';
 
 const fetchProducts = async () => {
-  const res = await fetch('https://fakestoreapi.com/products', {
+  const res = await fetch('https://dummyjson.com/products?limit=194', {
     cache: 'no-store',
   });
 
@@ -9,8 +10,8 @@ const fetchProducts = async () => {
     throw new Error('Failed to fetch products');
   }
 
-  const products = await res.json();
-
+  const { products }: { products: Product[] } = await res.json();
+  console.log(products);
   return products;
 };
 

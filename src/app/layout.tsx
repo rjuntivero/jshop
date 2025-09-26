@@ -18,9 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={` ${reddit_sans.variable} ${montserrat.variable}  min-h-screen`}>
+    <html lang="en" className={` ${reddit_sans.variable} ${montserrat.variable}  min-h-screen`}>
       <body className={`antialiased bg-background-light`}>
         <Providers>{children}</Providers>
       </body>

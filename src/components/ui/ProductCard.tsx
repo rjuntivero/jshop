@@ -76,10 +76,10 @@ const ProductCard: React.FC<T> = ({
           </h2>
           <div className="lg:flex-row flex-col flex items-start lg:items-center justify-start lg:gap-1">
             <div className="flex gap-2 items-center justify-start md:text-lg text-xs">
-              <p>{product?.rating.rate || 0}</p>
-              <StarRating rating={product?.rating.rate || 0} />
+              <p>{product?.rating || 0}</p>
+              <StarRating rating={product?.rating || 0} />
             </div>
-            <p className="text-gray-400 md:text-md text-xs">{product?.rating.count} reviews</p>
+            <p className="text-gray-400 md:text-md text-xs">{product?.reviews?.length} reviews</p>
           </div>
           <h2 className="pt-1 text-[1.2rem] font-semibold text-primary-light antialiased md:text-[2rem] flex gap-1 items-start">
             <span className="text-[0.8rem] md:text-[1.55rem] ">$</span>

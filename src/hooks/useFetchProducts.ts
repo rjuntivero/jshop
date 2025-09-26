@@ -3,9 +3,12 @@ import { Product } from '../types/Product';
 
 const fetchProducts = async (category: string): Promise<Product[]> => {
   await new Promise((resolve) => setTimeout(resolve, 1500));
-  const url = category === 'All' ? 'https://fakestoreapi.com/products' : `https://fakestoreapi.com/products/category/${category}`;
+  const url =
+    category === 'All'
+      ? 'https://dummyjson.com/products?limit=194'
+      : `https://dummyjson.com/products/category/${category}`;
   const response = await fetch(url);
-  const products: Product[] = await response.json();
+  const { products }: { products: Product[] } = await response.json();
 
   const productsWithTotalPrice = products.map((product) => ({
     ...product,

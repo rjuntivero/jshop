@@ -6,25 +6,26 @@ import { Product } from '@/types/Product';
 import Image from 'next/image';
 
 export default async function Homepage() {
-  const res = await fetch('https://fakestoreapi.com/products', {
+  const res = await fetch('https://dummyjson.com/products?limit=194', {
     cache: 'no-store',
   });
 
-  const products: Product[] = await res.json();
-  const topRatedProducts = products.sort((a, b) => b.rating.rate - a.rating.rate);
+  const { products }: { products: Product[] } = await res.json();
+  const topRatedProducts = products.sort((a, b) => b.rating - a.rating);
+
   console.log('fetched products', products);
   return (
     <>
       <Navbar homePage={true} />
       <main className="mb-12 bg-background-light relative">
-        <section className=" def-margin z-10 flex justify-around gap-5 p-5 ">
+        <section className=" def-margin z-10 flex justify-around gap-5 p-5 text-center">
           <div className="w-full text-primary-light relative z-2 flex h-80 flex-col items-center justify-center">
-            <h1 className="font-bold font-sans -motion-translate-y-in-25 motion-preset-focus-md relative z-10 text-[clamp(2rem,15vw,5.5rem)] transition-all delay-300 duration-1200 ease-in-out leading-25">
+            <h1 className="font-bold font-sans -motion-translate-y-in-25 motion-preset-focus-md relative z-10 text-[clamp(3.5rem,4vw,5.5rem)] transition-all delay-300 duration-1200 ease-in-out leading-25">
               JSHOP
             </h1>
             <div className="text-secondary-light relative flex flex-col items-center gap-4 font-bold transition-all duration-800 ">
               <p className="text-primary-light motion-preset-slide-left relative z-10 transition-all delay-1200 duration-1000">
-                Find all the right styles for you
+                Find what {"you're"} looking for.
               </p>
               {/* background deco */}
               <div className="bg-secondary-light/50 motion-opacity-loop-70 absolute -top-40 -left-50 z-0 hidden h-60 w-60 rounded-full transition-all delay-400 duration-3500 ease-in-out md:block"></div>
@@ -48,11 +49,11 @@ export default async function Homepage() {
         </section>
 
         <section className="def-margin">
-          <h2 className="font-bold text-2xl text-primary-light">Top Rated:</h2>
+          <h2 className="font-bold text-xl text-primary-light">Top Rated:</h2>
           <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto gap-4 overflow-auto rounded-sm p-2 outline-1 md:p-5">
             {topRatedProducts?.slice(0, 8)?.map((product) => (
               <article
-                className="w-full flex-none sm:w-1/2 md:w-1/3 lg:w-1/4"
+                className="w-full flex-none sm:w-1/5 md:w-1/6 lg:w-1/7"
                 key={String(product.id)}>
                 <ProductPreview key={String(product.id)} product={product} />
               </article>

@@ -74,7 +74,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Navbar cartPage={true} />
+      <Navbar />
       <hr className="bg-primary-light " />
 
       {/* Checkout Items */}
@@ -97,7 +97,7 @@ export default function CheckoutPage() {
                   productName={item.title}
                   productPrice={item.price}
                   productType={item.category}
-                  imageURL={item.image}
+                  imageURL={item.thumbnail}
                   totalPrice={item.totalPrice}
                   count={item.count}
                 />

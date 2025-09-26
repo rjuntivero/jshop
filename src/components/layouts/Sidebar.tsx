@@ -5,6 +5,7 @@ import SidebarItem from '../ui/SidebarItem';
 import Button from '../ui/Button';
 import UpArrowIcon from '../icons/UpArrowIcon';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
+import { capitalizeFirst } from '@/app/lib/utils';
 
 interface SidebarProps {
   className?: string;
@@ -13,7 +14,12 @@ interface SidebarProps {
   toggleSidebar: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ className, activeCategory, handleItemClick, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  className,
+  activeCategory,
+  handleItemClick,
+  toggleSidebar,
+}) => {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
 
   const scrollToTop = useCallback(() => {
@@ -43,27 +49,39 @@ const Sidebar: React.FC<SidebarProps> = ({ className, activeCategory, handleItem
 
   const { data: products } = useFetchProducts();
 
-  const categories = ['All', ...Array.from(new Set(products?.map((item) => item.category)))];
+  const categories = [
+    'All',
+    ...Array.from(new Set(products?.map((item) => capitalizeFirst(item.category.toString())))),
+  ];
 
   return (
     <>
-      <aside className={`${className} outline-primary-light text-primary-light relative z-100 py-[42px] border-t-2 lg:border-t-0 lg:border-r-1 grow `}>
-        <div className="items-center flex justify-between font-sub-header pr-8 border-b-primary-light dark:border-secondary-dark border-b-4 text-[2.7rem] font-bold  px-2">
-          <h1 className="">Categories</h1>
+      <aside className="outline-primary-light text-primary-light relative z-100 h-screen flex flex-col border-r-1 pt-[42px] ">
+        {/* Header */}
+        <div className="flex-shrink-0 flex items-center justify-between font-sub-header pr-8 border-b-1 border-b-primary-light text-[2.7rem] font-bold px-2">
+          <h1>Categories</h1>
           <button onClick={toggleSidebar} className="lg:hidden block font-light cursor-pointer">
             x
           </button>
         </div>
 
-        <ul className="*:dark:text-secondary-dark overflow-y-auto  h-[85%]">
-          {categories.map((item) => (
-            <SidebarItem key={item} item={item} isActive={activeCategory === item} handleItemClick={handleClick} />
-          ))}
-        </ul>
-        {/* <div className="bg-primary-light dark:bg-primary-dark absolute bottom-11 left-0 m-0 w-full  py-0.5"></div>
-        <div className="bg-primary-light dark:bg-primary-dark absolute bottom-0 left-0 m-0 w-full  py-5"></div> */}
-        <div className="font-sub-header text-secondary-light p-4 hidden text-xl lg:block">
-          <Button className="group flex gap-4 font-semibold " onClick={scrollToTop}>
+        {/* Scrollable middle */}
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          <ul className="flex flex-col *:dark:text-secondary-dark">
+            {categories.map((item) => (
+              <SidebarItem
+                key={item}
+                item={item}
+                isActive={activeCategory === item}
+                handleItemClick={handleClick}
+              />
+            ))}
+          </ul>
+        </div>
+
+        {/* Footer */}
+        <div className="flex-shrink-0 font-sub-header text-secondary-light p-4 hidden text-xl lg:block">
+          <Button className="group flex gap-4 font-semibold" onClick={scrollToTop}>
             <h1>Scroll to Top</h1>
             <UpArrowIcon className="transition-all duration-700 group-hover:animate-bounce" />
           </Button>

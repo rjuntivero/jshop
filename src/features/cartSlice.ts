@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '@/types/Product';
-
-interface Cart {
-  items: Product[];
-  totalPrice: number;
-  isCartOpen: boolean;
-  isDirectoryOpen: boolean;
-}
+import { Cart } from '@/types/Cart';
 
 const initialState: Cart = {
   items: [],
@@ -26,7 +20,8 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.count += quantityToAdd;
         existingItem.totalPrice = Math.round(existingItem.price * existingItem.count * 100) / 100;
-        state.totalPrice = Math.round((state.totalPrice + existingItem.price * quantityToAdd) * 100) / 100;
+        state.totalPrice =
+          Math.round((state.totalPrice + existingItem.price * quantityToAdd) * 100) / 100;
       } else {
         const itemToPush: Product = {
           ...product,
@@ -34,7 +29,8 @@ const cartSlice = createSlice({
           totalPrice: Math.round(product.price * quantityToAdd * 100) / 100,
         };
         state.items.push(itemToPush);
-        state.totalPrice = Math.round((state.totalPrice + product.price * quantityToAdd) * 100) / 100;
+        state.totalPrice =
+          Math.round((state.totalPrice + product.price * quantityToAdd) * 100) / 100;
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
@@ -74,6 +70,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, toggleCart, toggleDirectory, clearItem } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, toggleCart, toggleDirectory, clearItem } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

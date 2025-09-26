@@ -12,8 +12,17 @@ export default function LazyProductCard({ product }: { product: Product }) {
   return (
     <div ref={ref} className="min-h-[360px]">
       {inView ? (
-        <Suspense fallback={<div className="rounded-md bg-secondary-dark dark:bg-neutral-800 animate-pulse h-full w-full" />}>
-          <ProductCard product={product} productName={product.title} productType={product.category} productPrice={product.price} imageURL={product.image} />
+        <Suspense
+          fallback={
+            <div className="rounded-md bg-secondary-dark dark:bg-neutral-800 animate-pulse h-full w-full" />
+          }>
+          <ProductCard
+            product={product}
+            productName={product.title}
+            productType={product.category}
+            productPrice={product.price}
+            imageURL={product?.thumbnail}
+          />
         </Suspense>
       ) : (
         // placeholder not in vew

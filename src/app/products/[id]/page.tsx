@@ -21,6 +21,7 @@ import { useItemCount } from '@/hooks/useItemCount';
 import toast from 'react-hot-toast';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
 import StarRating from '@/components/ui/StarRating';
+import Review from '@/components/ui/Review';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,10 +31,13 @@ const ProductPage = () => {
   const { itemCount, updateItemCount } = useItemCount();
   const { data: products } = useFetchProducts();
   console.log('FETCHED PRODUCTS', products);
-  const similarProducts: Product[] | undefined = products?.filter(
+  const relatedProducts: Product[] | undefined = products?.filter(
     (item) => item.category === product?.category && item.id != product.id
   );
 
+  const similarProducts: Product[] | undefined = products?.filter(
+    (item) => item.id !== product?.id && product?.tags?.some((tag) => item.tags?.includes(tag))
+  );
   const handleCartToggle = () => {
     dispatch(toggleCart());
   };
@@ -48,7 +52,7 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col gap-12">
+    <div className="min-h-screen flex flex-col gap-6">
       <Navbar productsPage={true} />
 
       <CartSidebar
@@ -65,7 +69,7 @@ const ProductPage = () => {
       {error && <ErrorMessage />}
 
       {product && (
-        <main className="grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)]">
+        <main className=" grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
           {/* background design */}
           {/* <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
           <div className="bg-secondary-light/70 absolute left-20 z-1 hidden rounded-full p-8 md:block"></div>
@@ -74,12 +78,12 @@ const ProductPage = () => {
           <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 hidden rounded-full p-3 md:block"></div>
           <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div> */}
 
-          <article className="justify-center z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-6 p-0 md:flex-row ">
+          <article className="justify-center z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-1 p-0 md:flex-row ">
             <div className="md:px-6">
               {/* image container */}
               <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-white flex rounded-sm shadow-md outline-1 outline-primary-dark">
                 <Image
-                  src={product.image!}
+                  src={product.thumbnail!}
                   alt="PRODUCT IMAGE"
                   width={500}
                   height={500}
@@ -93,10 +97,11 @@ const ProductPage = () => {
                 <h1 className="font-sub-header font-bold text-5xl">{product?.title}</h1>
                 <h2 className="text-secondary-light text-2xl">{product?.category}</h2>
                 <div className="flex items-center gap-2">
-                  <p>{product?.rating.rate || 0}</p>
-                  <StarRating rating={product?.rating.rate || 0} />
-                  <p className="text-gray-400">{product?.rating.count} reviews</p>
+                  <p>{product?.rating || 0}</p>
+                  <StarRating rating={product?.rating || 0} />
+                  <p className="text-gray-400">{product?.reviews?.length} reviews</p>
                 </div>
+                <p className="italic text-gray-400">{product?.stock} left in stock</p>
               </header>
               <hr />
               <p className="py-4 text-[clamp(0.9em,1vw,2em)]">{product?.description}</p>
@@ -121,14 +126,36 @@ const ProductPage = () => {
           </article>
         </main>
       )}
+      {/* related products */}
+      <section className="p-8 border-t-1   flex flex-col gap-4">
+        <h1 className="font-semibold text-2xl text-primary-light ">Related Products:</h1>
+        <div className="gap-4 flex  overflow-x-auto pb-2">
+          {relatedProducts?.map((product) => (
+            <div key={product.id} className="shrink-0 w-64">
+              <ProductPreview product={product} />
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <section className="p-20 border-t-1 border-b-1 flex flex-col gap-4">
-        <h1 className="font-semibold text-2xl text-primary-light ">
-          Products related to this item:
-        </h1>
-        <div className="gap-4 grid grid-rows-[repeat(auto-fill,minmax(200px,1fr))] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
-          {similarProducts?.map((product) => (
-            <ProductPreview key={product.id} product={product} />
+      {similarProducts && similarProducts?.length > 0 && (
+        <section className="p-8 border-t-1 border-b-1   flex flex-col gap-4">
+          <h1 className="font-semibold text-2xl text-primary-light ">Products like this item:</h1>
+          <div className="gap-4 flex  overflow-x-auto pb-2">
+            {similarProducts?.map((product) => (
+              <div key={product.id} className="shrink-0 w-64">
+                <ProductPreview product={product} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      {/* reviews */}
+      <section className="p-8 flex flex-col gap-4">
+        <h1 className="font-semibold text-2xl text-primary-light ">Reviews:</h1>
+        <div className="gap-4 flex flex-col grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+          {product?.reviews?.map((review) => (
+            <Review key={review.reviewerEmail} review={review} />
           ))}
         </div>
       </section>
