@@ -11,15 +11,10 @@ import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
 interface NavbarProps {
   homePage?: boolean;
-  cartPage?: boolean;
   productsPage?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  homePage = false,
-  cartPage = false,
-  productsPage = false,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false }) => {
   const dispatch = useDispatch();
 
   const handleDirectoryToggle = useCallback(() => {

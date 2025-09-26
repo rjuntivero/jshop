@@ -1,17 +1,14 @@
 'use client';
 import Link from 'next/link';
-import MenuIcon from '@/components/icons/MenuIcon';
-import Directory from '@/components/layouts/Directory';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
 import Button from '@/components/ui/Button';
 import CheckoutItem from '@/components/ui/CheckoutItem';
-import CartIcon from '@/components/icons/CartIcon';
 import { useAppSelector } from '@/state/hooks';
 import { useDispatch } from 'react-redux';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
-import { clearCart, toggleDirectory } from '@/features/cartSlice';
+import { clearCart } from '@/features/cartSlice';
 import convertToSubcurrency from '../../../lib/convertToSubcurrency';
 
 export default function CheckoutPage() {
@@ -24,14 +21,9 @@ export default function CheckoutPage() {
 
   const cartItems = useAppSelector((state) => state.cart.items);
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
-  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
   const dispatch = useDispatch();
 
   const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
-
-  const handleDirectoryToggle = () => {
-    dispatch(toggleDirectory());
-  };
 
   const handleClearCart = () => {
     dispatch(clearCart());
