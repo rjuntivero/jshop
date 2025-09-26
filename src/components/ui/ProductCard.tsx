@@ -50,7 +50,7 @@ const ProductCard: React.FC<T> = ({
                 src={imageURL!}
                 alt="PRODUCT IMAGE"
                 fill
-                className={`z-1 p-2 md:p-4 lg:p-6 cursor-pointer object-contain object-center transition-all duration-500 group-hover:scale-103 group-hover:-translate-y-1 ${
+                className={`z-1  cursor-pointer object-contain object-center transition-all duration-500 group-hover:scale-103 group-hover:-translate-y-1 ${
                   loaded ? 'opacity-100' : 'opacity-0'
                 }`}
                 onLoad={() => setLoaded(true)}

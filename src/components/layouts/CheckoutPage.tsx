@@ -1,14 +1,10 @@
 'use client';
-import Link from 'next/link';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
 import Button from '@/components/ui/Button';
-import CheckoutItem from '@/components/ui/CheckoutItem';
 import { useAppSelector } from '@/state/hooks';
-import { useDispatch } from 'react-redux';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
-import { clearCart } from '@/features/cartSlice';
 import convertToSubcurrency from '../../../lib/convertToSubcurrency';
 
 export default function CheckoutPage() {
@@ -19,15 +15,8 @@ export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const cartItems = useAppSelector((state) => state.cart.items);
+  // const cartItems = useAppSelector((state) => state.cart.items);
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
-  const dispatch = useDispatch();
-
-  const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
-
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
 
   useEffect(() => {
     fetch('/api/create-payment-intent', {
@@ -75,49 +64,11 @@ export default function CheckoutPage() {
   return (
     <>
       <Navbar />
-      <hr className="bg-primary-light " />
 
       {/* Checkout Items */}
-      <main className=" text-primary-light grid-rows-[1fr, auto] md:p-6 grid min-h-screen grid-cols-1 md:grid-cols-[1.5fr,1fr] md:grid-rows-[1fr] ">
-        <article className="def-margin col-span-1 col-start-1 overflow-y-auto rounded-sm bg-secondary-dark p-8 shadow-md">
-          <h1 className="font-sub-header font-bold text-[clamp(1rem,2vw,2rem)]">My Cart</h1>
-          <Button onClick={handleClearCart}>
-            {cartItems.length > 0 && (
-              <h2 className="text-secondary-light  mb-4 text-sm md:text-xl lg:text-2xl">
-                Remove all items
-              </h2>
-            )}
-          </Button>
-          <div className="relative rounded-md bg-white">
-            {cartItems.length > 0 ? (
-              cartItems?.map((item) => (
-                <CheckoutItem
-                  key={String(item.id)}
-                  product={item}
-                  productName={item.title}
-                  productPrice={item.price}
-                  productType={item.category}
-                  imageURL={item.thumbnail}
-                  totalPrice={item.totalPrice}
-                  count={item.count}
-                />
-              ))
-            ) : (
-              <div className="text-[clamp(0.2rem, 1vw, 1.5rem)]">
-                <h1 className="font-bold text-black">Your JSHOP cart is empty...</h1>
-                <Link href="/products" className="text-black">
-                  Your shopping cart lives to serve --- Go out there and fill it with items!!
-                </Link>
-              </div>
-            )}
-          </div>
-          <h1 className="text-[clamp(0.2rem,2vw,1.3rem)] text-end">
-            Subtotal: {`(${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}{' '}
-            <strong>${cartTotal.toFixed(2)}</strong>
-          </h1>
-        </article>
-        <div className=" p-8 md:col-start-2 md:row-start-1">
-          <div className="flex  flex-col gap-4 text-secondary-light outline-secondary-light/50 rounded-sm bg-secondary-dark p-8 font-bold outline-1 ">
+      <main className=" text-primary-light min-h-screen">
+        <div className=" p-8 ">
+          <article className=" flex flex-col grow gap-4 text-secondary-light outline-secondary-light/50 rounded-sm bg-secondary-dark p-8 font-bold outline-1 ">
             <div className="flex justify-between">
               <h1 className="text-primary-light">Total: </h1>
               <h1 className="text-primary-light justify-self-end">{'$' + cartTotal.toFixed(2)}</h1>
@@ -136,7 +87,7 @@ export default function CheckoutPage() {
                 {!loading ? `Pay $${cartTotal}` : 'Processing...'}
               </Button>
             </form>
-          </div>
+          </article>
         </div>
       </main>
       <div className="bg-primary-light mb-1 w-full pt-1"></div>
