@@ -13,7 +13,6 @@ export default async function Homepage() {
   const { products }: { products: Product[] } = await res.json();
   const topRatedProducts = products.sort((a, b) => b.rating - a.rating);
 
-  console.log('fetched products', products);
   return (
     <>
       <Navbar homePage={true} />

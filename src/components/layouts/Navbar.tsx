@@ -10,6 +10,7 @@ import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
 import UserIcon from '../icons/UserIcon';
+import { useAuth } from '@/hooks/useAuth';
 interface NavbarProps {
   homePage?: boolean;
   productsPage?: boolean;
@@ -27,6 +28,8 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
   }, [dispatch]);
 
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
+
+  const { user, loading, logout } = useAuth();
 
   return (
     <nav
@@ -46,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
           JSHOP
         </h1>
       )}
-      <div className="right flex items-center gap-6">
+      <div className="right flex items-center ">
         {productsPage && (
           <Button
             onClick={handleCartToggle}
@@ -63,11 +66,22 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
             </Button>
           </Link>
         )}
-        <Link href="/login">
-          <Button className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
-            <UserIcon width={44} height={40} color="#442727" />
-          </Button>
-        </Link>
+        <div className="flex items-center">
+          {loading ? (
+            <div className="h-[78px] w-[78px] flex items-center justify-center">Loading...</div>
+          ) : user ? (
+            <>
+              <Button className="" onClick={logout}>
+                Sign Out
+              </Button>
+              <div className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
+                <UserIcon width={44} height={40} color="#442727" />
+              </div>
+            </>
+          ) : (
+            <Link href="/login">Sign In</Link>
+          )}
+        </div>
       </div>
     </nav>
   );

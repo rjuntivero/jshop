@@ -1,13 +1,15 @@
+import { NextResponse } from 'next/server';
 import { users } from '../_data/users';
 
+// fetch all users
 export async function GET() {
-  return Response.json(users);
+  return NextResponse.json(users);
 }
 
+// create a new user in mock database
 export async function POST(req: Request) {
   const newUser = await req.json();
-  newUser.id = users.length + 1;
-  newUser.cart = [];
   users.push(newUser);
-  return Response.json(newUser);
+  console.log(' USER CREATED SSUCCCESSFULLYY: ', newUser);
+  return NextResponse.json(newUser);
 }

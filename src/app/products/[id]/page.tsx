@@ -30,7 +30,7 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const { itemCount, updateItemCount } = useItemCount();
   const { data: products } = useFetchProducts();
-  console.log('FETCHED PRODUCTS', products);
+
   const relatedProducts: Product[] | undefined = products?.filter(
     (item) => item.category === product?.category && item.id != product.id
   );

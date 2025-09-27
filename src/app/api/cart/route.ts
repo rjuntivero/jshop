@@ -1,5 +1,6 @@
 import { Product } from '@/types/Product';
 import { Cart } from '@/types/Cart';
+import { NextResponse } from 'next/server';
 
 const cart: Cart = {
   items: [],
@@ -9,7 +10,7 @@ const cart: Cart = {
 };
 
 export async function GET() {
-  return Response.json(cart);
+  return NextResponse.json(cart);
 }
 
 export async function POST(req: Request) {
@@ -33,11 +34,11 @@ export async function POST(req: Request) {
   // update total price
   cart.totalPrice = cart.items.reduce((acc, item) => acc + item.totalPrice, 0);
 
-  return Response.json(cart);
+  return NextResponse.json(cart);
 }
 
 export async function DELETE() {
   cart.items = [];
   cart.totalPrice = 0;
-  return Response.json(cart);
+  return NextResponse.json(cart);
 }

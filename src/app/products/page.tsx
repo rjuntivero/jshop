@@ -11,7 +11,6 @@ const fetchProducts = async () => {
   }
 
   const { products }: { products: Product[] } = await res.json();
-  console.log(products);
   return products;
 };
 
