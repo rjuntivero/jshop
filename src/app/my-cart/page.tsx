@@ -38,13 +38,15 @@ export default function ShoppingCart() {
                 </>
               )}
             </Button>
-            <Link href="/checkout" className="flex items-center gap-2 ">
-              <h2 className="text-secondary-light  text-sm md:text-xl lg:text-2xl">Checkout</h2>
-              <CartIcon width={45} height={40} color="#D9B68C" />
-            </Link>
+            {cartItems.length > 0 && (
+              <Link href="/checkout" className="flex items-center gap-2 ">
+                <h2 className="text-secondary-light  text-sm md:text-xl lg:text-2xl">Checkout</h2>
+                <CartIcon width={45} height={40} color="#D9B68C" />
+              </Link>
+            )}
           </div>
 
-          <div className="relative rounded-md bg-white p-6">
+          <div className="relative rounded-md bg-white p-6 mb-4">
             {cartItems.length > 0 ? (
               cartItems?.map((item) => (
                 <CheckoutItem
