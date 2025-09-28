@@ -39,7 +39,7 @@ const ProductCard: React.FC<T> = ({
   };
 
   return (
-    <article className="outline-1 outline-primary-dark/20 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-secondary-dark shadow-md duration-400 hover:shadow-sm">
+    <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-secondary-dark shadow-md duration-400 hover:shadow-sm">
       <div className="  relative">
         {/* Image */}
         <div className="relative w-full  overflow-hidden">

@@ -22,6 +22,7 @@ import toast from 'react-hot-toast';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
 import StarRating from '@/components/ui/StarRating';
 import Review from '@/components/ui/Review';
+import PaginatedGrid from '@/components/layouts/PaginateGrid';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -130,31 +131,13 @@ const ProductPage = () => {
         </main>
       )}
       {/* related products */}
-      <section className="p-8 border-t-1   flex flex-col gap-4">
-        <h1 className="font-semibold text-2xl text-primary-light ">
-          Related Products: {`"${product?.category}"`}
-        </h1>
-        <div className="gap-4 flex  overflow-x-auto pb-2">
-          {relatedProducts?.map((product) => (
-            <div key={`${product.id}-related`} className="shrink-0 w-64">
-              <ProductPreview product={product} />
-            </div>
-          ))}
-        </div>
+      <section className="py-8 flex flex-col gap-2">
+        <PaginatedGrid
+          items={relatedProducts ?? []}
+          title={`Related Products: "${product?.category}"`}
+        />
+        <PaginatedGrid items={similarProducts ?? []} title={`Products similar to this item:`} />
       </section>
-
-      {similarProducts && similarProducts?.length > 0 && (
-        <section className="p-8 border-t-1 border-b-1   flex flex-col gap-4">
-          <h1 className="font-semibold text-2xl text-primary-light ">Similar Items:</h1>
-          <div className="gap-4 flex  overflow-x-auto pb-2">
-            {similarProducts?.map((product) => (
-              <div key={`${product.id}-similar`} className="shrink-0 w-64">
-                <ProductPreview product={product} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
       {/* reviews */}
       <section className="p-8 flex flex-col gap-4">
         <h1 className="font-semibold text-2xl text-primary-light ">Reviews:</h1>

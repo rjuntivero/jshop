@@ -4,6 +4,8 @@ import Navbar from '@/components/layouts/Navbar';
 import ProductPreview from '@/components/ui/ProductPreview';
 import { Product } from '@/types/Product';
 import Image from 'next/image';
+import TopRated from '@/components/layouts/PaginateGrid';
+import PaginatedGrid from '@/components/layouts/PaginateGrid';
 
 export default async function Homepage() {
   const res = await fetch('https://dummyjson.com/products?limit=194', {
@@ -11,7 +13,7 @@ export default async function Homepage() {
   });
 
   const { products }: { products: Product[] } = await res.json();
-  const topRatedProducts = products.sort((a, b) => b.rating - a.rating);
+  const topRatedProducts = products.sort((a, b) => b.rating - a.rating).slice(0, 24);
 
   return (
     <>
@@ -47,18 +49,7 @@ export default async function Homepage() {
           </div>
         </section>
 
-        <section className="def-margin">
-          <h2 className="font-bold text-xl text-primary-light">Top Rated:</h2>
-          <article className="bg-secondary-light/50 outline-primary-light mt-3 box-border flex h-auto gap-4 overflow-auto rounded-sm p-2 outline-1 md:p-5">
-            {topRatedProducts?.slice(0, 8)?.map((product) => (
-              <article
-                className="w-full flex-none sm:w-1/5 md:w-1/6 lg:w-1/7"
-                key={String(product.id)}>
-                <ProductPreview key={String(product.id)} product={product} />
-              </article>
-            ))}
-          </article>
-        </section>
+        <PaginatedGrid items={topRatedProducts} title="Top Rated:" />
       </main>
       <div className="bg-primary-light mb-1 w-full pt-1"></div>
 
