@@ -12,7 +12,7 @@ const ProductPreview: React.FC<T> = ({ product }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col rounded-sm bg-secondary-dark shadow-md duration-400">
+    <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col bg-secondary-dark shadow-md duration-400">
       <div className="">
         <Link href={`/products/${product?.id}`}>
           <div

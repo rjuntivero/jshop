@@ -70,7 +70,7 @@ const ProductPage = () => {
       {error && <ErrorMessage />}
 
       {product && (
-        <main className=" py-12 bg-white grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
+        <main className=" border-b-1 py-12 bg-secondary-dark grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
           {/* background design */}
           {/* <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
           <div className="bg-secondary-light/70 absolute left-20 z-1 hidden rounded-full p-8 md:block"></div>
