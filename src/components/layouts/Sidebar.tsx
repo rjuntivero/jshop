@@ -6,6 +6,7 @@ import Button from '../ui/Button';
 import UpArrowIcon from '../icons/UpArrowIcon';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
 import { capitalizeFirst } from '@/app/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SidebarProps {
   className?: string;

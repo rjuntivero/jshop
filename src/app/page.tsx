@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
-import ProductPreview from '@/components/ui/ProductPreview';
 import { Product } from '@/types/Product';
 import Image from 'next/image';
-import TopRated from '@/components/layouts/PaginateGrid';
 import PaginatedGrid from '@/components/layouts/PaginateGrid';
 
 export default async function Homepage() {
@@ -14,6 +12,13 @@ export default async function Homepage() {
 
   const { products }: { products: Product[] } = await res.json();
   const topRatedProducts = products.sort((a, b) => b.rating - a.rating).slice(0, 24);
+  const lowStock = products
+    .filter((product) => product.availabilityStatus === 'Low Stock')
+    .slice(0, 24);
+  const luxuryProducts = products
+    .filter((product) => product.price > 1000)
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 24);
 
   return (
     <>
@@ -49,7 +54,12 @@ export default async function Homepage() {
           </div>
         </section>
 
-        <PaginatedGrid items={topRatedProducts} title="Top Rated:" />
+        {/* Item Categories */}
+        <PaginatedGrid items={topRatedProducts} title="Top Rated" />
+        {/* Low Stock */}
+        <PaginatedGrid items={lowStock} title="Grab Fast" />
+        {/* High Price */}
+        <PaginatedGrid items={luxuryProducts} title="Luxury Picks" />
       </main>
       <div className="bg-primary-light mb-1 w-full pt-1"></div>
 

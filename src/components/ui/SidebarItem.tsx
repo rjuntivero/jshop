@@ -1,10 +1,11 @@
 import React, { memo, useState } from 'react';
 import Button from './Button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SidebarItemProps {
   item: string;
   isActive: boolean;
-  activeValue?: string; // <- for subcategories
+  activeValue?: string;
   handleItemClick: (newValue: string) => void;
   hasDropdown?: boolean;
   childrenItems?: { label: string; value: string }[];
@@ -32,10 +33,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     <li>
       <Button
         onClick={handleClick}
-        className={`relative w-full  px-4 py-2 text-left transition-colors duration-300 ease-in-out ${
+        className={`relative w-full px-4 py-2 text-left transition-colors duration-300 ease-in-out ${
           !hasDropdown ? 'group hover:bg-secondary-light/40' : ''
         }`}>
-        {/* Dont apply hover animation to parents with dropdown */}
         {!hasDropdown && (
           <span
             className={`bg-secondary-light/70 absolute top-0 left-0 -z-10 h-full w-full origin-left opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100 ${
@@ -56,25 +56,32 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         </span>
       </Button>
 
-      {/* Render children items if dropdown */}
-      {hasDropdown && isOpen && (
-        <ul className="flex flex-col">
-          {childrenItems.map(({ label, value }) => (
-            <li
-              key={value}
-              className={`border-t-1 last:border-b-1 hover:bg-secondary-light/40 transition-all duration-300`}>
-              <Button
-                onClick={() => handleItemClick(value)}
-                className={`group w-full pl-10 p-2 text-left text-base transition-colors duration-300 ease-in-out ${
-                  activeValue === value
-                    ? 'bg-secondary-light/70 text-white dark:text-background-dark'
-                    : ''
-                }`}>
-                {label}
-              </Button>
-            </li>
-          ))}
-        </ul>
+      {/* Animate children dropdown */}
+      {hasDropdown && (
+        <AnimatePresence>
+          {isOpen && (
+            <motion.ul
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className=" flex flex-col  overflow-hidden">
+              {childrenItems.map(({ label, value }) => (
+                <li key={value} className="border-t-1 last:border-b-1 ">
+                  <Button
+                    onClick={() => handleItemClick(value)}
+                    className={`hover:bg-secondary-light/70   hover:text-white group w-full pl-10 p-2 text-left text-base transition-colors duration-300 ease-in-out ${
+                      activeValue === value
+                        ? 'bg-secondary-light/70 text-white dark:text-background-dark'
+                        : ''
+                    }`}>
+                    {label}
+                  </Button>
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
       )}
     </li>
   );

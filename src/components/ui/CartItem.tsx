@@ -28,7 +28,7 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
   };
 
   return (
-    <div className=" motion-preset-blur-down border-b-1 border-primary-light flex h-auto w-full self-center duration-400 p-8">
+    <div className=" motion-preset-blur-down  border-b-1 border-primary-light flex h-auto w-full self-center duration-400 p-8 ">
       <article className="grow flex gap-6">
         <div className="p-4 bg-white shadow-sm outline-1 outline-primary-light/10 flex items-center">
           <Image

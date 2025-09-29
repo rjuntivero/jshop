@@ -69,7 +69,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       />
-      <main className=" min-h-screen bg-background-light relative flex   transition-all duration-500">
+      <main className=" min-h-screen  relative flex   transition-all duration-500">
         <AnimatePresence mode="popLayout">
           {showSidebar && (
             <motion.aside

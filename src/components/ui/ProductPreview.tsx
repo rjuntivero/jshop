@@ -24,20 +24,21 @@ const ProductPreview: React.FC<T> = ({ product }) => {
               src={product!.thumbnail!}
               alt={product?.title ?? 'Product Image'}
               fill
-              className="object-contain object-center hover:brightness-90 transition-all duration-300 ease-in-out hover:saturate-90"
+              className="object-contain object-center hover:brightness-90 transition-all duration-300 ease-in-out hover:saturate-90 hover:scale-103 hover:-translate-y-1"
               onLoad={() => setLoaded(true)}
             />
           </div>
         </Link>
 
         <div className="flex flex-col p-1 md:p-3 bg-white  border-t-1 border-t-primary-light/20">
-          <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate  text-xl md:text-xl">
+          <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate  text-sm md:text-md">
             {product?.title}
           </h1>
-          <h2 className="pt-1 text-[1.2rem] font-semibold text-primary-light antialiased md:text-[2rem] flex gap-1 items-start">
-            <span className="text-[0.8rem] md:text-[1.55rem] ">$</span>
+          <h2 className="pt-1 text-[1.2rem] font-semibold text-primary-light antialiased md:text-[1rem] flex gap-1 items-start">
+            <span className="text-[0.4rem] md:text-[0.7rem] ">$</span>
             {product?.price?.toFixed(2)}
           </h2>
+          <p> </p>
         </div>
       </div>
     </article>

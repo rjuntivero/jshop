@@ -28,7 +28,7 @@ export default function PaginatedGrid({ items, title, itemsPerPage = 6 }: Props)
     <section className="def-margin">
       {title && <h2 className="font-bold text-xl text-primary-light mb-3">{title}</h2>}
 
-      <div className="outline-1 outline-primary-light/70 bg-secondary-dark/60  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
+      <div className="outline-1 outline-primary-light/40 bg-secondary-dark/50  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
         {currentItems.map((item) => (
           <ProductPreview key={item.id} product={item} />
         ))}

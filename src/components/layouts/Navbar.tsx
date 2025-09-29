@@ -67,9 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
           </Link>
         )}
         <div className="flex items-center">
-          {loading ? (
-            <div className="h-[78px] w-[78px] flex items-center justify-center">Loading...</div>
-          ) : user ? (
+          {user ? (
             <>
               <Button className="" onClick={logout}>
                 Sign Out
