@@ -43,7 +43,7 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
           <h1 className="text-lg font-main mb-2 w-full text-ellipsis line-clamp-1">
             {productName}
           </h1>
-          <h2 className="font-main pb-2 text-[1.5rem] font-medium">
+          <h2 className="font-main pb-2 text-[1.2rem] font-medium">
             {'$ ' + totalPrice?.toFixed(2)}
           </h2>
           <div className="flex gap-4 items-center justify-between">

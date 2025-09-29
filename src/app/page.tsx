@@ -14,6 +14,7 @@ export default async function Homepage() {
   const topRatedProducts = products.sort((a, b) => b.rating - a.rating).slice(0, 24);
   const lowStock = products
     .filter((product) => product.availabilityStatus === 'Low Stock')
+    .sort((a, b) => a.stock - b.stock)
     .slice(0, 24);
   const luxuryProducts = products
     .filter((product) => product.price > 1000)

@@ -75,16 +75,24 @@ const ProductCard: React.FC<T> = ({
             {productType}
           </h2>
           <div className="lg:flex-row flex-col flex items-start lg:items-center justify-start lg:gap-1">
-            <div className="flex gap-2 items-center justify-start md:text-lg text-xs">
+            <div className="flex gap-2 items-center justify-start md:text-md text-xs pb-1">
               <p>{product?.rating || 0}</p>
               <StarRating rating={product?.rating || 0} />
             </div>
             <p className="text-gray-400 md:text-md text-xs">{product?.reviews?.length} reviews</p>
           </div>
-          <h2 className="pt-1 text-[1.2rem] font-semibold text-primary-light antialiased md:text-[2rem] flex gap-1 items-start">
-            <span className="text-[0.8rem] md:text-[1.55rem] ">$</span>
-            {productPrice?.toFixed(2)}
-          </h2>
+          <div className="flex items-center gap-2">
+            {(product?.availabilityStatus === 'Low Stock' && (
+              <p className="text-[0.7rem] md:text-[1rem] font-semibold">
+                <span className="text-red-600">Only {product.stock} left</span>
+              </p>
+            )) ||
+              ''}
+            <h2 className=" text-[1.2rem] font-semibold text-primary-light antialiased md:text-[1.5rem] flex gap-1 items-start">
+              <span className="text-[0.8rem] md:text-[1rem] ">$</span>
+              {productPrice?.toFixed(2)}
+            </h2>
+          </div>
           {/* Action Buttons */}
           <div className="mt-3 flex justify-between gap-3 border-t pt-2  transition-opacity duration-300 md:flex-row flex-col items-center">
             <div className="flex items-center gap-2">
