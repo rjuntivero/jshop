@@ -11,6 +11,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
 import { addToCart } from '@/app/lib/authCart';
 import { addToGuestCart } from '@/app/lib/guestCart';
+import useCart from '@/hooks/useCart';
 
 interface T {
   product?: Product;
@@ -31,6 +32,7 @@ const ProductCard: React.FC<T> = ({
   const [loaded, setLoaded] = useState(false);
   const { itemCount, updateItemCount } = useItemCount();
   const [user] = useAuthState(auth);
+  const [cart, loading, updateGuestCart] = useCart(user ?? null);
 
   return (
     <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col  bg-secondary-dark shadow-md duration-400 hover:shadow-sm">
@@ -99,7 +101,7 @@ const ProductCard: React.FC<T> = ({
                 onClick={
                   user
                     ? () => addToCart(product as Product, user, itemCount)
-                    : () => addToGuestCart(product as Product, itemCount)
+                    : () => addToGuestCart(product as Product, updateGuestCart)
                 }>
                 {/* <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" /> */}
                 <CartIcon width={25} height={25} color="#442727" />

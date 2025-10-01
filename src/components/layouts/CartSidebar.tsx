@@ -7,7 +7,9 @@ import { memo } from 'react';
 import Overlay from './Overlay';
 import { useAppSelector } from '@/state/hooks';
 import CartIcon from '../icons/CartIcon';
-import { useCart } from '@/hooks/useCart';
+import useCart from '@/hooks/useCart';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
 
 interface SidebarProps {
   onClose: () => void;
@@ -16,7 +18,8 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const { cart } = useCart();
+  const [user] = useAuthState(auth);
+  const [cart, loading, updateGuestCart] = useCart(user ?? null);
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
 
@@ -38,12 +41,9 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
               <CartItem
                 key={item.id}
                 product={item}
-                productName={item.title}
-                productType={item.category}
-                imageURL={item.thumbnail}
                 quantity={item.quantity}
-                productPrice={item.price}
                 totalPrice={parseFloat((item.price * item.quantity).toFixed(2))}
+                updateGuestCart={updateGuestCart}
               />
             ))}
           {cart?.length === 0 && (

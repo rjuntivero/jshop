@@ -4,7 +4,13 @@ import { Product } from '../../types/Product';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { addToCart, clearItem, removeFromCart } from '../../features/cartSlice';
+import { clearItem, removeFromCart } from '../../features/cartSlice';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
+import { addToCart } from '@/app/lib/authCart';
+import { addToGuestCart } from '@/app/lib/guestCart';
+
+import { User } from 'firebase/auth';
 
 interface T {
   product?: Product;
@@ -18,15 +24,7 @@ interface T {
 
 const CheckoutItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
   const dispatch = useDispatch();
-
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        ...(product as Product),
-        quantity: 1,
-      })
-    );
-  };
+  const [user] = useAuthState(auth);
 
   const handleRemoveFromCart = (id: number) => {
     dispatch(removeFromCart(id));
@@ -65,7 +63,11 @@ const CheckoutItem: React.FC<T> = ({ product, productName, totalPrice, imageURL,
               </Button>
               <p className="px-1 w-[2ch] text-center">{count}</p>
               <Button
-                onClick={handleAddToCart}
+                onClick={
+                  user
+                    ? () => addToCart(product as Product, user as User)
+                    : () => addToGuestCart(product as Product)
+                }
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 +
               </Button>

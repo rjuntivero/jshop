@@ -1,19 +1,52 @@
+import { CartItem } from '@/hooks/useCart';
 import { Product } from '@/types/Product';
 import toast from 'react-hot-toast';
 
 // unauth users
-const addToGuestCart = (product: Product, itemCount: number) => {
-  const existingCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-  const existingItem = existingCart.find((item: Product) => item.id === product.id);
+const addToGuestCart = (
+  product: Product,
+  updateGuestCart: (items: CartItem[]) => void,
+  itemCount?: number
+) => {
+  const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+  const existingItem = existingCart.find((item) => item.product_id === product.id);
 
   if (existingItem) {
-    existingItem.quantity += itemCount;
+    existingItem.quantity += itemCount ?? 1;
   } else {
-    existingCart.push({ ...product, quantity: itemCount });
+    existingCart.push({
+      id: crypto.randomUUID(),
+      product_id: product.id,
+      quantity: itemCount ?? 1,
+    });
   }
 
-  localStorage.setItem('guestCart', JSON.stringify(existingCart));
+  updateGuestCart(existingCart);
   toast.success(`${product.title} added to cart!`);
 };
 
-export { addToGuestCart };
+const removeFromGuestCart = (
+  product: Product,
+  updateGuestCart: (items: CartItem[]) => void,
+  itemCount?: number
+) => {
+  const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+  const existingItem = existingCart.find((item) => item.product_id === product.id);
+
+  if (existingItem && existingItem.quantity != 1) {
+    existingItem.quantity -= 1;
+  }
+
+  updateGuestCart(existingCart);
+  toast.success(`${itemCount ?? 1} ${product.title} removed from cart!`);
+};
+
+const clearGuestItem = (product: Product, updateGuestCart: (items: CartItem[]) => void) => {
+  const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+  const updatedCart = existingCart.filter((item) => item.product_id !== product.id);
+
+  updateGuestCart(updatedCart);
+  toast.success(`Successfully removed ${product.title} from cart!`);
+};
+
+export { addToGuestCart, removeFromGuestCart, clearGuestItem };
