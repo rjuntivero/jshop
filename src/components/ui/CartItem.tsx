@@ -20,7 +20,7 @@ const CartItem: React.FC<T> = ({ product, totalPrice, quantity }) => {
   const dispatch = useAppDispatch();
 
   // guest cart
-  const handleAddTGuestoCart = () => {
+  const handleAddToGuestCart = () => {
     dispatch(
       addToCart({
         ...(product as Product),
@@ -64,7 +64,7 @@ const CartItem: React.FC<T> = ({ product, totalPrice, quantity }) => {
                 onClick={
                   user
                     ? () => addToAuthCart(product as Product, user as User)
-                    : () => handleAddTGuestoCart()
+                    : () => handleAddToGuestCart()
                 }
                 className="hover:bg-secondary-light/30 self-center h-full p-4 transition duration-400">
                 +

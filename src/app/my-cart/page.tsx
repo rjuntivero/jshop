@@ -8,13 +8,25 @@ import { useAppSelector } from '@/state/hooks';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '@/features/cartSlice';
 import CartIcon from '@/components/icons/CartIcon';
+import useAuthCart from '@/hooks/useAuthCart';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebaseConfig';
 
 export default function ShoppingCart() {
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const cartTotal = useAppSelector((state) => state.cart.totalPrice);
   const dispatch = useDispatch();
 
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const [user] = useAuthState(auth);
+
+  // auth users
+  const [authCart] = useAuthCart(user ?? null);
+  const cartTotal = user && authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // guest users
+  const guestCart = useAppSelector((state) => state.cart.items);
+  const guestCartTotal = useAppSelector((state) => state.cart.totalPrice);
+
+  const cart = user ? authCart : guestCart;
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -32,7 +44,8 @@ export default function ShoppingCart() {
               <h1 className="font-sub-header font-bold text-[clamp(1rem,2vw,2rem)]">Cart Items:</h1>
               <div className="flex gap-2 text-[clamp(0.2rem,2vw,1.3rem)] text-end  justify-end items-end">
                 <p>
-                  Subtotal: <strong>${cartTotal.toFixed(2)}</strong>
+                  Subtotal:{' '}
+                  <strong>${user ? cartTotal?.toFixed(2) ?? 0 : guestCartTotal.toFixed(2)}</strong>
                 </p>
                 {` (${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}{' '}
               </div>
@@ -40,7 +53,7 @@ export default function ShoppingCart() {
             {/* actions */}
             <div className="flex justify-between items-center w-full ">
               <Button onClick={handleClearCart}>
-                {cartItems.length > 0 && (
+                {cart.length > 0 && (
                   <>
                     <h2 className="text-secondary-light  text-sm md:text-xl lg:text-lg">
                       Remove all items
@@ -48,7 +61,7 @@ export default function ShoppingCart() {
                   </>
                 )}
               </Button>
-              {cartItems.length > 0 && (
+              {cart.length > 0 && (
                 <Link href="/checkout" className="flex items-center gap-2 ">
                   <h2 className="text-secondary-light  text-sm md:text-xl lg:text-lg">Checkout</h2>
                   <CartIcon width={45} height={40} color="#D9B68C" />
@@ -58,19 +71,8 @@ export default function ShoppingCart() {
           </header>
           {/* Cart Items */}
           <div className="relative  flex flex-col ">
-            {cartItems.length > 0 ? (
-              cartItems?.map((item) => (
-                <CheckoutItem
-                  key={String(item.id)}
-                  product={item}
-                  productName={item.title}
-                  productPrice={item.price}
-                  productType={item.category}
-                  imageURL={item.thumbnail}
-                  totalPrice={item.totalPrice}
-                  quantity={item.quantity}
-                />
-              ))
+            {cart.length > 0 ? (
+              cart?.map((item) => <CheckoutItem key={String(item.id)} product={item} />)
             ) : (
               <div className="text-[clamp(0.2rem, 1vw, 1.5rem)]">
                 <h1 className="font-bold text-black">Your JSHOP cart is empty...</h1>

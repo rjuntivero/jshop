@@ -11,11 +11,9 @@ import CartSidebar from '@/components/layouts/CartSidebar';
 import Footer from '@/components/layouts/Footer';
 import { Product } from '@/types/Product';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import { useDispatch } from 'react-redux';
 import { addToCart, toggleCart } from '@/features/cartSlice';
-import { useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import Image from 'next/image';
-import ProductPreview from '@/components/ui/ProductPreview';
 import ItemCounter from '@/components/ui/ItemCounter';
 import { useItemCount } from '@/hooks/useItemCount';
 import toast from 'react-hot-toast';
@@ -23,12 +21,16 @@ import { useFetchProducts } from '@/hooks/useFetchProducts';
 import StarRating from '@/components/ui/StarRating';
 import Review from '@/components/ui/Review';
 import PaginatedGrid from '@/components/layouts/PaginateGrid';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
+import { addToAuthCart } from '@/app/lib/authCart';
+import { User } from 'firebase/auth';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading, error } = useFetchProduct(Number(id));
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { itemCount, updateItemCount } = useItemCount();
   const { data: products } = useFetchProducts();
 
@@ -43,7 +45,10 @@ const ProductPage = () => {
     dispatch(toggleCart());
   };
 
-  const handleAddToCart = (product: Product) => {
+  const [user] = useAuthState(auth);
+
+  // guest cart
+  const handleAddToGuestCart = (product: Product) => {
     const payload: Product = {
       ...product,
       quantity: itemCount,
@@ -51,7 +56,6 @@ const ProductPage = () => {
     dispatch(addToCart(payload));
     toast.success(`${product.title} added to cart!`);
   };
-
   return (
     <div className="min-h-screen flex flex-col ">
       <Navbar productsPage={true} />
@@ -115,7 +119,11 @@ const ProductPage = () => {
                   <ItemCounter updateItemCount={updateItemCount} itemCount={itemCount} />
                   <Button
                     className="w-full bg-secondary-light border-primary-light flex items-center justify-center p-3 gap-3"
-                    onClick={() => handleAddToCart(product as Product)}>
+                    onClick={
+                      user
+                        ? () => addToAuthCart(product as Product, user as User, itemCount)
+                        : () => handleAddToGuestCart(product as Product)
+                    }>
                     <h1 className="font-sub-header">Add To Cart</h1>
                     <CartIcon width={28} height={28} color="#442727" />
                   </Button>

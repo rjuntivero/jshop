@@ -4,28 +4,34 @@ import { Product } from '../../types/Product';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { clearItem, removeFromCart } from '../../features/cartSlice';
+import { addToCart, clearItem, removeFromCart } from '../../features/cartSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
-import { addToAuthCart } from '@/app/lib/authCart';
+import { addToAuthCart, clearAuthItem, removeFromAuthCart } from '@/app/lib/authCart';
 
 import { User } from 'firebase/auth';
 
 interface T {
   product?: Product;
-  totalPrice?: number;
-  imageURL?: string;
-  count?: number;
 }
 
-const CheckoutItem: React.FC<T> = ({ product, totalPrice, imageURL, count }) => {
+const CheckoutItem: React.FC<T> = ({ product }) => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
 
-  const handleRemoveFromCart = (id: number) => {
+  // guest cart
+  const handleAddToGuestCart = () => {
+    dispatch(
+      addToCart({
+        ...(product as Product),
+        quantity: 1,
+      })
+    );
+  };
+  const handleRemoveFromGuestCart = (id: number) => {
     dispatch(removeFromCart(id));
   };
-  const handleClearItem = (id: number) => {
+  const handleClearGuestItem = (id: number) => {
     dispatch(clearItem(id));
   };
   return (
@@ -37,7 +43,7 @@ const CheckoutItem: React.FC<T> = ({ product, totalPrice, imageURL, count }) => 
           className="aspect-square w-full md:w-[clamp(100px,20vw,250px)] h-[clamp(150px,20vw,250px)] relative bg-white outline-1 outline-primary-light/10 shadow-sm">
           <Image
             className="rounded-sm object-contain transition-all duration-400 hover:-translate-y-1 hover:scale-102 p-4"
-            src={imageURL!}
+            src={product?.thumbnail as string}
             alt="Product Image"
             fill
           />
@@ -47,25 +53,42 @@ const CheckoutItem: React.FC<T> = ({ product, totalPrice, imageURL, count }) => 
             <h1 className="font-main mb-2 text-[clamp(1rem,2vw,1.3rem)]">{product?.title}</h1>
 
             <h2 className="font-main pb-2 text-[clamp(1rem,3vw,1.3rem)] font-semibold">
-              {'$' + totalPrice?.toFixed(2)}
+              {user
+                ? '$' + ((product?.price ?? 0) * (product?.quantity ?? 0)).toFixed(2)
+                : '$' + product?.totalPrice}
             </h2>
           </div>
           <div className="flex flex-col md:items-center md:flex-row">
             <div className="bg-white m-3 flex max-w-50 items-center justify-between rounded-sm text-xs shadow-md outline-secondary-light/60 outline-1">
               <Button
-                onClick={() => handleRemoveFromCart(product?.id as number)}
+                onClick={
+                  user
+                    ? () => removeFromAuthCart(product as Product, user as User)
+                    : () => handleRemoveFromGuestCart(product?.id as number)
+                }
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 -
               </Button>
-              <p className="px-1 w-[2ch] text-center">{count}</p>
+              <p className="px-1 w-[2ch] text-center">{product?.quantity}</p>
               <Button
-                onClick={() => addToAuthCart(product as Product, user as User)}
+                onClick={
+                  user
+                    ? () => addToAuthCart(product as Product, user as User)
+                    : () => handleAddToGuestCart()
+                }
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 +
               </Button>
             </div>
             <div className="text-secondary-light flex self-center">
-              <Button onClick={() => handleClearItem(product?.id as number)}>Delete</Button>
+              <Button
+                onClick={
+                  user
+                    ? () => clearAuthItem(product as Product, user as User)
+                    : () => handleClearGuestItem(product?.id as number)
+                }>
+                Delete
+              </Button>
             </div>
           </div>
         </div>

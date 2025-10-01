@@ -7,19 +7,30 @@ import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react';
 import convertToSubcurrency from '../../../lib/convertToSubcurrency';
 import CheckoutItem from '@/components/ui/CheckoutItem';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
+import useAuthCart from '@/hooks/useAuthCart';
 
 export default function CheckoutPage() {
   const stripe = useStripe();
   const elements = useElements();
+  const [user] = useAuthState(auth);
 
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // const cartItems = useAppSelector((state) => state.cart.items);
-  const cartTotal = useAppSelector((state) => state.cart.totalPrice);
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+  // auth users
+  const [authCart] = useAuthCart(user ?? null);
+  const authCartTotal = user && authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // guest users
+  const guestCart = useAppSelector((state) => state.cart.items);
+  const guestCartTotal = useAppSelector((state) => state.cart.totalPrice);
+
+  const cart = user ? authCart : guestCart;
+  const cartTotal = user ? authCartTotal : guestCartTotal;
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     fetch('/api/create-payment-intent', {
@@ -27,7 +38,7 @@ export default function CheckoutPage() {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ amount: convertToSubcurrency(cartTotal) }),
+      body: JSON.stringify({ amount: convertToSubcurrency(cartTotal as number) }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -36,7 +47,7 @@ export default function CheckoutPage() {
   const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    localStorage.setItem('cart', JSON.stringify(guestCart));
 
     if (!stripe || !elements) {
       return;
@@ -76,7 +87,7 @@ export default function CheckoutPage() {
             <h1 className="">
               <div className="flex gap-2 text-[clamp(0.2rem,2vw,1.3rem)] text-end  justify-end items-end">
                 <p>
-                  Subtotal: <strong>${cartTotal.toFixed(2)}</strong>
+                  Subtotal: <strong>${cartTotal?.toFixed(2) ?? 0}</strong>
                 </p>
                 {` (${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}{' '}
               </div>
@@ -84,17 +95,8 @@ export default function CheckoutPage() {
           </header>
           {/* Cart Items */}
           <div className="relative flex flex-col ">
-            {cartItems?.map((item) => (
-              <CheckoutItem
-                key={String(item.id)}
-                product={item}
-                productName={item.title}
-                productPrice={item.price}
-                productType={item.category}
-                imageURL={item.thumbnail}
-                totalPrice={item.totalPrice}
-                count={item.quantity}
-              />
+            {cart?.map((item) => (
+              <CheckoutItem key={String(item.id)} product={item} />
             ))}
           </div>
         </article>
@@ -102,7 +104,9 @@ export default function CheckoutPage() {
           <article className=" flex flex-col grow gap-4 text-secondary-light outline-secondary-light/50 rounded-sm bg-secondary-dark p-8 font-bold outline-1 ">
             <div className="flex justify-between">
               <h1 className="text-primary-light">Total: </h1>
-              <h1 className="text-primary-light justify-self-end">{'$' + cartTotal.toFixed(2)}</h1>
+              <h1 className="text-primary-light justify-self-end">
+                {'$' + (cartTotal?.toFixed(2) ?? 0)}
+              </h1>
             </div>
 
             <hr className="w-full" />
