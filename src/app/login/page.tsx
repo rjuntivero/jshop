@@ -4,18 +4,19 @@ import InputField from '@/components/ui/InputField';
 import Button from '@/components/ui/Button';
 import React, { useState } from 'react';
 import { db } from '../firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, increment, setDoc } from 'firebase/firestore';
 import { auth } from '@/app/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function Homepage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistered, setIsRegistered] = useState(true);
 
-  const { user } = useAuth();
+  const [user] = useAuthState(auth);
+
   const router = useRouter();
 
   async function register(e: React.FormEvent<HTMLFormElement>) {
@@ -38,10 +39,25 @@ export default function Homepage() {
     });
   }
 
+  //  upon login, turn guest cart into user cart
+  const mergeGuestCart = async () => {
+    if (!user) return;
+
+    const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+    for (const item of guestCart) {
+      const cartItemRef = doc(db, 'carts', user.uid, 'cartItems', item.id.toString());
+      await setDoc(cartItemRef, { quantity: increment(item.quantity) }, { merge: true });
+    }
+
+    // clear guest cart
+    localStorage.removeItem('guestCart');
+  };
+
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const cred = await signInWithEmailAndPassword(auth, email, password);
+      mergeGuestCart();
       router.push('/');
       console.log('Logged in UID:', cred.user.uid);
     } catch (err) {

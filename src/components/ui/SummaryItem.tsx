@@ -1,4 +1,3 @@
-import Button from './Button';
 import { Product } from '../../types/Product';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,10 +9,10 @@ interface T {
   productType?: string;
   totalPrice?: number;
   imageURL?: string;
-  count?: number;
+  quantity?: number;
 }
 
-export default function SummaryItem({ product, productName, totalPrice, imageURL, count }: T) {
+export default function SummaryItem({ product, productName, totalPrice, imageURL, quantity }: T) {
   return (
     <section className="">
       <article className="motion-preset-blur-down flex flex-col gap-8 duration-400 sm:flex-row  py-5 pr-6 ">
@@ -38,7 +37,7 @@ export default function SummaryItem({ product, productName, totalPrice, imageURL
           <div className="flex flex-col md:items-center md:flex-row">
             <div className="flex px-1 text-center gap-2">
               <p className="">Qt: </p>
-              <p>{count}</p>
+              <p>{quantity}</p>
             </div>
           </div>
         </div>

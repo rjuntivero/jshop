@@ -21,7 +21,7 @@ export default function LazyProductCard({ product }: { product: Product }) {
             productName={product.title}
             productType={product.category}
             productPrice={product.price}
-            imageURL={product?.thumbnail}
+            imageURL={product.thumbnail}
           />
         </Suspense>
       ) : (

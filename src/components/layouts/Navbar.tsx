@@ -11,6 +11,10 @@ import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
 import UserIcon from '../icons/UserIcon';
 import { useAuth } from '@/hooks/useAuth';
+import SearchIcon from '../icons/SearchIcon';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
+
 interface NavbarProps {
   homePage?: boolean;
   productsPage?: boolean;
@@ -29,7 +33,8 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
 
   const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
 
-  const { user, loading, logout } = useAuth();
+  const { logout } = useAuth();
+  const [user] = useAuthState(auth);
 
   return (
     <nav
@@ -50,6 +55,10 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
         </h1>
       )}
       <div className="right flex items-center ">
+        <div className="flex items-center gap-2">
+          {/* <input type="text" className="outline-1 p-1 text-sm" placeholder="search jshop" /> */}
+          <SearchIcon width={44} height={40} />
+        </div>
         {productsPage && (
           <Button
             onClick={handleCartToggle}
@@ -69,7 +78,9 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
         <div className="flex items-center">
           {user ? (
             <>
-              <Button className="" onClick={logout}>
+              <Button
+                className="hover:bg-secondary-light p-2 rounded-full transition-all duration-300"
+                onClick={logout}>
                 Sign Out
               </Button>
               <div className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">

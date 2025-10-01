@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   // const cartItems = useAppSelector((state) => state.cart.items);
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     fetch('/api/create-payment-intent', {
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
                 productType={item.category}
                 imageURL={item.thumbnail}
                 totalPrice={item.totalPrice}
-                count={item.count}
+                count={item.quantity}
               />
             ))}
           </div>

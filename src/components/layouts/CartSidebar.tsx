@@ -7,6 +7,7 @@ import { memo } from 'react';
 import Overlay from './Overlay';
 import { useAppSelector } from '@/state/hooks';
 import CartIcon from '../icons/CartIcon';
+import { useCart } from '@/hooks/useCart';
 
 interface SidebarProps {
   onClose: () => void;
@@ -15,14 +16,14 @@ interface SidebarProps {
 }
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
-  const cart = useAppSelector((state) => state.cart.items);
+  const { cart } = useCart();
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
 
   return (
     <>
       <aside className={className + ' font-sub-header'}>
-        <header className="relative  outline-1 p-3 pb-2 flex justify-between items-center">
+        <header className="border-b-1 relative  outline-1 p-3 pb-2 flex justify-between items-center">
           <div className="flex gap-3 items-center">
             <CartIcon width={30} height={30} color="var(--color-primary-light)" />
             <h1 className="font-bold text-primary-light text-2xl">Cart</h1>
@@ -40,9 +41,9 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
                 productName={item.title}
                 productType={item.category}
                 imageURL={item.thumbnail}
-                count={item.count}
+                quantity={item.quantity}
                 productPrice={item.price}
-                totalPrice={parseFloat((item.price * item.count).toFixed(2))}
+                totalPrice={parseFloat((item.price * item.quantity).toFixed(2))}
               />
             ))}
           {cart?.length === 0 && (

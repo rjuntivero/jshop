@@ -12,17 +12,17 @@ interface T {
   productType?: string;
   totalPrice?: number;
   imageURL?: string;
-  count?: number;
+  quantity?: number;
 }
 
-const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
+const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, quantity }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     dispatch(
       addToCart({
         ...(product as Product),
-        count: 1,
+        quantity: 1,
       })
     );
   };
@@ -53,7 +53,7 @@ const CartItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, cou
                 className="hover:bg-secondary-light/30 self-center p-4 h-full transition duration-400">
                 -
               </Button>
-              <h1>{count}</h1>
+              <h1>{quantity}</h1>
               <Button
                 onClick={handleAddToCart}
                 className="hover:bg-secondary-light/30 self-center h-full p-4 transition duration-400">

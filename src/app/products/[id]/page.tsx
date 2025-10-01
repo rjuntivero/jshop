@@ -46,7 +46,7 @@ const ProductPage = () => {
   const handleAddToCart = (product: Product) => {
     const payload: Product = {
       ...product,
-      count: itemCount,
+      quantity: itemCount,
     };
     dispatch(addToCart(payload));
     toast.success(`${product.title} added to cart!`);

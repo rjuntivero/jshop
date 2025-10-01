@@ -2,13 +2,15 @@ import { memo, useState } from 'react';
 import Button from './Button';
 import Link from 'next/link';
 import { Product } from '@/types/Product';
-import { addToCart } from '@/features/cartSlice';
-import { useAppDispatch } from '@/state/hooks';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 import { useItemCount } from '@/hooks/useItemCount';
 import ItemCounter from './ItemCounter';
 import StarRating from './StarRating';
+import CartIcon from '../icons/CartIcon';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
+import { addToCart } from '@/app/lib/authCart';
+import { addToGuestCart } from '@/app/lib/guestCart';
 
 interface T {
   product?: Product;
@@ -25,18 +27,10 @@ const ProductCard: React.FC<T> = ({
   productPrice,
   imageURL,
 }) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [loaded, setLoaded] = useState(false);
   const { itemCount, updateItemCount } = useItemCount();
-
-  const handleAddToCart = (product: Product) => {
-    const payload: Product = {
-      ...product,
-      count: itemCount,
-    };
-    dispatch(addToCart(payload));
-    toast.success(`${product.title} added to cart!`);
-  };
+  const [user] = useAuthState(auth);
 
   return (
     <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col  bg-secondary-dark shadow-md duration-400 hover:shadow-sm">
@@ -102,8 +96,13 @@ const ProductCard: React.FC<T> = ({
             <div className="flex gap-3 items-center ">
               <Button
                 className="hover:bg-secondary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85"
-                onClick={() => handleAddToCart(product as Product)}>
-                <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" />
+                onClick={
+                  user
+                    ? () => addToCart(product as Product, user, itemCount)
+                    : () => addToGuestCart(product as Product, itemCount)
+                }>
+                {/* <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" /> */}
+                <CartIcon width={25} height={25} color="#442727" />
               </Button>
             </div>
           </div>

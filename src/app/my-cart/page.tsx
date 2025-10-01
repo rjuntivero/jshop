@@ -14,7 +14,7 @@ export default function ShoppingCart() {
   const cartTotal = useAppSelector((state) => state.cart.totalPrice);
   const dispatch = useDispatch();
 
-  const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -68,7 +68,7 @@ export default function ShoppingCart() {
                   productType={item.category}
                   imageURL={item.thumbnail}
                   totalPrice={item.totalPrice}
-                  count={item.count}
+                  quantity={item.quantity}
                 />
               ))
             ) : (

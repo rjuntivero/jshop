@@ -16,21 +16,14 @@ interface T {
   count?: number;
 }
 
-const CheckoutItem: React.FC<T> = ({
-  product,
-  productName,
-  productType,
-  totalPrice,
-  imageURL,
-  count,
-}) => {
+const CheckoutItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     dispatch(
       addToCart({
         ...(product as Product),
-        count: 1,
+        quantity: 1,
       })
     );
   };

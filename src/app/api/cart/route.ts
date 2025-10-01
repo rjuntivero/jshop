@@ -14,18 +14,18 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const product: Product & { count?: number } = await req.json();
+  const product: Product & { quantity?: number } = await req.json();
 
-  const quantityToAdd = product.count && product.count > 0 ? product.count : 1;
+  const quantityToAdd = product.quantity && product.quantity > 0 ? product.quantity : 1;
   const existingItem = cart.items.find((item) => item.id === product.id);
 
   if (existingItem) {
-    existingItem.count! += quantityToAdd;
-    existingItem.totalPrice = existingItem.price * existingItem.count!;
+    existingItem.quantity! += quantityToAdd;
+    existingItem.totalPrice = existingItem.price * existingItem.quantity!;
   } else {
     const itemToPush = {
       ...product,
-      count: quantityToAdd,
+      quantity: quantityToAdd,
       totalPrice: product.price * quantityToAdd,
     };
     cart.items.push(itemToPush);

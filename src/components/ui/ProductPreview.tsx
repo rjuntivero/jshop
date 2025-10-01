@@ -30,18 +30,19 @@ const ProductPreview: React.FC<T> = ({ product }) => {
           </div>
         </Link>
 
-        <div className="flex flex-col p-1 md:p-3 bg-white  border-t-1 border-t-primary-light/20">
+        {/* details */}
+        <div className="flex flex-col p-1 md:p-3 bg-white  border-t-1 border-t-primary-light/20 gap-1">
           <h1 className="font-sub-header text-primary-light dark:text-secondary-dark truncate  text-sm md:text-[1rem]">
             {product?.title}
           </h1>
-          <div className="flex items-center  gap-2">
+          <div className="flex items-end  gap-2 leading-none">
             {(product?.availabilityStatus === 'Low Stock' && (
               <p className="text-[0.7rem] md:text-[0.8rem] font-semibold">
                 <span className="text-red-600">Only {product.stock} left</span>
               </p>
             )) ||
               ''}
-            <h2 className="pt-1 text-[0.8rem] font-semibold text-primary-light antialiased md:text-[1rem] flex gap-1 items-start">
+            <h2 className="pt-1 text-primary-light antialiased flex gap-1 items-start">
               <span className="text-[0.4rem] md:text-[0.7rem] ">$</span>
               {product?.price?.toFixed(2)}
             </h2>

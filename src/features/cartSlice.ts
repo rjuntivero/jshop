@@ -15,17 +15,18 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<Product>) {
       const product = action.payload;
-      const quantityToAdd = product.count && product.count > 0 ? product.count : 1;
+      const quantityToAdd = product.quantity && product.quantity > 0 ? product.quantity : 1;
       const existingItem = state.items.find((item) => item.id === product.id);
       if (existingItem) {
-        existingItem.count += quantityToAdd;
-        existingItem.totalPrice = Math.round(existingItem.price * existingItem.count * 100) / 100;
+        existingItem.quantity += quantityToAdd;
+        existingItem.totalPrice =
+          Math.round(existingItem.price * existingItem.quantity * 100) / 100;
         state.totalPrice =
           Math.round((state.totalPrice + existingItem.price * quantityToAdd) * 100) / 100;
       } else {
         const itemToPush: Product = {
           ...product,
-          count: quantityToAdd,
+          quantity: quantityToAdd,
           totalPrice: Math.round(product.price * quantityToAdd * 100) / 100,
         };
         state.items.push(itemToPush);
@@ -35,9 +36,9 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action: PayloadAction<number>) {
       const itemToRemove = state.items.find((item) => item.id === action.payload);
-      if (itemToRemove && itemToRemove.count > 1) {
-        itemToRemove.count -= 1;
-        itemToRemove.totalPrice = itemToRemove.price * itemToRemove.count;
+      if (itemToRemove && itemToRemove.quantity > 1) {
+        itemToRemove.quantity -= 1;
+        itemToRemove.totalPrice = itemToRemove.price * itemToRemove.quantity;
         state.totalPrice = Math.round((state.totalPrice - itemToRemove.price) * 100) / 100;
       } else {
         return;
@@ -63,7 +64,7 @@ const cartSlice = createSlice({
     },
     cartTotal(state) {
       state.items = state.items.map((item) => {
-        const totalPrice = item.price * item.count;
+        const totalPrice = item.price * item.quantity;
         return { ...item, totalPrice };
       });
     },

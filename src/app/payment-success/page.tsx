@@ -5,16 +5,17 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SummaryItem from '@/components/ui/SummaryItem';
+import { Product } from '@/types/Product';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
   const amount = searchParams.get('amount');
   const paymentIntent = searchParams.get('payment_intent');
   const clientSecret = searchParams.get('payment_intent_client_secret');
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<Product[] | []>([]);
   const redirectStatus = searchParams.get('redirect_status');
 
-  const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -51,7 +52,7 @@ export default function PaymentSuccess() {
                   productType={item.category}
                   imageURL={item.thumbnail}
                   totalPrice={item.totalPrice}
-                  count={item.count}
+                  quantity={item.quantity}
                 />
               ))}
             </div>
