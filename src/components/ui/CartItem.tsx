@@ -4,20 +4,30 @@ import { Product } from '../../types/Product';
 import Image from 'next/image';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
-import { addToCart, clearItem, removeFromCart } from '@/app/lib/authCart';
+import { addToAuthCart, clearAuthItem, removeFromAuthCart } from '@/app/lib/authCart';
 import { User } from 'firebase/auth';
-import { addToGuestCart, clearGuestItem, removeFromGuestCart } from '@/app/lib/guestCart';
-import { CartItem as CartItemType } from '@/hooks/useCart';
+import { useAppDispatch } from '@/state/hooks';
+import { addToCart, clearItem, removeFromCart } from '@/features/cartSlice';
 
 interface T {
   product?: Product;
   quantity?: number;
   totalPrice: number;
-  updateGuestCart: (items: CartItemType[]) => void;
 }
 
-const CartItem: React.FC<T> = ({ product, totalPrice, quantity, updateGuestCart }) => {
+const CartItem: React.FC<T> = ({ product, totalPrice, quantity }) => {
   const [user] = useAuthState(auth);
+  const dispatch = useAppDispatch();
+
+  // guest cart
+  const handleAddTGuestoCart = () => {
+    dispatch(
+      addToCart({
+        ...(product as Product),
+        quantity: 1,
+      })
+    );
+  };
 
   return (
     <div className=" motion-preset-blur-down  border-b-1 border-primary-light flex h-auto w-full self-center duration-400 p-8 ">
@@ -43,8 +53,8 @@ const CartItem: React.FC<T> = ({ product, totalPrice, quantity, updateGuestCart 
               <Button
                 onClick={
                   user
-                    ? () => removeFromCart(product as Product, user as User)
-                    : () => removeFromGuestCart(product as Product, updateGuestCart)
+                    ? () => removeFromAuthCart(product as Product, user as User)
+                    : () => dispatch(removeFromCart(product!.id))
                 }
                 className="hover:bg-secondary-light/30 self-center p-4 h-full transition duration-400">
                 -
@@ -53,8 +63,8 @@ const CartItem: React.FC<T> = ({ product, totalPrice, quantity, updateGuestCart 
               <Button
                 onClick={
                   user
-                    ? () => addToCart(product as Product, user as User)
-                    : () => addToGuestCart(product as Product, updateGuestCart)
+                    ? () => addToAuthCart(product as Product, user as User)
+                    : () => handleAddTGuestoCart()
                 }
                 className="hover:bg-secondary-light/30 self-center h-full p-4 transition duration-400">
                 +
@@ -63,8 +73,8 @@ const CartItem: React.FC<T> = ({ product, totalPrice, quantity, updateGuestCart 
             <Button
               onClick={
                 user
-                  ? () => clearItem(product as Product, user as User)
-                  : () => clearGuestItem(product as Product, updateGuestCart)
+                  ? () => clearAuthItem(product as Product, user as User)
+                  : () => dispatch(clearItem(product!.id))
               }>
               <Image src="/trash.svg" alt="trash icon" width={25} height={25} />
             </Button>

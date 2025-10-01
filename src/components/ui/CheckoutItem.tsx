@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 import { clearItem, removeFromCart } from '../../features/cartSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
-import { addToCart } from '@/app/lib/authCart';
-import { addToGuestCart } from '@/app/lib/guestCart';
+import { addToAuthCart } from '@/app/lib/authCart';
 
 import { User } from 'firebase/auth';
 
@@ -60,11 +59,7 @@ const CheckoutItem: React.FC<T> = ({ product, totalPrice, imageURL, count }) => 
               </Button>
               <p className="px-1 w-[2ch] text-center">{count}</p>
               <Button
-                onClick={
-                  user
-                    ? () => addToCart(product as Product, user as User)
-                    : () => addToGuestCart(product as Product)
-                }
+                onClick={() => addToAuthCart(product as Product, user as User)}
                 className="hover:bg-primary-light/20 px-4 py-2 transition duration-400">
                 +
               </Button>

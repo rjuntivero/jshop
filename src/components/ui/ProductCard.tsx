@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import Button from './Button';
 import Link from 'next/link';
 import { Product } from '@/types/Product';
@@ -7,26 +7,34 @@ import { useItemCount } from '@/hooks/useItemCount';
 import ItemCounter from './ItemCounter';
 import StarRating from './StarRating';
 import CartIcon from '../icons/CartIcon';
-import { addToCart } from '@/app/lib/authCart';
-import { addToGuestCart } from '@/app/lib/guestCart';
-import { CartItem } from '@/hooks/useCart';
+import { addToCart } from '@/features/cartSlice';
+import { addToAuthCart } from '@/app/lib/authCart';
 import { User } from 'firebase/auth';
+import { useAppDispatch } from '@/state/hooks';
+import toast from 'react-hot-toast';
 
 interface T {
   product?: Product;
   imageURL?: string;
   user?: User | null;
-  updateGuestCart: (items: CartItem[]) => void;
 }
 
-const ProductCard: React.FC<T> = ({ product, imageURL, user, updateGuestCart }) => {
+const ProductCard: React.FC<T> = ({ product, imageURL, user }) => {
   // const dispatch = useAppDispatch();
   const [loaded, setLoaded] = useState(false);
   const { itemCount, updateItemCount } = useItemCount();
 
-  useEffect(() => {
-    console.log('COMPONENT RERENDERING');
-  });
+  const dispatch = useAppDispatch();
+
+  // guest cart
+  const handleAddToGuestCart = (product: Product) => {
+    const payload: Product = {
+      ...product,
+      quantity: itemCount,
+    };
+    dispatch(addToCart(payload));
+    toast.success(`${product.title} added to cart!`);
+  };
 
   return (
     <article className="outline-1 outline-primary-dark/25 aspect-square motion-preset-blur-down z-1 flex h-auto grow flex-col  bg-secondary-dark shadow-md duration-400 hover:shadow-sm">
@@ -94,8 +102,8 @@ const ProductCard: React.FC<T> = ({ product, imageURL, user, updateGuestCart }) 
                 className="hover:bg-secondary-light/30 rounded-md border-primary-light border-2 flex h-10 w-10 items-center justify-center   transition-all duration-300 hover:brightness-85"
                 onClick={
                   user
-                    ? () => addToCart(product as Product, user as User, itemCount)
-                    : () => addToGuestCart(product as Product, updateGuestCart)
+                    ? () => addToAuthCart(product as Product, user as User, itemCount)
+                    : () => handleAddToGuestCart(product as Product)
                 }>
                 {/* <Image width={25} height={25} src="/shoppingbag.svg" alt="Shopping Bag Icon" /> */}
                 <CartIcon width={25} height={25} color="#442727" />

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { db } from '../firebaseConfig';
 
 // auth users
-const addToCart = async (product: Product, user: User, itemCount?: number) => {
+const addToAuthCart = async (product: Product, user: User, itemCount?: number) => {
   // only authenticated users may add to cart
   if (!user) {
     return;
@@ -29,7 +29,7 @@ const addToCart = async (product: Product, user: User, itemCount?: number) => {
   return true;
 };
 
-const removeFromCart = async (product: Product, user: User) => {
+const removeFromAuthCart = async (product: Product, user: User) => {
   // only authenticated users may add to cart
   if (!user) {
     return;
@@ -66,7 +66,7 @@ const removeFromCart = async (product: Product, user: User) => {
   return true;
 };
 
-const clearItem = async (product: Product, user: User) => {
+const clearAuthItem = async (product: Product, user: User) => {
   if (!user) return;
 
   const cartItemRef = doc(db, 'carts', user.uid, 'cartItems', product.id.toString());
@@ -82,4 +82,4 @@ const clearItem = async (product: Product, user: User) => {
   }
 };
 
-export { addToCart, removeFromCart, clearItem };
+export { addToAuthCart, removeFromAuthCart, clearAuthItem };

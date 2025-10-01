@@ -7,7 +7,7 @@ import { memo } from 'react';
 import Overlay from './Overlay';
 import { useAppSelector } from '@/state/hooks';
 import CartIcon from '../icons/CartIcon';
-import useCart from '@/hooks/useCart';
+import useAuthCart from '@/hooks/useAuthCart';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
 
@@ -19,10 +19,19 @@ interface SidebarProps {
 
 const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
   const [user] = useAuthState(auth);
-  const [cart, loading, updateGuestCart] = useCart(user ?? null);
-  const cartTotal = useAppSelector((state) => state.cart.totalPrice);
+
+  // auth users
+  const [authCart] = useAuthCart(user ?? null);
+  const cartTotal = user && authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // guest users
+  const guestCart = useAppSelector((state) => state.cart.items);
+  const guestCartTotal = useAppSelector((state) => state.cart.totalPrice);
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
 
+  const cart = user ? authCart : guestCart;
+
+  console.log('CART ITEMS: ', cart);
   return (
     <>
       <aside className={className + ' font-sub-header'}>
@@ -43,7 +52,6 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
                 product={item}
                 quantity={item.quantity}
                 totalPrice={parseFloat((item.price * item.quantity).toFixed(2))}
-                updateGuestCart={updateGuestCart}
               />
             ))}
           {cart?.length === 0 && (
@@ -54,7 +62,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
         </section>
         <div className="p-4 text-2xl flex justify-between border-t-1 border-b-1">
           <p>Total: </p>
-          <p>$ {cartTotal.toFixed(2)}</p>
+          <p>$ {user ? cartTotal?.toFixed(2) ?? 0 : guestCartTotal.toFixed(2)}</p>
         </div>
         <div className="p-4">
           <Link

@@ -14,18 +14,9 @@ export interface CartProduct extends Product {
   quantity: number;
 }
 
-const useCart = (user: User | null): [CartProduct[], boolean, (items: CartItem[]) => void] => {
-  console.log('USE CART RUNNING--------------------------');
+const useAuthCart = (user: User | null): [CartProduct[], boolean] => {
   const [cart, setCart] = useState<CartProduct[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // reactive guest cart
-  const [guestCart, setGuestCart] = useState<CartItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      return JSON.parse(localStorage.getItem('cart') || '[]');
-    }
-    return [];
-  });
 
   const fetchProducts = async (items: CartItem[]) => {
     const products = await Promise.all(
@@ -35,7 +26,6 @@ const useCart = (user: User | null): [CartProduct[], boolean, (items: CartItem[]
         return { ...product, quantity: item.quantity };
       })
     );
-    console.log('FETCHED PRODUCTS CAUSE FUNCTION ', products);
     setCart(products);
     setLoading(false);
   };
@@ -54,33 +44,13 @@ const useCart = (user: User | null): [CartProduct[], boolean, (items: CartItem[]
         console.log('FETCHING FOR AUTH USERS');
         await fetchProducts(items);
       });
-    } else {
-      // guest users
-      const localItems: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
-      console.log('FETCHING FOR GUEST USERS');
-      setGuestCart(localItems);
-      fetchProducts(localItems);
     }
-
-    console.log('FETCHED PRODUCTS FOR USE EFFECT 1');
     return () => {
       if (unsubscribe) unsubscribe();
     };
   }, [user]);
 
-  useEffect(() => {
-    if (!user) {
-      localStorage.setItem('cart', JSON.stringify(guestCart));
-      fetchProducts(guestCart);
-    }
-    console.log('FETCHING GUEST CART', guestCart);
-  }, [guestCart, user]);
-
-  const updateGuestCart = (items: CartItem[]) => {
-    setGuestCart(items);
-  };
-
-  return [cart, loading, updateGuestCart];
+  return [cart, loading];
 };
 
-export default useCart;
+export default useAuthCart;

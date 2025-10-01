@@ -3,18 +3,16 @@
 import { useInView } from 'react-intersection-observer';
 import { lazy, Suspense } from 'react';
 import type { Product } from '@/types/Product';
-import { CartItem } from '@/hooks/useCart';
 import { User } from 'firebase/auth';
 
 const ProductCard = lazy(() => import('./ProductCard'));
 
 interface Props {
-  updateGuestCart: (items: CartItem[]) => void;
   user?: User | null;
   product: Product;
 }
 
-export default function LazyProductCard({ product, user, updateGuestCart }: Props) {
+export default function LazyProductCard({ product, user }: Props) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -24,12 +22,7 @@ export default function LazyProductCard({ product, user, updateGuestCart }: Prop
           fallback={
             <div className="rounded-md bg-secondary-dark dark:bg-neutral-800 animate-pulse h-full w-full" />
           }>
-          <ProductCard
-            product={product}
-            imageURL={product.thumbnail}
-            updateGuestCart={updateGuestCart}
-            user={user}
-          />
+          <ProductCard product={product} imageURL={product.thumbnail} user={user} />
         </Suspense>
       ) : (
         // placeholder not in vew
