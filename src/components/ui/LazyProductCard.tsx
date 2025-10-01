@@ -3,10 +3,18 @@
 import { useInView } from 'react-intersection-observer';
 import { lazy, Suspense } from 'react';
 import type { Product } from '@/types/Product';
+import { CartItem } from '@/hooks/useCart';
+import { User } from 'firebase/auth';
 
 const ProductCard = lazy(() => import('./ProductCard'));
 
-export default function LazyProductCard({ product }: { product: Product }) {
+interface Props {
+  updateGuestCart: (items: CartItem[]) => void;
+  user?: User | null;
+  product: Product;
+}
+
+export default function LazyProductCard({ product, user, updateGuestCart }: Props) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -18,10 +26,9 @@ export default function LazyProductCard({ product }: { product: Product }) {
           }>
           <ProductCard
             product={product}
-            productName={product.title}
-            productType={product.category}
-            productPrice={product.price}
             imageURL={product.thumbnail}
+            updateGuestCart={updateGuestCart}
+            user={user}
           />
         </Suspense>
       ) : (

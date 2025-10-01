@@ -14,6 +14,9 @@ import LazyProductCard from '../ui/LazyProductCard';
 import CartSidebar from '@/components/layouts/CartSidebar';
 import { useDispatch } from 'react-redux';
 import { toggleCart } from '@/features/cartSlice';
+import useCart from '@/hooks/useCart';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/app/firebaseConfig';
 
 const ProductGrid = ({ products }: { products: Product[] }) => {
   const [search, setSearch] = useState('');
@@ -22,6 +25,8 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const dispatch = useDispatch();
   const filteredProducts = useFilteredProducts(products, search, activeCategory);
+  const [user] = useAuthState(auth);
+  const [cart, loading, updateGuestCart] = useCart(user ?? null);
 
   const handleCartToggle = useCallback(() => {
     dispatch(toggleCart());
@@ -103,7 +108,12 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
           <div className="h-full transition-all duration-500 mb-6 md:p-3 lg:p-5">
             <article className="relative grid grid-cols-2 gap-2 px-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-3">
               {filteredProducts?.map((product) => (
-                <LazyProductCard key={String(product.id)} product={product} />
+                <LazyProductCard
+                  key={String(product.id)}
+                  product={product}
+                  updateGuestCart={updateGuestCart}
+                  user={user}
+                />
               ))}
             </article>
           </div>

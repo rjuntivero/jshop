@@ -13,7 +13,7 @@ interface T {
   product?: Product;
   quantity?: number;
   totalPrice: number;
-  updateGuestCart?: (items: CartItemType[]) => void;
+  updateGuestCart: (items: CartItemType[]) => void;
 }
 
 const CartItem: React.FC<T> = ({ product, totalPrice, quantity, updateGuestCart }) => {

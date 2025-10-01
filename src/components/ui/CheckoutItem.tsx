@@ -14,15 +14,12 @@ import { User } from 'firebase/auth';
 
 interface T {
   product?: Product;
-  productName?: string;
-  productPrice?: number;
-  productType?: string;
   totalPrice?: number;
   imageURL?: string;
   count?: number;
 }
 
-const CheckoutItem: React.FC<T> = ({ product, productName, totalPrice, imageURL, count }) => {
+const CheckoutItem: React.FC<T> = ({ product, totalPrice, imageURL, count }) => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
 
@@ -48,7 +45,7 @@ const CheckoutItem: React.FC<T> = ({ product, productName, totalPrice, imageURL,
         </Link>
         <div>
           <div className="md:p-4">
-            <h1 className="font-main mb-2 text-[clamp(1rem,2vw,1.3rem)]">{productName}</h1>
+            <h1 className="font-main mb-2 text-[clamp(1rem,2vw,1.3rem)]">{product?.title}</h1>
 
             <h2 className="font-main pb-2 text-[clamp(1rem,3vw,1.3rem)] font-semibold">
               {'$' + totalPrice?.toFixed(2)}
