@@ -6,6 +6,8 @@ import Button from '../ui/Button';
 import UpArrowIcon from '../icons/UpArrowIcon';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
 import { capitalizeFirst } from '@/app/lib/utils';
+import { useAppDispatch } from '@/state/hooks';
+import { setSearchQuery } from '@/features/cartSlice';
 
 interface SidebarProps {
   className?: string;
@@ -16,6 +18,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ activeCategory, handleItemClick, toggleSidebar }) => {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -24,6 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, handleItemClick, togg
   const handleClick = useCallback(
     (newValue: string) => {
       handleItemClick(newValue);
+      dispatch(setSearchQuery(newValue));
+
       if (isSmallScreen) {
         scrollToTop();
       }

@@ -48,21 +48,24 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
           <MenuIcon color="#442727" />
         </Button>
         <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
+        <CartIcon width={44} height={40} color="#442727" />
       </div>
       {!homePage && (
         <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">
           JSHOP
         </h1>
       )}
-      <div className="right flex items-center ">
-        <div className="flex items-center gap-2">
-          {/* <input type="text" className="outline-1 p-1 text-sm" placeholder="search jshop" /> */}
-          <SearchIcon width={44} height={40} />
+      <div className="right flex items-center gap-4 ">
+        <div className=" text-sm rounded-full bg-secondary-dark flex justify-between gap-2 items-center">
+          <div className="flex items-center justify-center hover:bg-secondary-light/50 rounded-full p-2 transition-colors duration-300 cursor-pointer">
+            <SearchIcon width={30} height={26} />
+          </div>
+          <input type="text" placeholder="Search " className="text-md font-semibold max-w-30" />
         </div>
         {productsPage && (
           <Button
             onClick={handleCartToggle}
-            className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
+            className="d flex h-[50px] w-[50px] items-center justify-center  transition-colors">
             <CartIcon width={44} height={40} color="#442727" />
           </Button>
         )}
@@ -70,12 +73,12 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
           <Link href="/my-cart">
             <Button
               onClick={handleCartToggle}
-              className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
+              className=" flex h-[50px] w-[50px] items-center justify-center  transition-colors ">
               <CartIcon width={44} height={40} color="#442727" />
             </Button>
           </Link>
         )}
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           {user ? (
             <>
               <Button
@@ -83,7 +86,7 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
                 onClick={logout}>
                 Sign Out
               </Button>
-              <div className="d flex h-[78px] w-[78px] items-center justify-center rounded-full p-2 transition-colors">
+              <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full transition-colors">
                 <UserIcon width={44} height={40} color="#442727" />
               </div>
             </>

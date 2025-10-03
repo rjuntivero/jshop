@@ -27,12 +27,12 @@ const useAuthCart = (user: User | null): [CartProduct[], boolean] => {
       })
     );
     setCart(products);
+
     setLoading(false);
   };
 
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
-
     if (user) {
       // auth users
       const cartItemsRef = collection(db, 'carts', user.uid, 'cartItems');
@@ -41,7 +41,6 @@ const useAuthCart = (user: User | null): [CartProduct[], boolean] => {
           id: doc.id,
           ...(doc.data() as Omit<CartItem, 'id'>),
         }));
-        console.log('FETCHING FOR AUTH USERS');
         await fetchProducts(items);
       });
     }
@@ -49,6 +48,7 @@ const useAuthCart = (user: User | null): [CartProduct[], boolean] => {
       if (unsubscribe) unsubscribe();
     };
   }, [user]);
+  console.log(cart);
 
   return [cart, loading];
 };

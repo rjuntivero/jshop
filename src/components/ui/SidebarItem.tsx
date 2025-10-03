@@ -1,6 +1,8 @@
 import React, { memo, useState } from 'react';
 import Button from './Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAppDispatch } from '@/state/hooks';
+import { setSearchQuery } from '@/features/cartSlice';
 
 interface SidebarItemProps {
   item: string;
@@ -20,12 +22,14 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   childrenItems = [],
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     if (hasDropdown) {
       setIsOpen(!isOpen);
     } else {
       handleItemClick(item);
+      dispatch(setSearchQuery(item));
     }
   };
 

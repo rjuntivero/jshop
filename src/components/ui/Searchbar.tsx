@@ -1,52 +1,52 @@
 import React, { memo } from 'react';
-import SearchIcon from '../icons/SearchIcon';
 import Button from './Button';
 import Dropdown from './Dropdown';
+import FilterIcon from '../icons/FilterIcon';
+import { useAppSelector } from '@/state/hooks';
 
 interface T {
-  input?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   results: number;
   sideBarVisible?: boolean;
   showSidebar?: () => void;
 }
 
-const Searchbar: React.FC<T> = ({ input, onChange, results, sideBarVisible, showSidebar }) => {
+const Searchbar: React.FC<T> = ({ results, sideBarVisible, showSidebar }) => {
   // const filters = ['Newest', 'Oldest', 'Popularity', 'Rating'];
   // const [dropdown, setDropdown] = useState(false);
 
   // const handleDropdown = () => {
   //   setDropdown((prev) => !prev);
   // };
+  const searchQuery = useAppSelector((state) => state.cart.searchQuery);
 
   return (
-    <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 ">
-      {/* searchbar */}
-      <Dropdown />
-      <div className="flex w-full items-center">
-        <div className="dark:bg-background-dark outline-primary-light dark:outline-secondary-dark flex w-[45%] items-center  px-1 py-1 text-sm outline-1 ">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={input}
-            onChange={onChange}
-            className=" dark:text-secondary-dark text-primary-light w-full min-w-0 border-red-50 bg-transparent px-4 focus:outline-none"
-          />
-          <Button className="dark:bg-background-dark ml-auto">
-            <SearchIcon />
-          </Button>
-        </div>
-      </div>
+    <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 justify-between">
       {/* show/hide sidebar and results */}
-      <div className=" grid grid-cols-[max-content] grid-rows-[repeat(2,auto)] items-center justify-end pr-8 text-right">
-        <Button
-          className="bg-secondary-dark shadow-md outline-1 outline-gray-400/15 py-1 px-2 text-primary-light dark:text-secondary-dark z-50 row-start-1  justify-self-end rounded-lg lg:block"
-          onClick={showSidebar}>
-          {sideBarVisible ? 'Hide' : 'Show'}
-        </Button>
-        <h1 className="text-primary-light dark:text-accent-dark row-start-2 hidden text-lg md:block">
-          {results} Results
+      <div>
+        <h1 className="text-primary-light dark:text-accent-dark row-start-2 hidden text-sm md:block">
+          Search results for
         </h1>
+        <p className="text-2xl font-semibold">
+          {searchQuery} {`(${results})`}
+        </p>
+      </div>
+      <div className="flex gap-4">
+        <Button
+          className=" py-1 px-2 text-primary-light z-50   justify-self-end rounded-lg lg:block"
+          onClick={showSidebar}>
+          {sideBarVisible ? (
+            <div className="flex gap-4">
+              <p>Hide Filters</p>
+              <FilterIcon />
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              <p>Show Filters</p>
+              <FilterIcon />
+            </div>
+          )}
+        </Button>
+        <Dropdown />
       </div>
     </div>
   );

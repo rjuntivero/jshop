@@ -7,6 +7,7 @@ const initialState: Cart = {
   totalPrice: 0,
   isCartOpen: false,
   isDirectoryOpen: false,
+  searchQuery: 'All',
 };
 
 const cartSlice = createSlice({
@@ -51,7 +52,6 @@ const cartSlice = createSlice({
         state.items = state.items.filter((item) => item.id !== action.payload);
       }
     },
-
     clearCart(state) {
       state.items = [];
       state.totalPrice = 0;
@@ -68,10 +68,20 @@ const cartSlice = createSlice({
         return { ...item, totalPrice };
       });
     },
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, toggleCart, toggleDirectory, clearItem } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  toggleCart,
+  toggleDirectory,
+  clearItem,
+  setSearchQuery,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

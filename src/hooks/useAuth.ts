@@ -6,6 +6,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       await auth.signOut();
+
       return true;
     } catch (err) {
       console.error('Logout error:', err);

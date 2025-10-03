@@ -1,28 +1,55 @@
+// Checkout.tsx (recommended)
 'use client';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import convertToSubcurrency from '../../../lib/convertToSubcurrency';
 import CheckoutPage from '@/components/layouts/CheckoutPage';
-import { useAppSelector } from '@/state/hooks';
+import useAuthCart from '@/hooks/useAuthCart';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebaseConfig';
+import { useRouter } from 'next/navigation';
+import LoadWheel from '@/components/ui/LoadWheel';
+import { User } from 'firebase/auth';
 
-if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
-  throw new Error('NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined');
-}
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
+export default function Checkout() {
+  const [user, loadingAuth] = useAuthState(auth);
+  const [authCart, loadingCart] = useAuthCart(user as User);
+  const router = useRouter();
 
-const Checkout = () => {
-  const cartTotal = useAppSelector((state) => state.cart.totalPrice);
+  // wait until authCart is resolved
+  if (loadingAuth || loadingCart) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <LoadWheel />
+      </div>
+    );
+  }
 
+  // protect from unauth users
+  if (!user) {
+    router.replace('/login');
+    return null;
+  }
+
+  const authCartTotal = authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  if (!authCartTotal || authCartTotal <= 0) {
+    // protect from unauth users
+    router.replace('/my-cart');
+    return null;
+  }
 
   return (
     <Elements
       stripe={stripePromise}
-      options={{ mode: 'payment', amount: convertToSubcurrency(cartTotal), currency: 'usd' }}>
+      options={{
+        mode: 'payment',
+        amount: convertToSubcurrency(authCartTotal),
+        currency: 'usd',
+      }}>
       <CheckoutPage />
     </Elements>
   );
-};
-
-export default Checkout;
+}
