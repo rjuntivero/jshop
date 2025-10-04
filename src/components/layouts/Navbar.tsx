@@ -14,6 +14,7 @@ import { useAuth } from '@/hooks/useAuth';
 import SearchIcon from '../icons/SearchIcon';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
+import Image from 'next/image';
 
 interface NavbarProps {
   homePage?: boolean;
@@ -48,7 +49,10 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
           <MenuIcon color="#442727" />
         </Button>
         <Directory className={`${isDirectoryOpen ? 'left-0' : '-left-full'}`} />
-        <CartIcon width={44} height={40} color="#442727" />
+        <Link href={'/products'} className="flex cursor-pointer">
+          <Image src="shoppingbag.svg" width={40} height={40} alt="shopping bag icon" />
+        </Link>
+        {/* <CartIcon width={44} height={40} color="#442727" /> */}
       </div>
       {!homePage && (
         <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">
