@@ -22,6 +22,8 @@ export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
 
+  console.log('Client Secret', clientSecret);
+
   // auth users
   const [authCart] = useAuthCart(user ?? null);
   const authCartTotal = user && authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -40,7 +42,7 @@ export default function CheckoutPage() {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ amount: convertToSubcurrency(cartTotal as number) }),
+      body: JSON.stringify({ amount: convertToSubcurrency(cartTotal as number), user, cart }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -48,6 +50,7 @@ export default function CheckoutPage() {
 
   const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     setLoading(true);
     localStorage.setItem('cart', JSON.stringify(guestCart));
 
