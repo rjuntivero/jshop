@@ -1,32 +1,38 @@
+import { runTransaction, doc, deleteDoc } from 'firebase/firestore';
 import { Product } from '@/types/Product';
 import { User } from 'firebase/auth';
-import { deleteDoc, doc, increment, runTransaction, setDoc } from 'firebase/firestore';
-import toast from 'react-hot-toast';
 import { db } from '../firebaseConfig';
+import toast from 'react-hot-toast';
 
-// auth users
-const addToAuthCart = async (product: Product, user: User, itemCount?: number) => {
-  // only authenticated users may add to cart
-  if (!user) {
-    return;
-  }
+const addToAuthCart = async (product: Product, user: User, itemCount = 1) => {
+  if (!user) return;
 
-  const cartItemRef = doc(db, 'carts', user?.uid as string, 'cartItems', product.id.toString());
+  const cartItemRef = doc(db, 'carts', user.uid, 'cartItems', product.id.toString());
 
   try {
-    // increment quantity
-    await setDoc(
-      cartItemRef,
-      { product_id: product.id, quantity: increment(itemCount ?? 1) },
-      { merge: true }
-    );
+    await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(cartItemRef);
+
+      if (snap.exists()) {
+        const data = snap.data() as { quantity?: number };
+        const currentQty = data?.quantity ?? 0;
+        transaction.update(cartItemRef, {
+          quantity: currentQty + itemCount,
+          product_id: product.id,
+        });
+      } else {
+        transaction.set(cartItemRef, {
+          product_id: product.id,
+          quantity: itemCount,
+        });
+      }
+    });
+
     toast.success(`${product.title} added to cart!`);
   } catch (err) {
     console.error('Failed to Add Cart Item', err);
     toast.error('Failed to add item to cart. Please try again');
-    return false;
   }
-  return true;
 };
 
 const removeFromAuthCart = async (product: Product, user: User) => {

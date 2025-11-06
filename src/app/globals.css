@@ -22,13 +22,6 @@
   src: url(/fonts/RedditSans-VariableFont_opszwght.ttf);
 }
 
-@font-face {
-  font-family: Inter;
-  font-display: auto;
-  src: url(/fonts/Inter-VariableFont_opszwght.ttf);
-}
-
-
 @theme {
   --color-background-light: #f3eed9;
   --color-primary-light: #442727;

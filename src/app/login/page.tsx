@@ -9,6 +9,8 @@ import { auth } from '@/app/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { FirebaseError } from 'firebase/app';
+import { generateFirebaseAuthErrorMessage } from '../lib/ErrorHandler';
 
 export default function Homepage() {
   const [email, setEmail] = useState('');
@@ -60,8 +62,11 @@ export default function Homepage() {
       mergeGuestCart();
       router.push('/');
       console.log('Logged in UID:', cred.user.uid);
-    } catch (err) {
-      console.error('Login error:', err);
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        generateFirebaseAuthErrorMessage(error);
+      }
+      console.error('Login error:', error);
     }
   }
 

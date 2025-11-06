@@ -52,7 +52,6 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
         <Link href={'/products'} className="flex cursor-pointer">
           <Image src="shoppingbag.svg" width={40} height={40} alt="shopping bag icon" />
         </Link>
-        {/* <CartIcon width={44} height={40} color="#442727" /> */}
       </div>
       {!homePage && (
         <h1 className="logo text-primary-light dark:text-secondary-dark text-center text-4xl font-bold tracking-widest">

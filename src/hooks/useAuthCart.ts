@@ -35,14 +35,22 @@ const useAuthCart = (user: User | null): [CartProduct[], boolean] => {
     let unsubscribe: (() => void) | undefined;
     if (user) {
       // auth users
+      console.log('GRABBING CART FOR USER: ', user.uid);
       const cartItemsRef = collection(db, 'carts', user.uid, 'cartItems');
-      unsubscribe = onSnapshot(cartItemsRef, async (snapshot) => {
-        const items: CartItem[] = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<CartItem, 'id'>),
-        }));
-        await fetchProducts(items);
-      });
+      unsubscribe = onSnapshot(
+        cartItemsRef,
+        async (snapshot) => {
+          const items: CartItem[] = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<CartItem, 'id'>),
+          }));
+          await fetchProducts(items);
+        },
+        (err) => {
+          console.error('cart snapshot error', err);
+          setLoading(false);
+        }
+      );
     }
     return () => {
       if (unsubscribe) unsubscribe();
