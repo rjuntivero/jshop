@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SummaryItem from '@/components/ui/SummaryItem';
 import { Product } from '@/types/Product';
+import { fetchLatestReceipt, fetchProductsData } from '../lib/fetchLatestReceipt';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebaseConfig';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -14,16 +17,24 @@ export default function PaymentSuccess() {
   const clientSecret = searchParams.get('payment_intent_client_secret');
   const [cartItems, setCartItems] = useState<Product[] | []>([]);
   const redirectStatus = searchParams.get('redirect_status');
+  const [orderNumber, setOrderNumber] = useState('');
 
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
-  }, []);
-  console.log('ITEMS PURCHASED:', cartItems);
+    const fetchPurchasedItems = async () => {
+      if (!user) return;
+
+      const { items, orderNumber } = await fetchLatestReceipt(user.uid);
+      const products = await fetchProductsData(items);
+      setCartItems(products);
+      setOrderNumber(orderNumber);
+    };
+
+    fetchPurchasedItems();
+  }, [user]);
+
   console.log({ amount, paymentIntent, clientSecret, redirectStatus });
   return (
     <>
@@ -37,7 +48,7 @@ export default function PaymentSuccess() {
               ✔
             </div>
             <h1 className="text-4xl  font-semibold pt-3">Thank You For Your Purchase</h1>
-            <p className=" text-center text-lg">Your order number is #B6748C</p>
+            <p className=" text-center text-lg">Your order number is #{orderNumber}</p>
           </div>
 
           <div className="flex flex-col bg-secondary-dark p-8 max-w-[1200px] min-w-[900px] outline-1 rounded-sm outline-secondary-light/40">
@@ -47,10 +58,6 @@ export default function PaymentSuccess() {
                 <SummaryItem
                   key={String(item.id)}
                   product={item}
-                  productName={item.title}
-                  productPrice={item.price}
-                  productType={item.category}
-                  imageURL={item.thumbnail}
                   totalPrice={item.totalPrice}
                   quantity={item.quantity}
                 />
