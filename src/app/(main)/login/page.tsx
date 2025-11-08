@@ -1,18 +1,17 @@
 'use client';
-import Navbar from '@/components/layouts/Navbar';
 import InputField from '@/components/ui/InputField';
 import Button from '@/components/ui/Button';
 import React, { useState } from 'react';
-import { db } from '../firebaseConfig';
+import { db } from '@/app/firebaseConfig';
 import { doc, increment, setDoc } from 'firebase/firestore';
 import { auth } from '@/app/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FirebaseError } from 'firebase/app';
-import { generateFirebaseAuthErrorMessage } from '../lib/ErrorHandler';
+import { generateFirebaseAuthErrorMessage } from '@/app/lib/ErrorHandler';
 
-export default function Homepage() {
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistered, setIsRegistered] = useState(true);
@@ -41,7 +40,6 @@ export default function Homepage() {
     });
   }
 
-  //  upon login, turn guest cart into user cart
   const mergeGuestCart = async () => {
     if (!user) return;
 
@@ -51,7 +49,6 @@ export default function Homepage() {
       await setDoc(cartItemRef, { quantity: increment(item.quantity) }, { merge: true });
     }
 
-    // clear guest cart
     localStorage.removeItem('guestCart');
   };
 
@@ -71,41 +68,38 @@ export default function Homepage() {
   }
 
   return (
-    <>
-      <Navbar homePage={true} />
-      <main className="bg-background-light relative flex min-h-screen">
-        <section className="flex flex-col grow p-20">
-          <div className="flex flex-col grow shadow-md p-12 text-primary-light bg-white border-gray-400/25 border-1">
-            <header className="flex-1">
-              <h1 className="text-3xl font-bold text-secondary-light">JSHOP</h1>
-            </header>
-            <form onSubmit={isRegistered ? login : register} className="flex-7 flex flex-col gap-4">
-              <p className="text-xl">Welcome Back!</p>
-              <h1 className="text-5xl font-bold">{isRegistered ? 'Sign In' : 'Sign Up'}</h1>
-              <InputField label="Email:" id="email" onChange={(e) => setEmail(e.target.value)} />
-              <InputField
-                type="password"
-                label="Password:"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Button className="bg-secondary-light w-fit p-2 text-white rounded-sm flex justify-center font-semibold">
-                {isRegistered ? 'Sign In' : 'Sign Up'}
+    <main className="bg-background-light relative flex min-h-screen">
+      <section className="flex flex-col grow p-20">
+        <div className="flex flex-col grow shadow-md p-12 text-primary-light bg-white border-gray-400/25 border-1">
+          <header className="flex-1">
+            <h1 className="text-3xl font-bold text-secondary-light">JSHOP</h1>
+          </header>
+          <form onSubmit={isRegistered ? login : register} className="flex-7 flex flex-col gap-4">
+            <p className="text-xl">Welcome Back!</p>
+            <h1 className="text-5xl font-bold">{isRegistered ? 'Sign In' : 'Sign Up'}</h1>
+            <InputField label="Email:" id="email" onChange={(e) => setEmail(e.target.value)} />
+            <InputField
+              type="password"
+              label="Password:"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button className="bg-secondary-light w-fit p-2 text-white rounded-sm flex justify-center font-semibold">
+              {isRegistered ? 'Sign In' : 'Sign Up'}
+            </Button>
+          </form>
+          <div>
+            <p>
+              {isRegistered ? 'Need an Account?' : 'Already have an account?'}{' '}
+              <Button
+                className="text-secondary-light"
+                onClick={() => setIsRegistered(!isRegistered)}>
+                {isRegistered ? 'Register' : 'Sign In'} here
               </Button>
-            </form>
-            <div>
-              <p>
-                {isRegistered ? 'Need an Account?' : 'Already have an account?'}{' '}
-                <Button
-                  className="text-secondary-light"
-                  onClick={() => setIsRegistered(!isRegistered)}>
-                  {isRegistered ? 'Register' : 'Sign In'} here
-                </Button>
-              </p>
-            </div>
+            </p>
           </div>
-        </section>
-      </main>
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

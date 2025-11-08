@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import MenuIcon from '../icons/MenuIcon';
 import Directory from './Directory';
 import CartIcon from '../icons/CartIcon';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/state/hooks';
 import { toggleCart, toggleDirectory } from '@/features/cartSlice';
 import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDirectoryToggle = useCallback(() => {
     dispatch(toggleDirectory());

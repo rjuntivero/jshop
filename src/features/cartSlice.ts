@@ -62,6 +62,9 @@ const cartSlice = createSlice({
     toggleDirectory(state) {
       state.isDirectoryOpen = !state.isDirectoryOpen;
     },
+    closeCart(state) {
+      state.isCartOpen = false;
+    },
     cartTotal(state) {
       state.items = state.items.map((item) => {
         const totalPrice = item.price * item.quantity;
@@ -80,6 +83,7 @@ export const {
   clearCart,
   toggleCart,
   toggleDirectory,
+  closeCart,
   clearItem,
   setSearchQuery,
 } = cartSlice.actions;

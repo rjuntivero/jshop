@@ -3,16 +3,14 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useFetchProduct } from '@/hooks/useFetchProduct';
-import Navbar from '@/components/layouts/Navbar';
 import LoadWheel from '@/components/ui/LoadWheel';
 import Button from '@/components/ui/Button';
 import CartIcon from '@/components/icons/CartIcon';
-import CartSidebar from '@/components/layouts/CartSidebar';
 import Footer from '@/components/layouts/Footer';
 import { Product } from '@/types/Product';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import { addToCart, toggleCart } from '@/features/cartSlice';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { addToCart } from '@/features/cartSlice';
+import { useAppDispatch } from '@/state/hooks';
 import Image from 'next/image';
 import ItemCounter from '@/components/ui/ItemCounter';
 import { useItemCount } from '@/hooks/useItemCount';
@@ -29,7 +27,6 @@ import { User } from 'firebase/auth';
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading, error } = useFetchProduct(Number(id));
-  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const dispatch = useAppDispatch();
   const { itemCount, updateItemCount } = useItemCount();
   const { data: products } = useFetchProducts();
@@ -41,9 +38,6 @@ const ProductPage = () => {
   const similarProducts: Product[] | undefined = products?.filter(
     (item) => item.id !== product?.id && product?.tags?.some((tag) => item.tags?.includes(tag))
   );
-  const handleCartToggle = () => {
-    dispatch(toggleCart());
-  };
 
   const [user] = useAuthState(auth);
 
@@ -58,14 +52,6 @@ const ProductPage = () => {
   };
   return (
     <div className="min-h-screen flex flex-col ">
-      <Navbar productsPage={true} />
-
-      <CartSidebar
-        onClose={handleCartToggle}
-        className={`bg-background-light fixed top-0 right-0 z-99999 flex h-dvh w-93 md:w-106 flex-col outline-1 transition-transform duration-300 ease-in-out ${
-          isCartOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      />
       {isLoading && (
         <div className="flex h-[600px] items-center justify-center">
           <LoadWheel />
@@ -75,17 +61,8 @@ const ProductPage = () => {
 
       {product && (
         <main className=" border-b-1 py-12 bg-secondary-dark grow text-primary-light relative flex w-full flex-col justify-center transition-all duration-400 px-[clamp(0px,2%,50px)] ">
-          {/* background design */}
-          {/* <div className="bg-secondary-light/70 absolute -bottom-12 left-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
-          <div className="bg-secondary-light/70 absolute left-20 z-1 hidden rounded-full p-8 md:block"></div>
-          <div className="bg-secondary-light/70 absolute bottom-68 left-38 z-1 hidden rounded-full p-3 md:block"></div>
-          <div className="bg-secondary-light/70 absolute -top-12 right-30 z-1 hidden h-[128px] w-[128px] rounded-full p-42 md:block"></div>
-          <div className="bg-secondary-light/70 absolute right-30 bottom-60 z-1 hidden rounded-full p-3 md:block"></div>
-          <div className="bg-secondary-light/70 absolute right-35 bottom-40 z-1 hidden rounded-full p-8 md:block"></div> */}
-
           <article className="justify-center z-3 box-border flex w-full flex-col md:items-center gap-8 md:p-1 p-0 md:flex-row ">
             <div className="md:px-6">
-              {/* image container */}
               <div className="motion-preset-blur-down-md relative w-full aspect-square mx-auto p-4 bg-white flex rounded-sm shadow-md outline-1 outline-primary-dark">
                 <Image
                   src={product.thumbnail!}
@@ -138,7 +115,6 @@ const ProductPage = () => {
           </article>
         </main>
       )}
-      {/* related products */}
       <section className="py-8 flex flex-col gap-2">
         <PaginatedGrid
           items={relatedProducts ?? []}
@@ -146,7 +122,6 @@ const ProductPage = () => {
         />
         <PaginatedGrid items={similarProducts ?? []} title={`Products similar to this item:`} />
       </section>
-      {/* reviews */}
       <section className="p-8 flex flex-col gap-4">
         <h1 className="font-semibold text-2xl text-primary-light ">Reviews:</h1>
         <div className="gap-4 flex flex-col grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
