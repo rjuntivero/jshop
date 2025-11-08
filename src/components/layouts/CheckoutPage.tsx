@@ -12,6 +12,7 @@ import useAuthCart from '@/hooks/useAuthCart';
 import CheckoutItemList from '../ui/CheckoutItemList';
 import Subtotal from '../ui/Subtotal';
 import AddressForm from './AddressForm';
+import LoadWheel from '../ui/LoadWheel';
 
 export default function CheckoutPage() {
   const stripe = useStripe();
@@ -21,8 +22,6 @@ export default function CheckoutPage() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
-
-  console.log('Client Secret', clientSecret);
 
   // auth users
   const [authCart] = useAuthCart(user ?? null);
@@ -105,11 +104,11 @@ export default function CheckoutPage() {
             <AddressForm />
             <hr className="w-full" />
             <h1 className="text-2xl text-primary-light">2. Choose Payment Method:</h1>
-            {/* {!clientSecret && loading && (
+            {!clientSecret && loading && (
               <div className="flex h-[100px] items-center justify-center">
                 <LoadWheel />
               </div>
-            )} */}
+            )}
             <form
               onSubmit={handleCheckout}
               className="flex flex-col gap-6 overflow-y-auto overflow-x-hidden max-h-[750px] py-4 pr-4">

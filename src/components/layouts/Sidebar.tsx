@@ -7,7 +7,7 @@ import UpArrowIcon from '../icons/UpArrowIcon';
 import { useFetchProducts } from '@/hooks/useFetchProducts';
 import { capitalizeFirst } from '@/app/lib/utils';
 import { useAppDispatch } from '@/state/hooks';
-import { setSearchQuery } from '@/features/cartSlice';
+import { setSearchQuery } from '@/features/searchSlice';
 
 interface SidebarProps {
   className?: string;
@@ -63,7 +63,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, handleItemClick, togg
 
       if (childLabel) {
         const childObj = { label: childLabel, value: cat };
-        // only add if value doesn't exist already
         if (!map[parentLabel].some((c) => c.value === childObj.value)) {
           map[parentLabel].push(childObj);
         }

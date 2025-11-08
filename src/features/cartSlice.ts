@@ -7,7 +7,6 @@ const initialState: Cart = {
   totalPrice: 0,
   isCartOpen: false,
   isDirectoryOpen: false,
-  searchQuery: 'All',
 };
 
 const cartSlice = createSlice({
@@ -71,9 +70,6 @@ const cartSlice = createSlice({
         return { ...item, totalPrice };
       });
     },
-    setSearchQuery(state, action: PayloadAction<string>) {
-      state.searchQuery = action.payload;
-    },
   },
 });
 
@@ -85,7 +81,6 @@ export const {
   toggleDirectory,
   closeCart,
   clearItem,
-  setSearchQuery,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

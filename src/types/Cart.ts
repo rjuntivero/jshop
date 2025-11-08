@@ -5,5 +5,4 @@ export type Cart = {
   totalPrice: number;
   isCartOpen: boolean;
   isDirectoryOpen: boolean;
-  searchQuery: string | 'All';
 };

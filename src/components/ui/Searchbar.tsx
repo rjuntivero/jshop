@@ -17,7 +17,7 @@ const Searchbar: React.FC<T> = ({ results, sideBarVisible, showSidebar }) => {
   // const handleDropdown = () => {
   //   setDropdown((prev) => !prev);
   // };
-  const searchQuery = useAppSelector((state) => state.cart.searchQuery);
+  const searchQuery = useAppSelector((state) => state.search.query);
 
   return (
     <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 justify-between">
