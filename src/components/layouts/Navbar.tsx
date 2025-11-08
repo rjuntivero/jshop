@@ -6,7 +6,7 @@ import MenuIcon from '../icons/MenuIcon';
 import Directory from './Directory';
 import CartIcon from '../icons/CartIcon';
 import { useAppDispatch } from '@/state/hooks';
-import { toggleCart, toggleDirectory } from '@/features/cartSlice';
+import { toggleCart, toggleDirectory } from '@/features/uiSlice';
 import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
 import UserIcon from '../icons/UserIcon';
@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
     dispatch(toggleCart());
   }, [dispatch]);
 
-  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
+  const isDirectoryOpen = useAppSelector((state) => state.ui.isDirectoryOpen);
 
   const { logout } = useAuth();
   const [user] = useAuthState(auth);

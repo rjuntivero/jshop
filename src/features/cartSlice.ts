@@ -5,8 +5,6 @@ import { Cart } from '@/types/Cart';
 const initialState: Cart = {
   items: [],
   totalPrice: 0,
-  isCartOpen: false,
-  isDirectoryOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -55,15 +53,6 @@ const cartSlice = createSlice({
       state.items = [];
       state.totalPrice = 0;
     },
-    toggleCart(state) {
-      state.isCartOpen = !state.isCartOpen;
-    },
-    toggleDirectory(state) {
-      state.isDirectoryOpen = !state.isDirectoryOpen;
-    },
-    closeCart(state) {
-      state.isCartOpen = false;
-    },
     cartTotal(state) {
       state.items = state.items.map((item) => {
         const totalPrice = item.price * item.quantity;
@@ -73,14 +62,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  clearCart,
-  toggleCart,
-  toggleDirectory,
-  closeCart,
-  clearItem,
-} = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, clearItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

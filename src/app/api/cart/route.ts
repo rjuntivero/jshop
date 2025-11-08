@@ -5,8 +5,6 @@ import { NextResponse } from 'next/server';
 const cart: Cart = {
   items: [],
   totalPrice: 0,
-  isCartOpen: false,
-  isDirectoryOpen: false,
 };
 
 export async function GET() {

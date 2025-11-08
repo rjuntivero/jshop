@@ -2,13 +2,12 @@
 import React from 'react';
 import NavbarShopping from '@/components/layouts/NavbarShopping';
 import CartSidebar from '@/components/layouts/CartSidebar';
-import { useAppSelector } from '@/state/hooks';
-import { useDispatch } from 'react-redux';
-import { toggleCart } from '@/features/cartSlice';
+import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { toggleCart } from '@/features/uiSlice';
 
 export default function ShoppingLayout({ children }: { children: React.ReactNode }) {
-  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
-  const dispatch = useDispatch();
+  const isCartOpen = useAppSelector((state) => state.ui.isCartOpen);
+  const dispatch = useAppDispatch();
 
   const handleClose = () => dispatch(toggleCart());
 

@@ -74,12 +74,6 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
               showSidebar={handleSidebarToggle}
               sideBarVisible={showSidebar}
             />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products"
-              className="ml-4 p-2 rounded bg-white/10 text-primary-light"
-            />
           </div>
 
           <div className="h-full transition-all duration-500 mb-6 md:p-3 lg:p-5">
