@@ -10,7 +10,6 @@ import { auth } from '@/app/firebaseConfig';
 import { addToAuthCart, clearAuthItem, removeFromAuthCart } from '@/app/lib/authCart';
 
 import { User } from 'firebase/auth';
-import CloseIcon from '../icons/CloseIcon';
 
 interface T {
   product?: Product;

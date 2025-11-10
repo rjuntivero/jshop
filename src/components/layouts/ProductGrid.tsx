@@ -12,7 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
 
 const ProductGrid = ({ products }: { products: Product[] }) => {
-  const [search, setSearch] = useState('');
+  const [search, _setSearch] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const filteredProducts = useFilteredProducts(products, search, activeCategory);

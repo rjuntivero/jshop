@@ -16,6 +16,14 @@ pnpm dev
 bun dev
 ```
 
+Stripe Webhook:
+
+```bash
+stripe login
+# you must copy the webhook secret to your local env file after listening
+stripe listen --forward-to localhost:3000/api/webhook
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

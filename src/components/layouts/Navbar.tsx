@@ -11,7 +11,7 @@ import { useAppSelector } from '@/state/hooks';
 import Link from 'next/link';
 import UserIcon from '../icons/UserIcon';
 import { useAuth } from '@/hooks/useAuth';
-import SearchIcon from '../icons/SearchIcon';
+// import SearchIcon from '../icons/SearchIcon';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebaseConfig';
 import Image from 'next/image';
@@ -59,12 +59,12 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
         </h1>
       )}
       <div className="right flex items-center gap-4 ">
-        <div className=" text-sm rounded-full bg-secondary-dark flex justify-between gap-2 items-center">
-          <div className="flex items-center justify-center hover:bg-secondary-light/50 rounded-full p-2 transition-colors duration-300 cursor-pointer">
+        {/* <div className=" text-sm rounded-full bg-secondary-dark flex justify-between gap-2 items-center">
+          <div className="flex items-center justify-center bg-secondary-light/50 hover:bg-secondary-light/80 rounded-full p-2 transition-colors duration-300 cursor-pointer">
             <SearchIcon width={30} height={26} />
           </div>
           <input type="text" placeholder="Search " className="text-md font-semibold max-w-30" />
-        </div>
+        </div> */}
         {productsPage && (
           <Button
             onClick={handleCartToggle}
@@ -84,9 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ homePage = false, productsPage = false 
         <div className="flex items-center gap-4">
           {user ? (
             <>
-              <Button
-                className="hover:bg-secondary-light p-2 rounded-full transition-all duration-300"
-                onClick={logout}>
+              <Button className=" p-2 rounded-full transition-all duration-300" onClick={logout}>
                 Sign Out
               </Button>
               <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full transition-colors">

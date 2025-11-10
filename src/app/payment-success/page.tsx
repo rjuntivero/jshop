@@ -17,6 +17,7 @@ export default function PaymentSuccess() {
   const clientSecret = searchParams.get('payment_intent_client_secret');
   const [cartItems, setCartItems] = useState<Product[] | []>([]);
   const redirectStatus = searchParams.get('redirect_status');
+
   const [orderNumber, setOrderNumber] = useState('');
 
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -26,7 +27,7 @@ export default function PaymentSuccess() {
     const fetchPurchasedItems = async () => {
       if (!user) return;
 
-      const { items, orderNumber } = await fetchLatestReceipt(user.uid);
+      const { items, orderNumber } = await fetchLatestReceipt(user.uid, paymentIntent!);
       const products = await fetchProductsData(items);
       setCartItems(products);
       setOrderNumber(orderNumber);
@@ -35,7 +36,7 @@ export default function PaymentSuccess() {
     fetchPurchasedItems();
   }, [user]);
 
-  console.log({ amount, paymentIntent, clientSecret, redirectStatus });
+  // console.log({ amount, paymentIntent, clientSecret, redirectStatus });
   return (
     <>
       <Navbar />
