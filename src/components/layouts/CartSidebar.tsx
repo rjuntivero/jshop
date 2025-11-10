@@ -27,7 +27,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
   // guest users
   const guestCart = useAppSelector((state) => state.cart.items);
   const guestCartTotal = useAppSelector((state) => state.cart.totalPrice);
-  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+  const isCartOpen = useAppSelector((state) => state.ui.isCartOpen);
 
   const cart = user ? authCart : guestCart;
 
@@ -62,7 +62,7 @@ const CartSidebar: React.FC<SidebarProps> = ({ onClose, className }) => {
         </section>
         <div className="p-4 text-2xl flex justify-between border-t-1 border-b-1">
           <p>Total: </p>
-          <p>$ {user ? cartTotal?.toFixed(2) ?? 0 : guestCartTotal.toFixed(2)}</p>
+          <p>$ {user ? (cartTotal?.toFixed(2) ?? 0) : guestCartTotal.toFixed(2)}</p>
         </div>
         <div className="p-4">
           <Link

@@ -4,9 +4,8 @@ import CloseIcon from '../icons/CloseIcon';
 import Button from '../ui/Button';
 import Overlay from './Overlay';
 import { usePathname } from 'next/navigation';
-import { useAppSelector } from '@/state/hooks';
-import { useDispatch } from 'react-redux';
-import { toggleDirectory } from '../../features/cartSlice';
+import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { toggleDirectory } from '@/features/uiSlice';
 import { memo } from 'react';
 
 type DirectoryProps = {
@@ -15,8 +14,8 @@ type DirectoryProps = {
 
 const Directory: React.FC<DirectoryProps> = ({ className }) => {
   const location = usePathname();
-  const isDirectoryOpen = useAppSelector((state) => state.cart.isDirectoryOpen);
-  const dispatch = useDispatch();
+  const isDirectoryOpen = useAppSelector((state) => state.ui.isDirectoryOpen);
+  const dispatch = useAppDispatch();
 
   const handleDirectoryToggle = () => {
     dispatch(toggleDirectory());

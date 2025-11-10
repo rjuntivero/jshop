@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import Button from './Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '@/state/hooks';
-import { setSearchQuery } from '@/features/cartSlice';
+import { setSearchQuery } from '@/features/searchSlice';
 
 interface SidebarItemProps {
   item: string;
@@ -53,8 +53,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             isActive
               ? 'dark:text-background-dark text-white'
               : !hasDropdown
-              ? 'dark:text-background-dark group-hover:text-white'
-              : 'dark:text-background-dark'
+                ? 'dark:text-background-dark group-hover:text-white'
+                : 'dark:text-background-dark'
           }`}>
           {item} {hasDropdown && (isOpen ? '▾' : '▸')}
         </span>

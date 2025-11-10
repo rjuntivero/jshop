@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import * as admin from 'firebase-admin';
 import { generateOrderNumber } from '@/app/lib/utils';
 
-// Initialize Firebase Admin (only once)
+// Initialize Firebase Admin
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert({
@@ -18,10 +18,10 @@ const db = admin.firestore();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' });
 
 export async function POST(req: Request) {
-  const sig = req.headers.get('stripe-signature');
-  const body = await req.text();
-
   try {
+    const sig = req.headers.get('stripe-signature');
+    const body = await req.text();
+
     const event = stripe.webhooks.constructEvent(body, sig!, process.env.STRIPE_WEBHOOK_SECRET!);
 
     if (event.type === 'payment_intent.succeeded') {
@@ -33,11 +33,13 @@ export async function POST(req: Request) {
 
       // Write receipt using Admin SDK
       await db.collection('receipts').add({
-        orderNumber: generateOrderNumber(),
         userId,
-        amount,
-        items,
-        timestamp: admin.firestore.FieldValue.serverTimestamp(),
+        items: items,
+        orderNumber: generateOrderNumber(),
+        receiptId: paymentIntent.id,
+        amount: amount,
+        timestamp: new Date(),
+        status: 'paid',
       });
 
       // Clear user's cart

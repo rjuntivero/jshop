@@ -1,4 +1,4 @@
-import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
+import { collection, query, limit, getDocs, where } from 'firebase/firestore';
 import { db } from '@/app/firebaseConfig';
 import { Product } from '@/types/Product';
 
@@ -12,12 +12,15 @@ export interface LatestReceipt {
   orderNumber: string;
 }
 
-export const fetchLatestReceipt = async (userId: string): Promise<LatestReceipt> => {
+export const fetchLatestReceipt = async (
+  userId: string,
+  paymentIntentId: string
+): Promise<LatestReceipt> => {
   const receiptsRef = collection(db, 'receipts');
   const q = query(
     receiptsRef,
     where('userId', '==', userId),
-    orderBy('timestamp', 'desc'),
+    where('receiptId', '==', paymentIntentId),
     limit(1)
   );
   const snapshot = await getDocs(q);
@@ -26,7 +29,6 @@ export const fetchLatestReceipt = async (userId: string): Promise<LatestReceipt>
 
   const latestReceipt = snapshot.docs[0].data();
 
-  console.log('LATEST RECEIPT:', latestReceipt);
   return { items: latestReceipt.items || [], orderNumber: latestReceipt.orderNumber || '' };
 };
 

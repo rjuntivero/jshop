@@ -5,9 +5,6 @@ import { Cart } from '@/types/Cart';
 const initialState: Cart = {
   items: [],
   totalPrice: 0,
-  isCartOpen: false,
-  isDirectoryOpen: false,
-  searchQuery: 'All',
 };
 
 const cartSlice = createSlice({
@@ -56,32 +53,15 @@ const cartSlice = createSlice({
       state.items = [];
       state.totalPrice = 0;
     },
-    toggleCart(state) {
-      state.isCartOpen = !state.isCartOpen;
-    },
-    toggleDirectory(state) {
-      state.isDirectoryOpen = !state.isDirectoryOpen;
-    },
     cartTotal(state) {
       state.items = state.items.map((item) => {
         const totalPrice = item.price * item.quantity;
         return { ...item, totalPrice };
       });
     },
-    setSearchQuery(state, action: PayloadAction<string>) {
-      state.searchQuery = action.payload;
-    },
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  clearCart,
-  toggleCart,
-  toggleDirectory,
-  clearItem,
-  setSearchQuery,
-} = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, clearItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

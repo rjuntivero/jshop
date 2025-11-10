@@ -36,10 +36,7 @@ const addToAuthCart = async (product: Product, user: User, itemCount = 1) => {
 };
 
 const removeFromAuthCart = async (product: Product, user: User) => {
-  // only authenticated users may add to cart
-  if (!user) {
-    return;
-  }
+  if (!user) return;
 
   const cartItemRef = doc(db, 'carts', user?.uid as string, 'cartItems', product.id.toString());
 

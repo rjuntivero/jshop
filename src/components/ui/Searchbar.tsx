@@ -17,10 +17,10 @@ const Searchbar: React.FC<T> = ({ results, sideBarVisible, showSidebar }) => {
   // const handleDropdown = () => {
   //   setDropdown((prev) => !prev);
   // };
-  const searchQuery = useAppSelector((state) => state.cart.searchQuery);
+  const searchQuery = useAppSelector((state) => state.search.query);
 
   return (
-    <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 justify-between">
+    <div className=" text-primary-light dark:bg-background-dark flex items-center gap-12 justify-between grow">
       {/* show/hide sidebar and results */}
       <div>
         <h1 className="text-primary-light dark:text-accent-dark row-start-2 hidden text-sm md:block">
@@ -53,28 +53,3 @@ const Searchbar: React.FC<T> = ({ results, sideBarVisible, showSidebar }) => {
 };
 
 export default memo(Searchbar);
-
-{
-  /* <Button
-          onClick={handleDropdown}
-          className={`group hover:bg-secondary-light/40 text-secondary-light dark:bg-background-dark dark:text-accent-dark border-secondary-light dark:border-accent-dark relative hidden items-center justify-center px-4 py-2 text-[0.75rem] transition-all duration-300 md:flex ${
-            dropdown ? 'bg-secondary-light/40' : ''
-          }`}
-        >
-          {/* Sort By
-        //   <Dropdown /> */
-}
-//   <div
-//     className={`absolute bottom-0 flex translate-y-full bg-white p-4 shadow-md transition-all duration-150 ease-in-out ${
-//       dropdown ? 'translate-x-0 opacity-100 focus-within:pointer-events-auto' : '-translate-x-3 opacity-0 not-focus-within:pointer-events-none'
-//     }`}
-//   >
-//     <ul className={`grid items-center justify-center gap-3 overflow-hidden transition-all duration-300 ${dropdown ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
-//       {filters.map((filter) => (
-//         <li className="hover:bg-secondary-light/40 w-full cursor-pointer p-4 py-2 text-center font-bold transition-all duration-200" key={filter}>
-//           {filter}
-//         </li>
-//       ))}
-//     </ul>
-//   </div>
-// </Button> */}
