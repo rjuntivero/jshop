@@ -19,7 +19,6 @@ export default function ShoppingCart() {
 
   // auth users
   const [authCart] = useAuthCart(user ?? null);
-  console.log('CART: ', authCart);
   const authCartTotal = user && authCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   // guest users
@@ -65,14 +64,14 @@ export default function ShoppingCart() {
         <section className="  sticky top-3 self-start">
           <article className=" flex flex-col grow gap-4 text-secondary-light outline-secondary-light/50 rounded-sm bg-secondary-dark p-8 font-bold outline-1">
             <Subtotal totalItems={totalItems} cartTotal={cartTotal ?? 0} />
-            {cart.length > 0 && (
-              <Link
-                href={user ? '/checkout' : '/login'}
-                className="flex items-center gap-2 justify-end">
-                <h2 className="text-white  rounded-sm  text-sm md:text-sm  bg-secondary-light p-2 w-full text-center">
-                  Proceed to Checkout
-                </h2>
+            {cart.length > 0 && user ? (
+              <Link href="/checkout" className="btn w-full font-semibold">
+                Proceed to Checkout
               </Link>
+            ) : (
+              <Button className="p-4 bg-secondary-light text-white font-semibold">
+                {user === null ? 'Login to checkout' : 'Loading cart...'}
+              </Button>
             )}
           </article>
         </section>
